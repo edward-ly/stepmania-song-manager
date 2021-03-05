@@ -74,7 +74,7 @@
 
           <q-separator />
 
-          <q-item clickable v-ripple>
+          <q-item clickable v-ripple v-close-popup @click="closeApp">
             <q-item-section avatar>
               <q-icon name="close" />
             </q-item-section>
@@ -101,12 +101,17 @@ export default defineComponent({
   setup () {
     const leftDrawerOpen = ref(false)
 
+    function closeApp () {
+      window.close()
+    }
+
     return {
       version,
       leftDrawerOpen,
       toggleLeftDrawer () {
         leftDrawerOpen.value = !leftDrawerOpen.value
-      }
+      },
+      closeApp
     }
   }
 })
