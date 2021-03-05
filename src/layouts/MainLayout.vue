@@ -12,10 +12,10 @@
         />
 
         <q-toolbar-title>
-          Quasar App
+          SM Song Manager
         </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
+        <!-- <div>Quasar v{{ $q.version }}</div> -->
       </q-toolbar>
     </q-header>
 
