@@ -17,7 +17,7 @@ yarn
 Start app in development mode (hot-code reloading, error reporting, etc.):
 
 ```bash
-quasar dev -m electron
+yarn run dev
 ```
 
 Lint files:
@@ -29,7 +29,7 @@ yarn run lint
 Build app for production:
 
 ```bash
-quasar build -m electron
+yarn run build
 ```
 
 To customize the Quasar configuration, see [Configuring quasar.conf.js](https://quasar.dev/quasar-cli/quasar-conf-js).
