@@ -6,6 +6,8 @@
   "author": "Edward Ly <edward.ly@pm.me>",
   "private": true,
   "scripts": {
+    "dev": "genversion --es6 version.js && quasar dev -m electron",
+    "build": "genversion --es6 version.js && quasar build -m electron",
     "lint": "eslint --ext .js,.vue ./",
     "test": "echo \"No test specified\" && exit 0"
   },
