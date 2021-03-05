@@ -15,7 +15,7 @@
           SM Song Manager
         </q-toolbar-title>
 
-        <!-- <div>Quasar v{{ $q.version }}</div> -->
+        <div>v{{ version }}</div>
       </q-toolbar>
     </q-header>
 
@@ -96,6 +96,7 @@ const linksList = [
 ];
 
 import { defineComponent, ref } from 'vue'
+import { version } from '../../version'
 
 export default defineComponent({
   name: 'MainLayout',
@@ -108,6 +109,7 @@ export default defineComponent({
     const leftDrawerOpen = ref(false)
 
     return {
+      version,
       essentialLinks: linksList,
       leftDrawerOpen,
       toggleLeftDrawer () {
