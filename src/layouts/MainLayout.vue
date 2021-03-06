@@ -30,7 +30,7 @@
     >
       <q-scroll-area class="fit">
         <q-list padding>
-          <q-item clickable v-ripple to="/">
+          <q-item clickable v-ripple to="/" exact>
             <q-item-section avatar>
               <q-icon name="home" />
             </q-item-section>
@@ -40,7 +40,7 @@
             </q-item-section>
           </q-item>
 
-          <q-item clickable v-ripple to="/add">
+          <q-item clickable v-ripple to="/add" exact>
             <q-item-section avatar>
               <q-icon name="create_new_folder" />
             </q-item-section>
@@ -52,7 +52,7 @@
 
           <q-separator />
 
-          <q-item clickable v-ripple to="/settings">
+          <q-item clickable v-ripple to="/settings" exact>
             <q-item-section avatar>
               <q-icon name="settings" />
             </q-item-section>
@@ -62,7 +62,7 @@
             </q-item-section>
           </q-item>
 
-          <q-item clickable v-ripple to="/about">
+          <q-item clickable v-ripple to="/about" exact>
             <q-item-section avatar>
               <q-icon name="info" />
             </q-item-section>
