@@ -1,8 +1,11 @@
 <template>
   <q-page class="q-pa-lg">
     <div class="row">
-      <div class="col" />
       <div class="col-auto">
+        <div class="text-h5 q-my-none">Installed Packs</div>
+      </div>
+      <div class="col" />
+      <div class="col-auto q-my-auto">
         <q-btn
           to="/add"
           no-wrap
