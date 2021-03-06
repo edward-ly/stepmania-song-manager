@@ -1,6 +1,10 @@
 import { LocalStorage } from 'quasar'
 
 export default (app) => {
+  if (!LocalStorage.has('RepositoryList')) {
+    LocalStorage.set('RepositoryList', []);
+  }
+
   if (!LocalStorage.has('DownloadPath')) {
     LocalStorage.set('DownloadPath', window.electron.initDownloadPath())
   }

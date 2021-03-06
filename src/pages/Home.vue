@@ -21,7 +21,7 @@
     </div>
     <div class="row q-pt-lg">
       <div class="col">
-        <div class="no-packs absolute-center">
+        <div class="no-packs absolute-center" v-if="isListEmpty()">
           <div class="column items-center q-gutter-y-xs">
             <q-icon name="info" size="xl" color="dark" />
             <div class="text-body1 text-dark text-center">
@@ -36,8 +36,21 @@
 
 <script>
 import { defineComponent } from 'vue';
+import { useQuasar } from 'quasar';
 
-export default defineComponent({})
+export default defineComponent({
+  setup () {
+    const $q = useQuasar()
+
+    function isListEmpty () {
+      return !$q.localStorage.getItem('RepositoryList').length
+    }
+
+    return {
+      isListEmpty
+    }
+  }
+})
 </script>
 
 <style lang="scss">
