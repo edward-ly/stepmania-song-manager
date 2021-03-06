@@ -21,11 +21,13 @@
     </div>
     <div class="row q-pt-lg">
       <div class="col">
-        <div class="flex flex-center">
-          <img
-            alt="Quasar logo"
-            src="~assets/quasar-logo-full.svg"
-          >
+        <div class="no-packs absolute-center">
+          <div class="column items-center q-gutter-y-xs">
+            <q-icon name="info" size="xl" color="dark" />
+            <div class="text-body1 text-dark text-center">
+              No song packs installed.<br>Click on "+ Add Songs" to get started!
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -41,5 +43,9 @@ export default defineComponent({})
 <style lang="scss">
   .btn-icon-left-padding-sm .on-left {
     margin-right: map-get($space-sm, "x");
+  }
+
+  .no-packs {
+    opacity: 0.5;
   }
 </style>
