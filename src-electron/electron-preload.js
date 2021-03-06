@@ -15,3 +15,14 @@
  *     doAThing: () => {}
  *   })
  */
+
+const { contextBridge, ipcRenderer } = require('electron')
+
+contextBridge.exposeInMainWorld('electron', {
+  initDownloadPath: () => {
+    return ipcRenderer.sendSync('init-download-path')
+  },
+  getPreferencesIniPath: () => {
+    return ipcRenderer.sendSync('get-preferences-ini-path')
+  }
+})

@@ -1,9 +1,11 @@
-import { app, BrowserWindow, nativeTheme } from 'electron'
+import { app, BrowserWindow, ipcMain, nativeTheme } from 'electron'
 import path from 'path'
+import fs from 'fs'
+import glob from 'glob'
 
 try {
   if (process.platform === 'win32' && nativeTheme.shouldUseDarkColors === true) {
-    require('fs').unlinkSync(require('path').join(app.getPath('userData'), 'DevTools Extensions'))
+    fs.unlinkSync(path.join(app.getPath('userData'), 'DevTools Extensions'))
   }
 } catch (_) { }
 
@@ -53,4 +55,30 @@ app.on('activate', () => {
   if (mainWindow === null) {
     createWindow()
   }
+})
+
+// ---------------------------------------------------------------------------
+
+ipcMain.on('init-download-path', event => {
+  const result = path.join(app.getPath('userData'), 'Songs')
+  if (!fs.existsSync(result)) {
+    fs.mkdirSync(result)
+  }
+  event.returnValue = result
+})
+
+ipcMain.on('get-preferences-ini-path', event => {
+  const files1 = glob.sync('**/StepMania 5*/**/Preferences.ini', {
+    cwd: "/Games",
+    absolute: true
+  })
+  const files2 = glob.sync('**/StepMania 5*/**/Preferences.ini', {
+    cwd: app.getPath('appData'),
+    absolute: true
+  })
+  let files = files1.concat(files2)
+  if (process.platform == 'win32') {
+    files = files.map(str => str.replace(/\//g, '\\'))
+  }
+  event.returnValue = files
 })
