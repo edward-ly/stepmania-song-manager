@@ -15,7 +15,7 @@ export default (app) => {
     LocalStorage.set('AutoLaunchOnLogin', true);
   }
   if (!LocalStorage.has('UpdateInterval')) {
-    LocalStorage.set('UpdateInterval', 1800000);
+    LocalStorage.set('UpdateInterval', 3600000);
   }
   if (!LocalStorage.has('Locale')) {
     LocalStorage.set('Locale', 'en-US');
