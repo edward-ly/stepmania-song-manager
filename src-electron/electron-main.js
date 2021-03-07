@@ -68,27 +68,25 @@ ipcMain.on('init-download-path', event => {
 })
 
 ipcMain.on('get-preferences-ini-path', event => {
-  const searchPattern = '**/StepMania 5*/**/Preferences.ini'
-  const searchPatternLinux = '**/.stepmania-5*/**/Preferences.ini'
   let files = []
 
   if (process.platform === 'win32') {
-    files = files.concat(glob.sync(searchPattern, {
+    files = files.concat(glob.sync('StepMania 5*/Save/Preferences.ini', {
       cwd: '/Games',
       absolute: true
     }))
-    files = files.concat(glob.sync(searchPattern, {
+    files = files.concat(glob.sync('StepMania 5*/Save/Preferences.ini', {
       cwd: app.getPath('appData'),
       absolute: true
     }))
     files = files.map(str => str.replace(/\//g, '\\'))
   } else if (process.platform === 'darwin') { // macOS
-    files = glob.sync(searchPattern, {
+    files = glob.sync('StepMania 5*/Preferences.ini', {
       cwd: path.join(app.getPath('home'), 'Library', 'Preferences'),
       absolute: true
     })
   } else { // Linux (any)
-    files = glob.sync(searchPatternLinux, {
+    files = glob.sync('.stepmania-5*/Save/Preferences.ini', {
       cwd: app.getPath('home'),
       absolute: true
     })
