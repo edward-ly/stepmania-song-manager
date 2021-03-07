@@ -1,1 +1,9 @@
 // app global css in SCSS form
+
+.btn-icon-left-padding-sm .on-left {
+  margin-right: map-get($space-sm, "x");
+}
+
+.text-muted {
+  opacity: 0.5;
+}

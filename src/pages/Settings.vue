@@ -65,7 +65,7 @@
         v-if="!preferencesIniPath.length"
         class="q-pt-none"
       >
-        <div class="no-ini-files text-body1 text-dark text-center">
+        <div class="text-muted text-body1 text-dark text-center">
           No Preferences.ini files added.
         </div>
       </q-card-section>
@@ -278,13 +278,3 @@ export default defineComponent({
   }
 })
 </script>
-
-<style lang="scss">
-  .btn-icon-left-padding-sm .on-left {
-    margin-right: map-get($space-sm, "x");
-  }
-
-  .no-ini-files {
-    opacity: 0.5;
-  }
-</style>

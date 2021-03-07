@@ -21,7 +21,7 @@
     </div>
     <div class="row q-pt-lg">
       <div class="col">
-        <div class="no-packs absolute-center" v-if="isListEmpty()">
+        <div class="text-muted absolute-center" v-if="isListEmpty()">
           <div class="column items-center q-gutter-y-xs">
             <q-icon name="info" size="xl" color="dark" />
             <div class="text-body1 text-dark text-center">
@@ -52,13 +52,3 @@ export default defineComponent({
   }
 })
 </script>
-
-<style lang="scss">
-  .btn-icon-left-padding-sm .on-left {
-    margin-right: map-get($space-sm, "x");
-  }
-
-  .no-packs {
-    opacity: 0.5;
-  }
-</style>
