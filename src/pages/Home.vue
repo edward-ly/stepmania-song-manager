@@ -21,6 +21,8 @@
     </div>
     <div class="row q-pt-lg">
       <div class="col">
+        <!-- TODO: add repository cards -->
+
         <div class="text-muted absolute-center" v-if="isListEmpty()">
           <div class="column items-center q-gutter-y-xs">
             <q-icon name="info" size="xl" color="dark" />

@@ -1,6 +1,5 @@
 <template>
   <q-page class="q-pa-lg">
-    <!-- TODO: build page -->
     <q-card class="q-mb-lg">
       <q-card-section>
         <div class="text-h6">Download Path</div>
