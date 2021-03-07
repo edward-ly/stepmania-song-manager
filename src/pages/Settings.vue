@@ -35,6 +35,21 @@
         />
       </q-card-section>
     </q-card>
+
+    <q-card class="q-mb-lg">
+      <q-card-section>
+        <q-checkbox
+          dense
+          size="lg"
+          v-model="autoLaunchOnLogin"
+          @update:modelValue="saveAutoLaunchOnLogin"
+        >
+          <div class="text-h6">
+            Auto-Launch on Login
+          </div>
+        </q-checkbox>
+      </q-card-section>
+    </q-card>
   </q-page>
 </template>
 
@@ -116,13 +131,23 @@ export default defineComponent({
 
     // ==================================================================
 
+    let autoLaunchOnLogin = ref($q.localStorage.getItem('AutoLaunchOnLogin'))
+
+    function saveAutoLaunchOnLogin (newValue) {
+      $q.localStorage.set('AutoLaunchOnLogin', newValue)
+    }
+
+    // ==================================================================
+
     return {
       downloadPath,
       saveDownloadPath,
       openDownloadPath,
       updateFrequency,
       updateFrequencyOptions,
-      saveUpdateFrequency
+      saveUpdateFrequency,
+      autoLaunchOnLogin,
+      saveAutoLaunchOnLogin
     }
   }
 })
