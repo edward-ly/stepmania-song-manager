@@ -100,7 +100,6 @@ ipcMain.on('get-preferences-ini-path', event => {
 })
 
 ipcMain.on('open-folder-dialog', (event, defaultPath) => {
-  console.log(defaultPath);
   event.returnValue = dialog.showOpenDialogSync(mainWindow, {
     title: 'Open Folder',
     defaultPath: fs.existsSync(defaultPath) ? defaultPath : app.getPath('home'),
