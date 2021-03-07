@@ -172,9 +172,8 @@ export default defineComponent({
 
     function deletePreferencesIniFile (index) {
       $q.dialog({
-        title: '<div class="text-h6">Confirm</div>',
-        message: '<div class="text-body1">Are you sure you want to remove this file from the program?</div>',
-        html: true,
+        title: 'Confirm',
+        message: 'Are you sure you want to remove this file from the program?',
         cancel: true,
         persistent: true
       }).onOk(() => {
