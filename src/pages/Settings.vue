@@ -60,6 +60,15 @@
           </template>
         </q-input>
       </q-card-section>
+
+      <q-card-section
+        v-if="!preferencesIniPath.length"
+        class="q-pt-none"
+      >
+        <div class="no-ini-files text-body1 text-dark text-center">
+          No Preferences.ini files added.
+        </div>
+      </q-card-section>
     </q-card>
 
     <q-card class="q-mb-lg">
@@ -269,3 +278,13 @@ export default defineComponent({
   }
 })
 </script>
+
+<style lang="scss">
+  .btn-icon-left-padding-sm .on-left {
+    margin-right: map-get($space-sm, "x");
+  }
+
+  .no-ini-files {
+    opacity: 0.5;
+  }
+</style>
