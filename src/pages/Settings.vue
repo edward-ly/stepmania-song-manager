@@ -1,7 +1,7 @@
 <template>
   <q-page class="q-pa-lg">
     <!-- TODO: build page -->
-    <q-card class="my-card">
+    <q-card class="q-mb-lg">
       <q-card-section>
         <div class="text-h6">Download Path</div>
       </q-card-section>
@@ -14,6 +14,25 @@
             <q-icon name="folder_open" @click.stop="openDownloadPath()" class="cursor-pointer" />
           </template>
         </q-input>
+      </q-card-section>
+    </q-card>
+
+    <q-card class="q-mb-lg">
+      <q-card-section>
+        <div class="text-h6">Update Frequency</div>
+      </q-card-section>
+
+      <q-separator inset />
+
+      <q-card-section>
+        <q-select
+          dense
+          options-dense
+          outlined
+          :options="updateFrequencyOptions"
+          v-model="updateFrequency"
+          @update:modelValue="saveUpdateFrequency"
+        />
       </q-card-section>
     </q-card>
   </q-page>
@@ -46,10 +65,64 @@ export default defineComponent({
 
     // ==================================================================
 
+    const updateFrequencyOptions = [
+      {
+        label: '1 minute',
+        value: 60000
+      },
+      {
+        label: '5 minutes',
+        value: 300000
+      },
+      {
+        label: '10 minutes',
+        value: 600000
+      },
+      {
+        label: '15 minutes',
+        value: 900000
+      },
+      {
+        label: '30 minutes',
+        value: 1800000
+      },
+      {
+        label: '1 hour',
+        value: 3600000
+      },
+      {
+        label: '2 hours',
+        value: 7200000
+      },
+      {
+        label: '4 hours',
+        value: 14400000
+      },
+      {
+        label: '6 hours',
+        value: 21600000
+      },
+      {
+        label: 'Never',
+        value: -1
+      }
+    ]
+
+    let updateFrequency = ref(updateFrequencyOptions.find(i => i.value === $q.localStorage.getItem('UpdateInterval')))
+
+    function saveUpdateFrequency (newValue) {
+      $q.localStorage.set('UpdateInterval', newValue.value)
+    }
+
+    // ==================================================================
+
     return {
       downloadPath,
       saveDownloadPath,
-      openDownloadPath
+      openDownloadPath,
+      updateFrequency,
+      updateFrequencyOptions,
+      saveUpdateFrequency
     }
   }
 })
