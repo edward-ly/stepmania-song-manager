@@ -1,13 +1,45 @@
 <template>
-  <q-page class="flex flex-center">
+  <q-page class="q-pa-lg">
     <!-- TODO: build page -->
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    <q-card class="my-card">
+      <q-card-section>
+        <div class="text-h6">Download Path</div>
+      </q-card-section>
+
+      <q-separator inset />
+
+      <q-card-section>
+        <q-input dense outlined v-model="downloadPath" @update:modelValue="updateDownloadPath">
+          <template v-slot:append>
+            <q-icon name="folder_open" @click.stop="openDir()" class="cursor-pointer" />
+          </template>
+        </q-input>
+      </q-card-section>
+    </q-card>
   </q-page>
 </template>
 
 <script>
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
+import { useQuasar } from 'quasar';
 
-export default defineComponent({})
+export default defineComponent({
+  setup () {
+    const $q = useQuasar()
+
+    function updateDownloadPath (newPath) {
+      $q.localStorage.set('DownloadPath', newPath)
+    }
+
+    function openDir () {
+
+    }
+
+    return {
+      downloadPath: ref($q.localStorage.getItem('DownloadPath')),
+      updateDownloadPath,
+      openDir
+    }
+  }
+})
 </script>
