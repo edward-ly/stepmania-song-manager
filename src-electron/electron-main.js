@@ -60,26 +60,24 @@ app.on('activate', () => {
 // ---------------------------------------------------------------------------
 
 ipcMain.on('init-download-path', event => {
-  const result = path.join(app.getPath('userData'), 'Songs')
-  if (!fs.existsSync(result)) {
-    fs.mkdirSync(result)
+  const downloadPath = path.join(app.getPath('userData'), 'Songs')
+  if (!fs.existsSync(downloadPath)) {
+    fs.mkdirSync(downloadPath)
   }
-  event.returnValue = result
+  event.returnValue = downloadPath
 })
 
 ipcMain.on('get-preferences-ini-path', event => {
-  let files = []
+  let files
 
   if (process.platform === 'win32') {
-    files = files.concat(glob.sync('StepMania 5*/Save/Preferences.ini', {
+    files = glob.sync('StepMania 5*/Save/Preferences.ini', {
       cwd: '/Games',
       absolute: true
-    }))
-    files = files.concat(glob.sync('StepMania 5*/Save/Preferences.ini', {
+    }).concat(glob.sync('StepMania 5*/Save/Preferences.ini', {
       cwd: app.getPath('appData'),
       absolute: true
-    }))
-    files = files.map(str => str.replace(/\//g, '\\'))
+    })).map(str => str.replace(/\//g, '\\'))
   } else if (process.platform === 'darwin') { // macOS
     files = glob.sync('StepMania 5*/Preferences.ini', {
       cwd: path.join(app.getPath('home'), 'Library', 'Preferences'),
