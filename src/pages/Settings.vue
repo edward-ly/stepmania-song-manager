@@ -19,6 +19,33 @@
 
     <q-card class="q-mb-lg">
       <q-card-section>
+        <div class="text-h6">Preferences.ini Path</div>
+      </q-card-section>
+
+      <q-separator inset class="q-mb-md" />
+
+      <q-card-section
+        v-for="(path, index) in preferencesIniPath"
+        v-bind:key="index"
+        class="q-pt-none"
+      >
+        <q-input dense outlined :model-value="path" readonly>
+          <template v-slot:after>
+            <q-btn
+              dense
+              icon="delete"
+              aria-label="Delete"
+              color="negative"
+              class="q-ml-xs"
+              @click="deletePreferencesFile(index)"
+            />
+          </template>
+        </q-input>
+      </q-card-section>
+    </q-card>
+
+    <q-card class="q-mb-lg">
+      <q-card-section>
         <div class="text-h6">Update Frequency</div>
       </q-card-section>
 
@@ -95,6 +122,34 @@ export default defineComponent({
         this.downloadPath = newPath
         saveDownloadPath(newPath)
       }
+    }
+
+    // ==================================================================
+
+    let preferencesIniPath = ref($q.localStorage.getItem('PreferencesIniPath'))
+
+    function addPreferencesIniPath (newPath) {
+      // const result = window.electron.openIniFileDialog(this.downloadPath)
+      // if (result !== undefined) {
+      //   const newPath = result[0]
+      //   this.downloadPath = newPath
+      //   saveDownloadPath(newPath)
+      //   $q.localStorage.set('PreferencesIniPath', newPath)
+      // }
+    }
+
+    function deletePreferencesFile (index) {
+      $q.dialog({
+        title: '<div class="text-h6">Confirm</div>',
+        message: '<div class="text-body1">Are you sure you want to remove this file from the program?</div>',
+        html: true,
+        cancel: true,
+        persistent: true
+      }).onOk(() => {
+        console.log(index);
+        this.preferencesIniPath.splice(index, 1)
+        $q.localStorage.set('PreferencesIniPath', this.preferencesIniPath)
+      })
     }
 
     // ==================================================================
@@ -177,6 +232,9 @@ export default defineComponent({
       downloadPath,
       saveDownloadPath,
       openDownloadPath,
+      preferencesIniPath,
+      addPreferencesIniPath,
+      deletePreferencesFile,
       updateFrequency,
       updateFrequencyOptions,
       saveUpdateFrequency,
