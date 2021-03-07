@@ -44,7 +44,7 @@
           v-model="autoLaunchOnLogin"
           @update:modelValue="saveAutoLaunchOnLogin"
         >
-          <div class="text-h6">
+          <div class="text-subtitle1">
             Auto-Launch on Login
           </div>
         </q-checkbox>
