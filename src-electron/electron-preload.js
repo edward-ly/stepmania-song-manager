@@ -24,5 +24,8 @@ contextBridge.exposeInMainWorld('electron', {
   },
   getPreferencesIniPath: () => {
     return ipcRenderer.sendSync('get-preferences-ini-path')
+  },
+  openFolderDialog: (currentPath) => {
+    return ipcRenderer.sendSync('open-folder-dialog', currentPath)
   }
 })

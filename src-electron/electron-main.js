@@ -1,4 +1,10 @@
-import { app, BrowserWindow, ipcMain, nativeTheme } from 'electron'
+import {
+  app,
+  BrowserWindow,
+  dialog,
+  ipcMain,
+  nativeTheme
+} from 'electron'
 import path from 'path'
 import fs from 'fs'
 import glob from 'glob'
@@ -91,4 +97,14 @@ ipcMain.on('get-preferences-ini-path', event => {
   }
 
   event.returnValue = files
+})
+
+ipcMain.on('open-folder-dialog', (event, defaultPath) => {
+  console.log(defaultPath);
+  event.returnValue = dialog.showOpenDialogSync(mainWindow, {
+    title: 'Open Folder',
+    defaultPath: fs.existsSync(defaultPath) ? defaultPath : app.getPath('home'),
+    buttonLabel: 'Select Folder',
+    properties: [ 'openDirectory', 'createDirectory', 'showHiddenFiles' ]
+  })
 })
