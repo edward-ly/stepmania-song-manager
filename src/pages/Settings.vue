@@ -26,6 +26,9 @@ import { useQuasar } from 'quasar';
 export default defineComponent({
   setup () {
     const $q = useQuasar()
+
+    // ==================================================================
+
     let downloadPath = ref($q.localStorage.getItem('DownloadPath'))
 
     function saveDownloadPath (newPath) {
@@ -40,6 +43,8 @@ export default defineComponent({
         saveDownloadPath(newPath)
       }
     }
+
+    // ==================================================================
 
     return {
       downloadPath,
