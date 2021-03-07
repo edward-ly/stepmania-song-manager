@@ -19,7 +19,25 @@
 
     <q-card class="q-mb-lg">
       <q-card-section>
-        <div class="text-h6">Preferences.ini Path</div>
+        <div class="row">
+          <div class="col-auto">
+            <div class="text-h6">Preferences.ini Path</div>
+          </div>
+          <div class="col" />
+          <div class="col-auto q-my-auto">
+            <q-btn
+              no-wrap
+              no-caps
+              color="positive"
+              icon="add"
+              label="Add Preferences.ini"
+              class="btn-icon-left-padding-sm"
+              size="md"
+              padding="xs md xs sm"
+              @click="addPreferencesIniPath"
+            />
+          </div>
+        </div>
       </q-card-section>
 
       <q-separator inset class="q-mb-md" />
@@ -37,7 +55,7 @@
               aria-label="Delete"
               color="negative"
               class="q-ml-xs"
-              @click="deletePreferencesFile(index)"
+              @click="deletePreferencesIniFile(index)"
             />
           </template>
         </q-input>
@@ -117,28 +135,33 @@ export default defineComponent({
 
     function openDownloadPath () {
       const result = window.electron.openFolderDialog(this.downloadPath)
-      if (result !== undefined) {
-        const newPath = result[0]
-        this.downloadPath = newPath
-        saveDownloadPath(newPath)
-      }
+      if (result === undefined) return;
+
+      const newPath = result[0]
+      this.downloadPath = newPath
+      saveDownloadPath(newPath)
     }
 
     // ==================================================================
 
     let preferencesIniPath = ref($q.localStorage.getItem('PreferencesIniPath'))
 
-    function addPreferencesIniPath (newPath) {
-      // const result = window.electron.openIniFileDialog(this.downloadPath)
-      // if (result !== undefined) {
-      //   const newPath = result[0]
-      //   this.downloadPath = newPath
-      //   saveDownloadPath(newPath)
-      //   $q.localStorage.set('PreferencesIniPath', newPath)
-      // }
+    function savePreferencesIniPath () {
+      $q.localStorage.set('PreferencesIniPath', preferencesIniPath.value)
     }
 
-    function deletePreferencesFile (index) {
+    function addPreferencesIniPath () {
+      const result = window.electron.openIniFileDialog()
+      if (result === undefined) return;
+
+      const newFile = result[0]
+      if (preferencesIniPath.value.includes(newFile)) return;
+
+      preferencesIniPath.value.push(newFile)
+      savePreferencesIniPath()
+    }
+
+    function deletePreferencesIniFile (index) {
       $q.dialog({
         title: '<div class="text-h6">Confirm</div>',
         message: '<div class="text-body1">Are you sure you want to remove this file from the program?</div>',
@@ -146,9 +169,8 @@ export default defineComponent({
         cancel: true,
         persistent: true
       }).onOk(() => {
-        console.log(index);
         this.preferencesIniPath.splice(index, 1)
-        $q.localStorage.set('PreferencesIniPath', this.preferencesIniPath)
+        savePreferencesIniPath()
       })
     }
 
@@ -234,7 +256,7 @@ export default defineComponent({
       openDownloadPath,
       preferencesIniPath,
       addPreferencesIniPath,
-      deletePreferencesFile,
+      deletePreferencesIniFile,
       updateFrequency,
       updateFrequencyOptions,
       saveUpdateFrequency,
