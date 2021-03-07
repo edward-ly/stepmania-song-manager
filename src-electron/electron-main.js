@@ -83,15 +83,15 @@ ipcMain.on('get-preferences-ini-path', event => {
     }))
     files = files.map(str => str.replace(/\//g, '\\'))
   } else if (process.platform === 'darwin') { // macOS
-    files = files.concat(glob.sync(searchPattern, {
+    files = glob.sync(searchPattern, {
       cwd: path.join(app.getPath('home'), 'Library', 'Preferences'),
       absolute: true
-    }))
+    })
   } else { // Linux (any)
-    files = files.concat(glob.sync(searchPatternLinux, {
+    files = glob.sync(searchPatternLinux, {
       cwd: app.getPath('home'),
       absolute: true
-    }))
+    })
   }
 
   event.returnValue = files
