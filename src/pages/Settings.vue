@@ -50,6 +50,25 @@
         </q-checkbox>
       </q-card-section>
     </q-card>
+
+    <q-card>
+      <q-card-section>
+        <div class="text-h6">Language</div>
+      </q-card-section>
+
+      <q-separator inset />
+
+      <q-card-section>
+        <q-select
+          dense
+          options-dense
+          outlined
+          :options="localeOptions"
+          v-model="locale"
+          @update:modelValue="saveLocale"
+        />
+      </q-card-section>
+    </q-card>
   </q-page>
 </template>
 
@@ -139,6 +158,21 @@ export default defineComponent({
 
     // ==================================================================
 
+    const localeOptions = [
+      {
+        label: 'English',
+        value: 'en-US'
+      }
+    ]
+
+    let locale = ref(localeOptions.find(i => i.value === $q.localStorage.getItem('Locale')))
+
+    function saveLocale (newValue) {
+      $q.localStorage.set('Locale', newValue.value)
+    }
+
+    // ==================================================================
+
     return {
       downloadPath,
       saveDownloadPath,
@@ -147,7 +181,10 @@ export default defineComponent({
       updateFrequencyOptions,
       saveUpdateFrequency,
       autoLaunchOnLogin,
-      saveAutoLaunchOnLogin
+      saveAutoLaunchOnLogin,
+      localeOptions,
+      locale,
+      saveLocale
     }
   }
 })
