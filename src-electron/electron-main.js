@@ -109,3 +109,14 @@ ipcMain.on('open-folder-dialog', (event, defaultPath) => {
     properties: [ 'openDirectory', 'createDirectory', 'showHiddenFiles' ]
   })
 })
+
+ipcMain.on('open-ini-file-dialog', (event) => {
+  event.returnValue = dialog.showOpenDialogSync(mainWindow, {
+    title: 'Open Preferences.ini File',
+    filters: [
+      { name: 'Initialization Files', extensions: ['ini'] },
+      { name: 'All Files', extensions: ['*'] }
+    ],
+    properties: [ 'openFile', 'showHiddenFiles' ]
+  })
+})
