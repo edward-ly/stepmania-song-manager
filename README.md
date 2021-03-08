@@ -6,37 +6,49 @@ A cross-platform companion app for [StepMania](https://github.com/stepmania/step
 
 Made with [Electron](https://www.electronjs.org/) and [Vue.js](https://vuejs.org/) via the [Quasar](https://quasar.dev/) framework.
 
+## External Dependencies
+
+This app requires [Git](https://git-scm.com/) and [Git LFS](https://git-lfs.github.com/) to be installed on your computer.
+You can follow the instructions below to download and install both if they are not installed already.
+
+### Windows
+
+1. Download and run the Git for Windows installer from [here](https://git-scm.com/download/win).
+2. Open Command Prompt or Git Bash, and run `git lfs install`.
+
+### macOS/Linux
+
+Install via [Homebrew](https://brew.sh/):
+
+```bash
+brew update
+brew install git
+brew install git-lfs
+git lfs install
+```
+
 ## Development
 
-Install dependencies:
-
 ```bash
+# Install dependencies
 yarn
-```
 
-Start app in development mode (hot-code reloading, error reporting, etc.):
+# Start app in development mode (hot-code reloading, error reporting, etc.)
+yarn dev
 
-```bash
-yarn run dev
-```
+# Lint files
+yarn lint
 
-Lint files:
-
-```bash
-yarn run lint
-```
-
-Build app for production:
-
-```bash
-yarn run build
+# Build app for production
+yarn build -T win
+yarn build -T mac
+yarn build -T linux
+yarn build -T all
 ```
 
 To customize the Quasar configuration, see [Configuring quasar.conf.js](https://quasar.dev/quasar-cli/quasar-conf-js).
 
 ## Using the App
-
-(for version 0.1, currently under development)
 
 ### Adding Song Packs
 
@@ -57,11 +69,17 @@ Parameters are set to their default values when the app is launched for the firs
 
 | Name | Default Value | Description |
 | :- | :- | :- |
-| `Download Path` | `$APP_PATH/Songs/` | The directory in which song packs will be downloaded. |
-| `'Preferences.ini' Path` | Paths to all `Preferences.ini` files (automatically found/detected). | The directory containing the `Preferences.ini` file for StepMania (or directories if multiple copies of StepMania are installed). |
+| `Download Path` | (See below.) | The directory in which song packs will be downloaded. |
+| `Preferences.ini Path` | Paths to all `Preferences.ini` files automatically found/detected. | The directory containing the `Preferences.ini` file for StepMania (or directories if multiple copies of StepMania are installed). |
+| `Update Frequency` | `1 hour` | How often the app will check for updates and, if any, download them. |
 | `Auto-Launch on Login` | `true` | Whether or not to open the app when the computer starts. |
-| `Update Frequency` | 1 hour | How often the app will check for updates and, if any, download them. |
-| `Language` | English | Language of the app's user interface. |
+| `Language` | `English` | Language of the app's user interface. |
+
+Default download paths:
+
+- Windows: `%APPDATA%/StepMania Song Manager/Songs`
+- macOS: `~/Library/Application Support/StepMania Song Manager/Songs`
+- Linux: `$XDG_CONFIG_HOME/StepMania Song Manager/Songs` or `~/.config/StepMania Song Manager/Songs`
 
 ## License
 
