@@ -1014,10 +1014,10 @@
   resolved "https://registry.yarnpkg.com/@positron/stack-trace/-/stack-trace-1.0.0.tgz#14fcc712a530038ef9be1ce6952315a839f466a8"
   integrity sha1-FPzHEqUwA475vhzmlSMVqDn0Zqg=
 
-"@quasar/app@^3.0.0-beta.8":
-  version "3.0.0-beta.8"
-  resolved "https://registry.yarnpkg.com/@quasar/app/-/app-3.0.0-beta.8.tgz#3f32c4cfeeff42e46d8c971446194c67f7faa638"
-  integrity sha512-D+fdmIwqnX3ulhzYRUWntswNag2YBQlEJNGNmrYYn9hgs7ckGqsE1Sqe+MMCN1mgGz/c59+JTU5bafh/ndi8Ew==
+"@quasar/app@^3.0.0-beta.9":
+  version "3.0.0-beta.9"
+  resolved "https://registry.yarnpkg.com/@quasar/app/-/app-3.0.0-beta.9.tgz#8d5fb2056aaf5a03919b63c9c655933281e8beed"
+  integrity sha512-Wt12LLWTyp1GMw17xVVScvjom9EILIlnuV4xrgZ7WTfwwZ18jcqtf3pTs2NMeOgIwohlP2qLsI5JQW9wLylQzw==
   dependencies:
     "@quasar/babel-preset-app" "2.0.1"
     "@quasar/fastclick" "1.1.4"
@@ -1122,10 +1122,10 @@
     core-js "^3.6.5"
     core-js-compat "^3.6.5"
 
-"@quasar/extras@^1.9.18":
-  version "1.9.18"
-  resolved "https://registry.yarnpkg.com/@quasar/extras/-/extras-1.9.18.tgz#9a6b1aa644584dcb42c8ae2eba1534384bc3c3c0"
-  integrity sha512-ZYZ4WIbJf4kGK2JA142Wqeg6rghAa8GRPNiLUe+IlrxFah23mOVKmcoDz2ru9E5mdpo/b7CmKyt9Ubnnl8f8zw==
+"@quasar/extras@^1.9.19":
+  version "1.9.19"
+  resolved "https://registry.yarnpkg.com/@quasar/extras/-/extras-1.9.19.tgz#8e511117ccd8ec5bbed7038b9dad1749052376b8"
+  integrity sha512-A1IO0dzfUtRkyKq3QC7ZQNvhLeJey2ET8MvRX7oV0Qe+g30jy/4pr1ZhO7GylkDAoLT3C9eY8t2/5Anrl0AHdA==
 
 "@quasar/fastclick@1.1.4":
   version "1.1.4"
@@ -7776,10 +7776,10 @@ qs@6.7.0:
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.7.0.tgz#41dc1a015e3d581f1621776be31afb2876a9b1bc"
   integrity sha512-VCdBRNFTX1fyE7Nb6FYoURo/SPe62QCaAyzJvUjwRaIsc+NePBEniHlvxFmmX56+HZphIGtV0XeCirBtpDrTyQ==
 
-quasar@^2.0.0-beta.8:
-  version "2.0.0-beta.8"
-  resolved "https://registry.yarnpkg.com/quasar/-/quasar-2.0.0-beta.8.tgz#799865ea2cbb231ea18d30dd0a08b0bc17f24414"
-  integrity sha512-ldZ0ZTBa3j1KTZo0M9WIKEUAfBf5yms0w/GAsDzvZYN8PcsB+ILzQ4onmolvCbA2yZU1n93Y3LQnNPG9FZEtUg==
+quasar@^2.0.0-beta.9:
+  version "2.0.0-beta.9"
+  resolved "https://registry.yarnpkg.com/quasar/-/quasar-2.0.0-beta.9.tgz#0247a3512f3bdffd29f8f2a3f33fc91e62a91697"
+  integrity sha512-xqYKBQMF5ntM9RUr/eHFsSM6onXTzpwTcoBnM0YL6/QknBlSBHXltjG7pJmKMSm62ZRq1YeOdLsC9nchHgSrCQ==
 
 query-string@^4.1.0:
   version "4.3.4"
