@@ -8,6 +8,8 @@ import {
 import path from 'path'
 import fs from 'fs'
 import glob from 'glob'
+import shell from 'shelljs'
+import semver from 'semver'
 
 try {
   if (process.platform === 'win32' && nativeTheme.shouldUseDarkColors === true) {
@@ -66,6 +68,44 @@ app.on('activate', () => {
 // ===========================================================================
 // Main Process Methods for Renderer
 // ===========================================================================
+
+// Configure shelljs for Electron
+shell.config.execPath = shell.env.npm_node_execpath
+shell.config.silent = true
+
+ipcMain.handle('init-git-lfs', event => {
+  // Check if Git LFS exists, and install it if not on Windows
+  if (shell.exec('git lfs --version').code !== 0) {
+    if (process.platform === 'win32') {
+      return { code: 2, errorMessage: 'Error: Git LFS is not installed.' }
+    }
+
+    // Check if Homebrew exists, and return error if not
+    if (!shell.which('brew')) {
+      return { code: 1, errorMessage: 'Error: Homebrew is not installed.' }
+    }
+
+    // Make sure Homebrew and all formulae are updated
+    shell.exec('brew update')
+
+    // Check if Git exists, and install it if not
+    if (!shell.which('git')) {
+      shell.exec('brew install git')
+    }
+
+    // Check if Git >= 1.8.2, and install new Git from Homebrew if not
+    // (probably came from a different package manager)
+    const gitVersion = shell.exec('git --version').stdout.match(/\d+\.\d+\.\d+/g)[0]
+    if (semver.satisfies(gitVersion, '>=1.8.2')) {
+      shell.exec('brew install git')
+    }
+
+    shell.exec('brew install git-lfs')
+  }
+
+  shell.exec('git lfs install')
+  return { code: 0, errorMessage: '' }
+})
 
 ipcMain.on('init-download-path', event => {
   const downloadPath = path.join(app.getPath('userData'), 'Songs')

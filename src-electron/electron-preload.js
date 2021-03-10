@@ -19,6 +19,9 @@
 const { contextBridge, ipcRenderer } = require('electron')
 
 contextBridge.exposeInMainWorld('electron', {
+  initGitLfs: async () => {
+    return await ipcRenderer.invoke('init-git-lfs')
+  },
   initDownloadPath: () => {
     return ipcRenderer.sendSync('init-download-path')
   },
