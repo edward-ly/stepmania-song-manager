@@ -3,7 +3,8 @@ import {
   BrowserWindow,
   dialog,
   ipcMain,
-  nativeTheme
+  nativeTheme,
+  shell
 } from 'electron'
 import path from 'path'
 import fs from 'fs'
@@ -139,6 +140,10 @@ ipcMain.on('get-preferences-ini-path', event => {
   }
 
   event.returnValue = files
+})
+
+ipcMain.handle('open-external', (event, url) => {
+  return shell.openExternal(url)
 })
 
 ipcMain.on('open-folder-dialog', (event, defaultPath) => {
