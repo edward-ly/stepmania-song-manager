@@ -86,7 +86,14 @@ module.exports = configure(function (/* ctx */) {
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-framework
     framework: {
-      config: {},
+      config: {
+        loading: {
+          delay: 300,
+          boxClass: 'bg-grey-2 text-grey-9 text-subtitle1 q-px-xl',
+          spinnerColor: 'primary',
+          spinnerSize: 64
+        }
+      },
 
       // iconSet: 'material-icons', // Quasar icon set
       // lang: 'en-US', // Quasar language pack
@@ -101,7 +108,8 @@ module.exports = configure(function (/* ctx */) {
       // Quasar plugins
       plugins: [
         'Dialog',
-        'LocalStorage'
+        'LocalStorage',
+        'Loading'
       ]
     },
 

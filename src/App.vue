@@ -11,6 +11,10 @@ export default defineComponent({
     onMounted(() => {
       const $q = useQuasar()
 
+      $q.loading.show({
+        message: 'Initializing. Please wait...',
+      })
+
       // Initialize Local Storage
       if (!$q.localStorage.has('RepositoryList')) {
         $q.localStorage.set('RepositoryList', []);
@@ -31,6 +35,10 @@ export default defineComponent({
       if (!$q.localStorage.has('Locale')) {
         $q.localStorage.set('Locale', 'en-US');
       }
+
+      window.electron.initGitLfs().then(() => {
+        $q.loading.hide()
+      })
     })
   }
 })
