@@ -37,8 +37,19 @@ export default defineComponent({
       }
 
       // Initialize Git LFS
-      window.electron.initGitLfs().then(() => {
+      window.electron.initGitLfs().then(res => {
         $q.loading.hide()
+        if (res.code !== 0) {
+          $q.dialog({
+            title: 'Error',
+            message: res.errorMessage,
+            ok: 'Quit',
+            cancel: 'Continue Anyway',
+            persistent: true
+          }).onOk(() => {
+            window.close()
+          })
+        }
       })
     })
   }

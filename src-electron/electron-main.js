@@ -80,12 +80,12 @@ ipcMain.handle('init-git-lfs', event => {
   // Check if Git LFS exists, and install it if not on Windows
   if (sh.exec('git lfs --version').code !== 0) {
     if (process.platform === 'win32') {
-      return { code: 2, errorMessage: 'Error: Git LFS is not installed.' }
+      return { code: 2, errorMessage: 'Git is not installed. Please download and install Git for Windows (https://git-scm.com/download/win), then restart the program.' }
     }
 
     // Check if Homebrew exists, and return error if not
     if (!sh.which('brew')) {
-      return { code: 1, errorMessage: 'Error: Homebrew is not installed.' }
+      return { code: 1, errorMessage: 'Homebrew is not installed. Please download and install Homebrew (https://brew.sh/), then restart the program.' }
     }
 
     // Make sure Homebrew and all formulae are updated
