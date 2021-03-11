@@ -38,3 +38,15 @@ contextBridge.exposeInMainWorld('electron', {
     return ipcRenderer.sendSync('open-ini-file-dialog')
   },
 })
+
+contextBridge.exposeInMainWorld('autoLaunch', {
+  isEnabled: () => {
+    return ipcRenderer.sendSync('is-auto-launch-enabled')
+  },
+  enable: async () => {
+    return await ipcRenderer.invoke('enable-auto-launch')
+  },
+  disable: async () => {
+    return await ipcRenderer.invoke('disable-auto-launch')
+  },
+})

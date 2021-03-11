@@ -11,6 +11,7 @@ import fs from 'fs'
 import glob from 'glob'
 import * as sh from 'shelljs'
 import semver from 'semver'
+import AutoLaunch from 'auto-launch'
 
 try {
   if (
@@ -72,6 +73,10 @@ app.on('activate', () => {
   }
 })
 
+const autoLauncher = new AutoLaunch({
+  name: 'StepMania Song Manager',
+})
+
 // ===========================================================================
 // Main Process Methods for Renderer
 // ===========================================================================
@@ -79,6 +84,18 @@ app.on('activate', () => {
 // Configure shelljs for Electron
 sh.config.execPath = sh.env.npm_node_execpath
 sh.config.silent = true
+
+ipcMain.on('is-auto-launch-enabled', async (event) => {
+  event.returnValue = await autoLauncher.isEnabled()
+})
+
+ipcMain.handle('enable-auto-launch', () => {
+  return autoLauncher.enable()
+})
+
+ipcMain.handle('disable-auto-launch', () => {
+  return autoLauncher.disable()
+})
 
 ipcMain.handle('init-git-lfs', () => {
   // Check if Git LFS exists, and install it if not on Windows
