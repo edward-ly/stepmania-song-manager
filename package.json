@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "genversion --es6 version.js && quasar dev -m electron",
     "build": "genversion --es6 version.js && quasar build -m electron",
-    "lint": "eslint --ext .js,.vue ./",
+    "lint": "prettier --write . && eslint --ext .js,.vue ./ --fix",
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
