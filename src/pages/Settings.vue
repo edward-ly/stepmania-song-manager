@@ -248,6 +248,11 @@ export default defineComponent({
 
     function saveAutoLaunchOnLogin (newValue) {
       $q.localStorage.set('AutoLaunchOnLogin', newValue)
+      if (newValue) {
+        window.autoLaunch.enable()
+      } else {
+        window.autoLaunch.disable()
+      }
     }
 
     // ==================================================================
