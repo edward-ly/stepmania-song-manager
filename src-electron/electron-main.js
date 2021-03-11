@@ -4,7 +4,7 @@ import {
   dialog,
   ipcMain,
   nativeTheme,
-  shell
+  shell,
 } from 'electron'
 import path from 'path'
 import fs from 'fs'
@@ -13,7 +13,10 @@ import * as sh from 'shelljs'
 import semver from 'semver'
 
 try {
-  if (process.platform === 'win32' && nativeTheme.shouldUseDarkColors === true) {
+  if (
+    process.platform === 'win32' &&
+    nativeTheme.shouldUseDarkColors === true
+  ) {
     fs.unlinkSync(path.join(app.getPath('userData'), 'DevTools Extensions'))
   }
 } catch (_) {
@@ -34,8 +37,8 @@ function createWindow () {
     webPreferences: {
       contextIsolation: true,
       // More info: /quasar-cli/developing-electron-apps/electron-preload-script
-      preload: path.resolve(__dirname, process.env.QUASAR_ELECTRON_PRELOAD)
-    }
+      preload: path.resolve(__dirname, process.env.QUASAR_ELECTRON_PRELOAD),
+    },
   })
 
   mainWindow.loadURL(process.env.APP_URL)
@@ -81,12 +84,20 @@ ipcMain.handle('init-git-lfs', () => {
   // Check if Git LFS exists, and install it if not on Windows
   if (sh.exec('git lfs --version').code !== 0) {
     if (process.platform === 'win32') {
-      return { code: 2, errorMessage: 'Git is not installed. Please download and install Git for Windows (https://git-scm.com/download/win), then restart the program.' }
+      return {
+        code: 2,
+        errorMessage:
+          'Git is not installed. Please download and install Git for Windows (https://git-scm.com/download/win), then restart the program.',
+      }
     }
 
     // Check if Homebrew exists, and return error if not
     if (!sh.which('brew')) {
-      return { code: 1, errorMessage: 'Homebrew is not installed. Please download and install Homebrew (https://brew.sh/), then restart the program.' }
+      return {
+        code: 1,
+        errorMessage:
+          'Homebrew is not installed. Please download and install Homebrew (https://brew.sh/), then restart the program.',
+      }
     }
 
     // Make sure Homebrew and all formulae are updated
@@ -99,7 +110,9 @@ ipcMain.handle('init-git-lfs', () => {
 
     // Check if Git >= 1.8.2, and install new Git from Homebrew if not
     // (probably came from a different package manager)
-    const gitVersion = sh.exec('git --version').stdout.match(/\d+\.\d+\.\d+/g)[0]
+    const gitVersion = sh
+      .exec('git --version')
+      .stdout.match(/\d+\.\d+\.\d+/g)[0]
     if (semver.satisfies(gitVersion, '>=1.8.2')) {
       sh.exec('brew install git')
     }
@@ -111,7 +124,7 @@ ipcMain.handle('init-git-lfs', () => {
   return { code: 0, errorMessage: '' }
 })
 
-ipcMain.on('init-download-path', event => {
+ipcMain.on('init-download-path', (event) => {
   const downloadPath = path.join(app.getPath('userData'), 'Songs')
   if (!fs.existsSync(downloadPath)) {
     fs.mkdirSync(downloadPath)
@@ -119,26 +132,33 @@ ipcMain.on('init-download-path', event => {
   event.returnValue = downloadPath
 })
 
-ipcMain.on('get-preferences-ini-path', event => {
+ipcMain.on('get-preferences-ini-path', (event) => {
   let files
 
   if (process.platform === 'win32') {
-    files = glob.sync('StepMania 5*/Save/Preferences.ini', {
-      cwd: '/Games',
-      absolute: true
-    }).concat(glob.sync('StepMania 5*/Save/Preferences.ini', {
-      cwd: app.getPath('appData'),
-      absolute: true
-    })).map(str => str.replace(/\//g, '\\'))
-  } else if (process.platform === 'darwin') { // macOS
+    files = glob
+      .sync('StepMania 5*/Save/Preferences.ini', {
+        cwd: '/Games',
+        absolute: true,
+      })
+      .concat(
+        glob.sync('StepMania 5*/Save/Preferences.ini', {
+          cwd: app.getPath('appData'),
+          absolute: true,
+        })
+      )
+      .map((str) => str.replace(/\//g, '\\'))
+  } else if (process.platform === 'darwin') {
+    // macOS
     files = glob.sync('StepMania 5*/Preferences.ini', {
       cwd: path.join(app.getPath('home'), 'Library', 'Preferences'),
-      absolute: true
+      absolute: true,
     })
-  } else { // Linux (any)
+  } else {
+    // Linux (any)
     files = glob.sync('.stepmania-5*/Save/Preferences.ini', {
       cwd: app.getPath('home'),
-      absolute: true
+      absolute: true,
     })
   }
 
@@ -154,7 +174,7 @@ ipcMain.on('open-folder-dialog', (event, defaultPath) => {
     title: 'Open Folder',
     defaultPath: fs.existsSync(defaultPath) ? defaultPath : app.getPath('home'),
     buttonLabel: 'Select Folder',
-    properties: [ 'openDirectory', 'createDirectory', 'showHiddenFiles' ]
+    properties: ['openDirectory', 'createDirectory', 'showHiddenFiles'],
   })
 })
 
@@ -163,8 +183,8 @@ ipcMain.on('open-ini-file-dialog', (event) => {
     title: 'Open Preferences.ini File',
     filters: [
       { name: 'Initialization Files', extensions: ['ini'] },
-      { name: 'All Files', extensions: ['*'] }
+      { name: 'All Files', extensions: ['*'] },
     ],
-    properties: [ 'openFile', 'showHiddenFiles' ]
+    properties: ['openFile', 'showHiddenFiles'],
   })
 })

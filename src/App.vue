@@ -24,7 +24,10 @@ export default defineComponent({
         $q.localStorage.set('DownloadPath', window.electron.initDownloadPath())
       }
       if (!$q.localStorage.has('PreferencesIniPath')) {
-        $q.localStorage.set('PreferencesIniPath', window.electron.getPreferencesIniPath())
+        $q.localStorage.set(
+          'PreferencesIniPath',
+          window.electron.getPreferencesIniPath()
+        )
       }
       if (!$q.localStorage.has('AutoLaunchOnLogin')) {
         $q.localStorage.set('AutoLaunchOnLogin', true)
@@ -37,7 +40,7 @@ export default defineComponent({
       }
 
       // Initialize Git LFS
-      window.electron.initGitLfs().then(res => {
+      window.electron.initGitLfs().then((res) => {
         $q.loading.hide()
         if (res.code !== 0) {
           $q.dialog({
@@ -45,13 +48,13 @@ export default defineComponent({
             message: res.errorMessage,
             ok: 'Quit',
             cancel: 'Continue Anyway',
-            persistent: true
+            persistent: true,
           }).onOk(() => {
             window.close()
           })
         }
       })
     })
-  }
+  },
 })
 </script>

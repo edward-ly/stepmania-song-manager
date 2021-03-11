@@ -27,7 +27,8 @@
           <div class="column items-center q-gutter-y-xs">
             <q-icon name="info" size="xl" color="dark" />
             <div class="text-body1 text-dark text-center">
-              No song packs installed.<br>Click on "+ Add Songs" to get started!
+              No song packs installed.<br />Click on "+ Add Songs" to get
+              started!
             </div>
           </div>
         </div>
@@ -49,8 +50,8 @@ export default defineComponent({
     }
 
     return {
-      isListEmpty
+      isListEmpty,
     }
-  }
+  },
 })
 </script>

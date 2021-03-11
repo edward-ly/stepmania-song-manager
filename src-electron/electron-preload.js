@@ -36,5 +36,5 @@ contextBridge.exposeInMainWorld('electron', {
   },
   openIniFileDialog: () => {
     return ipcRenderer.sendSync('open-ini-file-dialog')
-  }
+  },
 })

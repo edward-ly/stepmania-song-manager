@@ -11,9 +11,7 @@
           @click="toggleLeftDrawer"
         />
 
-        <q-toolbar-title>
-          SM Song Manager
-        </q-toolbar-title>
+        <q-toolbar-title>SM Song Manager</q-toolbar-title>
 
         <div>v{{ version }}</div>
       </q-toolbar>
@@ -35,9 +33,7 @@
               <q-icon name="home" />
             </q-item-section>
 
-            <q-item-section>
-              Home
-            </q-item-section>
+            <q-item-section>Home</q-item-section>
           </q-item>
 
           <q-item v-ripple clickable to="/add" exact>
@@ -45,9 +41,7 @@
               <q-icon name="create_new_folder" />
             </q-item-section>
 
-            <q-item-section>
-              Add Songs...
-            </q-item-section>
+            <q-item-section>Add Songs...</q-item-section>
           </q-item>
 
           <q-separator />
@@ -57,9 +51,7 @@
               <q-icon name="settings" />
             </q-item-section>
 
-            <q-item-section>
-              Settings
-            </q-item-section>
+            <q-item-section>Settings</q-item-section>
           </q-item>
 
           <q-item v-ripple clickable to="/about" exact>
@@ -67,9 +59,7 @@
               <q-icon name="info" />
             </q-item-section>
 
-            <q-item-section>
-              About
-            </q-item-section>
+            <q-item-section>About</q-item-section>
           </q-item>
 
           <q-separator />
@@ -79,9 +69,7 @@
               <q-icon name="close" />
             </q-item-section>
 
-            <q-item-section>
-              Quit
-            </q-item-section>
+            <q-item-section>Quit</q-item-section>
           </q-item>
         </q-list>
       </q-scroll-area>
@@ -111,8 +99,8 @@ export default defineComponent({
       toggleLeftDrawer () {
         leftDrawerOpen.value = !leftDrawerOpen.value
       },
-      closeApp
+      closeApp,
     }
-  }
+  },
 })
 </script>
