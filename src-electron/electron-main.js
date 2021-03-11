@@ -77,6 +77,13 @@ const autoLauncher = new AutoLaunch({
   name: 'StepMania Song Manager',
 })
 
+// Initialize Auto-Launch (if not set already)
+autoLauncher.isEnabled().then((isEnabled) => {
+  if (isEnabled === undefined) {
+    autoLauncher.enable()
+  }
+})
+
 // ===========================================================================
 // Main Process Methods for Renderer
 // ===========================================================================
