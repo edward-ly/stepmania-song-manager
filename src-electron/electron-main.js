@@ -16,14 +16,15 @@ try {
   if (process.platform === 'win32' && nativeTheme.shouldUseDarkColors === true) {
     fs.unlinkSync(path.join(app.getPath('userData'), 'DevTools Extensions'))
   }
-} catch (_) { }
+} catch (_) {
+  /* continue */
+}
 
 let mainWindow
 
 function createWindow () {
-  /**
-   * Initial window options
-   */
+  /* Initial window options */
+  /* global __dirname */
   mainWindow = new BrowserWindow({
     width: 720,
     height: 480,
@@ -76,7 +77,7 @@ app.on('activate', () => {
 sh.config.execPath = sh.env.npm_node_execpath
 sh.config.silent = true
 
-ipcMain.handle('init-git-lfs', event => {
+ipcMain.handle('init-git-lfs', () => {
   // Check if Git LFS exists, and install it if not on Windows
   if (sh.exec('git lfs --version').code !== 0) {
     if (process.platform === 'win32') {
