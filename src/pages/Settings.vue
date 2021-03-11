@@ -8,9 +8,9 @@
       <q-separator inset />
 
       <q-card-section>
-        <q-input dense outlined v-model="downloadPath" @update:modelValue="saveDownloadPath">
-          <template v-slot:append>
-            <q-icon name="folder_open" @click.stop="openDownloadPath()" class="cursor-pointer" />
+        <q-input v-model="downloadPath" dense outlined @update:modelValue="saveDownloadPath">
+          <template #append>
+            <q-icon name="folder_open" class="cursor-pointer" @click.stop="openDownloadPath()" />
           </template>
         </q-input>
       </q-card-section>
@@ -43,11 +43,11 @@
 
       <q-card-section
         v-for="(path, index) in preferencesIniPath"
-        v-bind:key="index"
+        :key="index"
         class="q-pt-none"
       >
         <q-input dense outlined :model-value="path" readonly>
-          <template v-slot:after>
+          <template #after>
             <q-btn
               dense
               icon="delete"
@@ -79,11 +79,11 @@
 
       <q-card-section>
         <q-select
+          v-model="updateFrequency"
           dense
           options-dense
           outlined
           :options="updateFrequencyOptions"
-          v-model="updateFrequency"
           @update:modelValue="saveUpdateFrequency"
         />
       </q-card-section>
@@ -92,9 +92,9 @@
     <q-card class="q-mb-lg">
       <q-card-section>
         <q-checkbox
+          v-model="autoLaunchOnLogin"
           dense
           size="lg"
-          v-model="autoLaunchOnLogin"
           @update:modelValue="saveAutoLaunchOnLogin"
         >
           <div class="text-subtitle1 text-weight-medium q-pl-xs">
@@ -113,11 +113,11 @@
 
       <q-card-section>
         <q-select
+          v-model="locale"
           dense
           options-dense
           outlined
           :options="localeOptions"
-          v-model="locale"
           @update:modelValue="saveLocale"
         />
       </q-card-section>

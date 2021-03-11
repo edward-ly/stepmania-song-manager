@@ -23,7 +23,7 @@
       <div class="col">
         <!-- TODO: add repository cards -->
 
-        <div class="text-muted absolute-center" v-if="isListEmpty()">
+        <div v-if="isListEmpty()" class="text-muted absolute-center">
           <div class="column items-center q-gutter-y-xs">
             <q-icon name="info" size="xl" color="dark" />
             <div class="text-body1 text-dark text-center">
