@@ -244,10 +244,9 @@ export default defineComponent({
 
     // ==================================================================
 
-    let autoLaunchOnLogin = ref($q.localStorage.getItem('AutoLaunchOnLogin'))
+    let autoLaunchOnLogin = ref(window.autoLaunch.isEnabled())
 
     function saveAutoLaunchOnLogin (newValue) {
-      $q.localStorage.set('AutoLaunchOnLogin', newValue)
       if (newValue) {
         window.autoLaunch.enable()
       } else {

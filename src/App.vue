@@ -29,9 +29,6 @@ export default defineComponent({
           window.electron.getPreferencesIniPath()
         )
       }
-      if (!$q.localStorage.has('AutoLaunchOnLogin')) {
-        $q.localStorage.set('AutoLaunchOnLogin', true)
-      }
       if (!$q.localStorage.has('UpdateInterval')) {
         $q.localStorage.set('UpdateInterval', 3600000)
       }
