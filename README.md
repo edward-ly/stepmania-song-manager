@@ -13,8 +13,8 @@ You can follow the instructions below to download and install both if they are n
 
 ### Windows
 
-1. Download and run the Git for Windows installer from [here](https://git-scm.com/download/win).
-2. Open Command Prompt or Git Bash, and run `git lfs install`.
+1.  Download and run the Git for Windows installer from [here](https://git-scm.com/download/win).
+2.  Open Command Prompt or Git Bash, and run `git lfs install`.
 
 ### macOS/Linux
 
@@ -72,14 +72,14 @@ Parameters are set to their default values when the app is launched for the firs
 | `Download Path` | (See below.) | The directory in which song packs will be downloaded. |
 | `Preferences.ini Path` | Paths to all `Preferences.ini` files automatically found/detected. | The directory containing the `Preferences.ini` file for StepMania (or directories if multiple copies of StepMania are installed). |
 | `Update Frequency` | `1 hour` | How often the app will check for updates and, if any, download them. |
-| `Auto-Launch on Login` | `true` | Whether or not to open the app when the computer starts. |
+| `Auto-Launch on Login` | `false` | Whether or not to open the app when the computer starts. |
 | `Language` | `English` | Language of the app's user interface. |
 
 Default download paths:
 
-- Windows: `%APPDATA%/StepMania Song Manager/Songs`
-- macOS: `~/Library/Application Support/StepMania Song Manager/Songs`
-- Linux: `$XDG_CONFIG_HOME/StepMania Song Manager/Songs` or `~/.config/StepMania Song Manager/Songs`
+-   Windows: `%APPDATA%/StepMania Song Manager/Songs`
+-   macOS: `~/Library/Application Support/StepMania Song Manager/Songs`
+-   Linux: `$XDG_CONFIG_HOME/StepMania Song Manager/Songs` or `~/.config/StepMania Song Manager/Songs`
 
 ## License
 
