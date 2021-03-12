@@ -36,21 +36,22 @@ export default defineComponent({
         $q.localStorage.set('Locale', 'en-US')
       }
 
-      // Initialize Git LFS
-      window.electron.initGitLfs().then((res) => {
-        $q.loading.hide()
-        if (res.code !== 0) {
-          $q.dialog({
-            title: 'Error',
-            message: res.errorMessage,
-            ok: 'Quit',
-            cancel: 'Continue Anyway',
-            persistent: true,
-          }).onOk(() => {
-            window.close()
-          })
-        }
-      })
+      $q.loading.hide()
+
+      // Check if Git LFS is installed, and initialize it if not
+      // window.electron.initGitLfs().then((res) => {
+      //   if (res.code !== 0) {
+      //     $q.dialog({
+      //       title: 'Error',
+      //       message: res.errorMessage,
+      //       ok: 'Quit',
+      //       cancel: 'Continue Anyway',
+      //       persistent: true,
+      //     }).onOk(() => {
+      //       window.close()
+      //     })
+      //   }
+      // })
     })
   },
 })
