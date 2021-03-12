@@ -4,6 +4,12 @@
   margin-right: map-get($space-sm, 'x');
 }
 
+.text-link {
+  color: #00f;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 .text-muted {
   opacity: 0.5;
 }
