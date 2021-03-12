@@ -52,11 +52,11 @@ export default defineComponent({
         title: 'New Repository',
         prompt: {
           model: '',
-          type: 'text' // optional
+          type: 'text', // optional
         },
         cancel: true,
-        persistent: true
-      }).onOk(data => {
+        persistent: true,
+      }).onOk((data) => {
         console.log('>>>> OK, received', data)
       })
     }
