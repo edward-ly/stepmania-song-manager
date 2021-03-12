@@ -2,7 +2,7 @@
   <q-card class="q-mb-lg">
     <q-card-section>
       <div class="text-h6">{{ name }}</div>
-      <div class="text-caption">{{ url }}</div>
+      <div class="text-caption text-link" @click="openUrl(url)">{{ url }}</div>
       <div v-if="description.length" class="text-body2 q-pt-sm">{{ description }}</div>
       <div v-else class="text-body2 text-italic text-muted q-pt-sm">No description set.</div>
     </q-card-section>
@@ -126,6 +126,9 @@ export default defineComponent({
     },
   },
   methods: {
+    openUrl (url) {
+      window.electron.openExternal(url)
+    },
     addRepo () {
       // TODO: add repo to local list and redirect to home page
     },
