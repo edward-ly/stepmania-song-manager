@@ -7,7 +7,7 @@ const defaultRepos = [
   {
     name: 'The Complete led_light Collection',
     url: 'https://gitlab.com/led_light/simfiles',
-    description: 'DDR custom simfiles made by led_light (the creator of this app!). Includes a wide variety of songs such as BEMANI crossovers, K-Pop, video game OSTs, and everything in between!',
+    description: 'High-quality DDR custom simfiles made by led_light (the creator of this app!). Includes a wide variety of songs such as BEMANI crossovers, K-Pop, video game OSTs, and much more!',
   },
 ]
 
