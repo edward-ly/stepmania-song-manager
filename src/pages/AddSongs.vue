@@ -34,9 +34,11 @@
 
 <script>
 import { defineComponent } from 'vue'
+import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
 import RepositoryCard from 'components/RepositoryCard.vue'
 import defaultRepos from 'components/defaultRepos'
+import AddRepoDialog from 'components/dialogs/AddRepoDialog.vue'
 
 export default defineComponent({
   components: {
@@ -45,19 +47,17 @@ export default defineComponent({
 
   setup () {
     const $q = useQuasar()
+    const router = useRouter()
 
     function addCustomRepo () {
-      // TODO: add dialog for new custom repo
-      $q.dialog({
-        title: 'New Repository',
-        prompt: {
-          model: '',
-          type: 'text', // optional
-        },
-        cancel: true,
-        persistent: true,
-      }).onOk((data) => {
-        console.log('>>>> OK, received', data)
+      $q.dialog({ component: AddRepoDialog }).onOk((data) => {
+        data.isDownloaded = false
+        data.lastUpdated = new Date().toISOString()
+
+        let repoList = $q.localStorage.getItem('RepositoryList')
+        repoList.push(data)
+        $q.localStorage.set('RepositoryList', repoList)
+        router.push('/')
       })
     }
 
