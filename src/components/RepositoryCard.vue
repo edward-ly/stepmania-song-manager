@@ -13,7 +13,19 @@
 
     <q-separator inset />
 
-    <q-card-section v-if="route === '/'" class="row">
+    <q-card-section
+      v-if="route === '/' && isDownloaded"
+      class="text-body2 text-italic q-pb-none"
+    >
+      Last Updated:
+      {{
+        new Date(lastUpdated).toLocaleString(
+          this.$q.localStorage.getItem('Locale')
+        )
+      }}
+    </q-card-section>
+
+    <q-card-section v-if="route === '/'" class="row justify-end q-pt-xs">
       <q-space />
       <q-btn
         v-if="isDownloaded"
@@ -22,7 +34,7 @@
         color="primary"
         icon="sync"
         label="Update"
-        class="btn-icon-left-padding-sm q-ml-sm"
+        class="btn-icon-left-padding-sm q-ml-sm q-mt-sm"
         size="md"
         padding="xs md xs sm"
         @click="pullRepo"
@@ -34,7 +46,7 @@
         color="primary"
         icon="download"
         label="Download"
-        class="btn-icon-left-padding-sm q-ml-sm"
+        class="btn-icon-left-padding-sm q-ml-sm q-mt-sm"
         size="md"
         padding="xs md xs sm"
         @click="cloneRepo"
@@ -45,7 +57,7 @@
         color="accent"
         icon="list"
         label="View Song List"
-        class="btn-icon-left-padding-sm q-ml-sm"
+        class="btn-icon-left-padding-sm q-ml-sm q-mt-sm"
         size="md"
         padding="xs md xs sm"
         @click="getSongListLocal"
@@ -56,13 +68,16 @@
         color="negative"
         icon="delete"
         label="Delete"
-        class="btn-icon-left-padding-sm q-ml-sm"
+        class="btn-icon-left-padding-sm q-ml-sm q-mt-sm"
         size="md"
         padding="xs md xs sm"
         @click="deleteFunction"
       />
     </q-card-section>
-    <q-card-section v-else-if="route === '/add'" class="row">
+    <q-card-section
+      v-else-if="route === '/add'"
+      class="row justify-end q-pt-xs"
+    >
       <q-space />
       <q-btn
         v-if="!isAdded()"
@@ -71,7 +86,7 @@
         color="accent"
         icon="list"
         label="View Song List"
-        class="btn-icon-left-padding-sm q-ml-sm"
+        class="btn-icon-left-padding-sm q-ml-sm q-mt-sm"
         size="md"
         padding="xs md xs sm"
         @click="getSongListRemote"
@@ -84,7 +99,7 @@
         color="positive"
         icon="done"
         label="Added"
-        class="btn-icon-left-padding-sm q-ml-sm"
+        class="btn-icon-left-padding-sm q-ml-sm q-mt-sm"
         size="md"
         padding="xs md xs sm"
       />
@@ -95,7 +110,7 @@
         color="positive"
         icon="add"
         label="Add"
-        class="btn-icon-left-padding-sm q-ml-sm"
+        class="btn-icon-left-padding-sm q-ml-sm q-mt-sm"
         size="md"
         padding="xs md xs sm"
         @click="addRepo"
@@ -129,6 +144,10 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    lastUpdated: {
+      type: String,
+      default: new Date().toISOString(),
+    },
     deleteFunction: {
       type: Function,
       default: () => {
@@ -148,19 +167,21 @@ export default defineComponent({
       )
     },
     addRepo () {
-      // TODO: add local repo path to Preferences.ini files
       let repoList = this.$q.localStorage.getItem('RepositoryList')
       repoList.push({
         name: this.name,
         url: this.url,
         description: this.description,
-        isDownloaded: false, // TODO: check if local repo already exists
+        isDownloaded: false,
+        lastUpdated: new Date().toISOString(),
       })
       this.$q.localStorage.set('RepositoryList', repoList)
       this.$router.push('/')
     },
     cloneRepo () {
-      // TODO: clone repo from remote
+      // TODO: add local repo path to Preferences.ini files
+      // TODO: if repo already exists, pull latest commits from remote
+      // TODO: else, clone repo from remote
     },
     pullRepo () {
       // TODO: pull latest commits from remote
