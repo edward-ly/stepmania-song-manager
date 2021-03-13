@@ -21,9 +21,14 @@
     </div>
     <div class="row q-pt-lg">
       <div class="col">
-        <!-- TODO: add repository cards -->
+        <RepositoryCard
+          v-for="repo in repoList"
+          :key="repo.url"
+          v-bind="repo"
+          :route="this.$route.path"
+        />
 
-        <div v-if="isListEmpty()" class="text-muted absolute-center">
+        <div v-if="!repoList.length" class="text-muted absolute-center">
           <div class="column items-center q-gutter-y-xs">
             <q-icon name="info" size="xl" color="dark" />
             <div class="text-body1 text-dark text-center">
@@ -38,19 +43,22 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { useQuasar } from 'quasar'
+import RepositoryCard from 'components/RepositoryCard.vue'
 
 export default defineComponent({
+  components: {
+    RepositoryCard,
+  },
+
   setup () {
     const $q = useQuasar()
 
-    function isListEmpty () {
-      return !$q.localStorage.getItem('RepositoryList').length
-    }
+    const repoList = ref($q.localStorage.getItem('RepositoryList'))
 
     return {
-      isListEmpty,
+      repoList,
     }
   },
 })
