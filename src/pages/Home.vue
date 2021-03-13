@@ -22,10 +22,11 @@
     <div class="row q-pt-lg">
       <div class="col">
         <RepositoryCard
-          v-for="repo in repoList"
+          v-for="(repo, index) in repoList"
           :key="repo.url"
           v-bind="repo"
           :route="this.$route.path"
+          :delete-function="() => deleteRepo(index)"
         />
 
         <div v-if="!repoList.length" class="text-muted absolute-center">
@@ -57,8 +58,22 @@ export default defineComponent({
 
     const repoList = ref($q.localStorage.getItem('RepositoryList'))
 
+    function deleteRepo (index) {
+      $q.dialog({
+        title: 'Confirm',
+        message:
+          'Are you sure you want to remove this repository from the list?',
+        cancel: true,
+        persistent: true,
+      }).onOk(() => {
+        this.repoList.splice(index, 1)
+        $q.localStorage.set('RepositoryList', repoList.value)
+      })
+    }
+
     return {
       repoList,
+      deleteRepo,
     }
   },
 })

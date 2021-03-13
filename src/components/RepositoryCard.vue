@@ -59,7 +59,7 @@
         class="btn-icon-left-padding-sm q-ml-sm"
         size="md"
         padding="xs md xs sm"
-        @click="deleteRepo"
+        @click="deleteFunction"
       />
     </q-card-section>
     <q-card-section v-else-if="route === '/add'" class="row">
@@ -129,6 +129,12 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    deleteFunction: {
+      type: Function,
+      default: () => {
+        return
+      },
+    },
   },
   methods: {
     openUrl (url) {
@@ -157,9 +163,6 @@ export default defineComponent({
     },
     pullRepo () {
       // TODO: pull latest commits from remote
-    },
-    deleteRepo () {
-      // TODO: delete repo from local list
     },
     getSongListLocal () {
       // TODO: display song list from local song list file
