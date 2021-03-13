@@ -148,12 +148,13 @@ export default defineComponent({
       )
     },
     addRepo () {
+      // TODO: add local repo path to Preferences.ini files
       let repoList = this.$q.localStorage.getItem('RepositoryList')
       repoList.push({
         name: this.name,
         url: this.url,
         description: this.description,
-        isDownloaded: false,
+        isDownloaded: false, // TODO: check if local repo already exists
       })
       this.$q.localStorage.set('RepositoryList', repoList)
       this.$router.push('/')

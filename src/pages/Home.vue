@@ -1,4 +1,5 @@
 <template>
+  <!-- TODO: add update button -->
   <q-page class="q-pa-lg">
     <div class="row">
       <div class="col-auto">
@@ -66,6 +67,7 @@ export default defineComponent({
         cancel: true,
         persistent: true,
       }).onOk(() => {
+        // TODO: remove local repo path from Preferences.ini files
         this.repoList.splice(index, 1)
         $q.localStorage.set('RepositoryList', repoList.value)
       })
