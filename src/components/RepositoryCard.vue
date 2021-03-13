@@ -65,6 +65,7 @@
     <q-card-section v-else-if="route === '/add'" class="row">
       <q-space />
       <q-btn
+        v-if="!isAdded()"
         no-wrap
         no-caps
         color="accent"
@@ -76,19 +77,7 @@
         @click="getSongListRemote"
       />
       <q-btn
-        v-if="!isDownloaded"
-        no-wrap
-        no-caps
-        color="positive"
-        icon="add"
-        label="Add"
-        class="btn-icon-left-padding-sm q-ml-sm"
-        size="md"
-        padding="xs md xs sm"
-        @click="addRepo"
-      />
-      <q-btn
-        v-else
+        v-if="isAdded()"
         no-wrap
         no-caps
         disable
@@ -98,6 +87,18 @@
         class="btn-icon-left-padding-sm q-ml-sm"
         size="md"
         padding="xs md xs sm"
+      />
+      <q-btn
+        v-else
+        no-wrap
+        no-caps
+        color="positive"
+        icon="add"
+        label="Add"
+        class="btn-icon-left-padding-sm q-ml-sm"
+        size="md"
+        padding="xs md xs sm"
+        @click="addRepo"
       />
     </q-card-section>
   </q-card>
@@ -133,8 +134,23 @@ export default defineComponent({
     openUrl (url) {
       window.electron.openExternal(url)
     },
+    isAdded () {
+      return (
+        this.$q.localStorage
+          .getItem('RepositoryList')
+          .find((repo) => repo.url === this.url) !== undefined
+      )
+    },
     addRepo () {
-      // TODO: add repo to local list and redirect to home page
+      let repoList = this.$q.localStorage.getItem('RepositoryList')
+      repoList.push({
+        name: this.name,
+        url: this.url,
+        description: this.description,
+        isDownloaded: false,
+      })
+      this.$q.localStorage.set('RepositoryList', repoList)
+      this.$router.push('/')
     },
     cloneRepo () {
       // TODO: clone repo from remote
