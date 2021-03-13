@@ -13,20 +13,25 @@
 
     <q-separator inset />
 
-    <q-card-section
-      v-if="route === '/' && isDownloaded"
-      class="text-body2 text-italic q-pb-none"
+    <q-card-actions
+      v-if="route === '/'"
+      align="right"
+      class="q-pa-md q-gutter-sm"
     >
-      Last Updated:
-      {{
-        new Date(lastUpdated).toLocaleString(
-          this.$q.localStorage.getItem('Locale')
-        )
-      }}
-    </q-card-section>
+      <div
+        v-if="route === '/' && isDownloaded"
+        class="text-body2 text-italic text-no-wrap"
+      >
+        Last Updated:
+        {{
+          new Date(lastUpdated).toLocaleString(
+            this.$q.localStorage.getItem('Locale')
+          )
+        }}
+      </div>
 
-    <q-card-section v-if="route === '/'" class="row justify-end q-pt-xs">
       <q-space />
+
       <q-btn
         v-if="isDownloaded"
         no-wrap
@@ -34,7 +39,7 @@
         color="primary"
         icon="sync"
         label="Update"
-        class="btn-icon-left-padding-sm q-ml-sm q-mt-sm"
+        class="btn-icon-left-padding-sm"
         size="md"
         padding="xs md xs sm"
         @click="pullRepo"
@@ -46,7 +51,7 @@
         color="primary"
         icon="download"
         label="Download"
-        class="btn-icon-left-padding-sm q-ml-sm q-mt-sm"
+        class="btn-icon-left-padding-sm"
         size="md"
         padding="xs md xs sm"
         @click="cloneRepo"
@@ -57,7 +62,7 @@
         color="accent"
         icon="list"
         label="View Song List"
-        class="btn-icon-left-padding-sm q-ml-sm q-mt-sm"
+        class="btn-icon-left-padding-sm"
         size="md"
         padding="xs md xs sm"
         @click="getSongListLocal"
@@ -68,17 +73,18 @@
         color="negative"
         icon="delete"
         label="Delete"
-        class="btn-icon-left-padding-sm q-ml-sm q-mt-sm"
+        class="btn-icon-left-padding-sm"
         size="md"
         padding="xs md xs sm"
         @click="deleteFunction"
       />
-    </q-card-section>
-    <q-card-section
-      v-else-if="route === '/add'"
-      class="row justify-end q-pt-xs"
+    </q-card-actions>
+
+    <q-card-actions
+      v-if="route === '/add'"
+      align="right"
+      class="q-pa-md q-gutter-sm"
     >
-      <q-space />
       <q-btn
         v-if="!isAdded()"
         no-wrap
@@ -86,7 +92,7 @@
         color="accent"
         icon="list"
         label="View Song List"
-        class="btn-icon-left-padding-sm q-ml-sm q-mt-sm"
+        class="btn-icon-left-padding-sm"
         size="md"
         padding="xs md xs sm"
         @click="getSongListRemote"
@@ -99,7 +105,7 @@
         color="positive"
         icon="done"
         label="Added"
-        class="btn-icon-left-padding-sm q-ml-sm q-mt-sm"
+        class="btn-icon-left-padding-sm"
         size="md"
         padding="xs md xs sm"
       />
@@ -110,12 +116,12 @@
         color="positive"
         icon="add"
         label="Add"
-        class="btn-icon-left-padding-sm q-ml-sm q-mt-sm"
+        class="btn-icon-left-padding-sm"
         size="md"
         padding="xs md xs sm"
         @click="addRepo"
       />
-    </q-card-section>
+    </q-card-actions>
   </q-card>
 </template>
 
