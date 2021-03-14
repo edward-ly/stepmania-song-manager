@@ -48,6 +48,7 @@
 import { defineComponent, ref } from 'vue'
 import { useQuasar } from 'quasar'
 import RepositoryCard from 'components/RepositoryCard.vue'
+import ConfirmDialog from 'components/dialogs/ConfirmDialog.vue'
 
 export default defineComponent({
   components: {
@@ -61,11 +62,10 @@ export default defineComponent({
 
     function deleteRepo (index) {
       $q.dialog({
-        title: 'Confirm',
-        message:
-          'Are you sure you want to remove this repository from the list?',
-        cancel: true,
-        persistent: true,
+        component: ConfirmDialog,
+        componentProps: {
+          message: 'Are you sure you want to remove this repository?',
+        },
       }).onOk(() => {
         // TODO: remove local repo path from Preferences.ini files
         this.repoList.splice(index, 1)

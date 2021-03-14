@@ -134,6 +134,7 @@
 <script>
 import { defineComponent, ref } from 'vue'
 import { useQuasar } from 'quasar'
+import ConfirmDialog from 'components/dialogs/ConfirmDialog.vue'
 
 export default defineComponent({
   setup () {
@@ -177,10 +178,10 @@ export default defineComponent({
 
     function deletePreferencesIniFile (index) {
       $q.dialog({
-        title: 'Confirm',
-        message: 'Are you sure you want to remove this file from the program?',
-        cancel: true,
-        persistent: true,
+        component: ConfirmDialog,
+        componentProps: {
+          message: 'Are you sure you want to remove this file?',
+        },
       }).onOk(() => {
         this.preferencesIniPath.splice(index, 1)
         savePreferencesIniPath()
