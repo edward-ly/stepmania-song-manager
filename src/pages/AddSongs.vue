@@ -50,6 +50,7 @@ export default defineComponent({
     const router = useRouter()
 
     function addCustomRepo () {
+      // TODO: add local repo path to Preferences.ini files
       $q.dialog({ component: AddRepoDialog }).onOk((data) => {
         data.isDownloaded = false
         data.lastUpdated = new Date().toISOString()

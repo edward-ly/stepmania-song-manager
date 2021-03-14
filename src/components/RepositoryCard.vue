@@ -185,12 +185,12 @@ export default defineComponent({
       this.$router.push('/')
     },
     cloneRepo () {
-      // TODO: add local repo path to Preferences.ini files
-      // TODO: if repo already exists, pull latest commits from remote
+      // TODO: if local repo already exists, call pullRepo()
       // TODO: else, clone repo from remote
     },
     pullRepo () {
-      // TODO: pull latest commits from remote
+      // TODO: if local repo not found, call cloneRepo()
+      // TODO: else, pull latest commits from remote
     },
     getSongListLocal () {
       // TODO: display song list from local song list file

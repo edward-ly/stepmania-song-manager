@@ -1,5 +1,4 @@
 <template>
-  <!-- TODO: add update button -->
   <q-page class="q-pa-lg">
     <div class="row">
       <div class="col-auto">
