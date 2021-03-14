@@ -6,6 +6,8 @@ A cross-platform companion app for [StepMania](https://github.com/stepmania/step
 
 Made with [Electron](https://www.electronjs.org/) and [Vue.js](https://vuejs.org/) via the [Quasar](https://quasar.dev/) framework.
 
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Z8Z42UJNY)
+
 ## External Dependencies
 
 This app requires [Git](https://git-scm.com/) and [Git LFS](https://git-lfs.github.com/) to be installed on your computer.
