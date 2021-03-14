@@ -53,14 +53,16 @@ To customize the Quasar configuration, see [Configuring quasar.conf.js](https://
 ### Adding Song Packs
 
 Simply click on the `+ Add Songs` button and select a repository from the list.
-You can also add a custom repository, in which case a name for the repository and the Git URL is required (the `.git` suffix is optional).
+You can also add a new repository that is not already in the list, in which case a name for and the URL of the remote repository are required.
 
 The selected repository will then be displayed on the home page where you can view information about the songs in the repository, clone the repository, or delete the repository.
 
+> Note: removing a repository from the app does not delete any local files from your computer! This is to reduce the size of future downloads should you decide to re-add the repository. If you want to completely remove the downloaded packs from your computer, you can manually delete the folders yourself.
+
 ### Updating Song Packs
 
-Once downloaded, all song packs will be updated automatically as long as the app is open or running in the background.
-The app itself will check for and download updates periodically, or you can perform an update immediately by clicking on the `Update` button.
+Once downloaded, all song packs will be updated periodically as long as the app is open or running in the background.
+The app itself will check for and download updates automatically, or you can perform a manual update by clicking on the `Update` button in each repository.
 
 ### Settings
 
@@ -79,7 +81,9 @@ Default download paths:
 
 -   Windows: `%APPDATA%/StepMania Song Manager/Songs`
 -   macOS: `~/Library/Application Support/StepMania Song Manager/Songs`
--   Linux: `$XDG_CONFIG_HOME/StepMania Song Manager/Songs` or `~/.config/StepMania Song Manager/Songs`
+-   Linux:
+  -   `$XDG_CONFIG_HOME/StepMania Song Manager/Songs`
+  -   or `~/.config/StepMania Song Manager/Songs`
 
 ## License
 
