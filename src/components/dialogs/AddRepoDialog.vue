@@ -3,7 +3,7 @@
     <q-card class="q-dialog-plugin">
       <q-form @submit="onOKClick" @reset="onReset">
         <q-card-section class="row">
-          <div class="text-h6">Add Repository</div>
+          <div class="text-h6">New Repository</div>
           <q-space />
           <q-btn flat round dense icon="close" @click="onCancelClick" />
         </q-card-section>
@@ -18,13 +18,12 @@
             :rules="nameRules"
           />
           <q-input
-            v-model="url"
-            type="url"
+            v-model="bucketName"
             dense
             outlined
-            label="URL *"
+            label="S3 Bucket Name *"
             lazy-rules
-            :rules="urlRules"
+            :rules="bucketNameRules"
           />
           <q-input
             v-model="description"
@@ -60,16 +59,16 @@ export default defineComponent({
     } = useDialogPluginComponent()
 
     const name = ref(null)
-    const url = ref(null)
+    const bucketName = ref(null)
     const description = ref(null)
 
     return {
       name,
       nameRules: [(val) => !!val || 'Required'],
-      url,
-      urlRules: [
+      bucketName,
+      bucketNameRules: [
         (val) => !!val || 'Required',
-        // TODO: validate url points to a git repo
+        // TODO: validate bucket name format
       ],
       description,
       dialogRef,
@@ -77,13 +76,13 @@ export default defineComponent({
       onOKClick () {
         onDialogOK({
           name: name.value,
-          url: url.value,
+          bucketName: bucketName.value,
           description: !description.value ? '' : description.value,
         })
       },
       onReset () {
         name.value = null
-        url.value = null
+        bucketName.value = null
         description.value = null
       },
       onCancelClick: onDialogCancel,

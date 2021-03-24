@@ -2,7 +2,7 @@
   <q-card class="q-mb-lg">
     <q-card-section>
       <div class="text-h6">{{ name }}</div>
-      <div class="text-caption text-link" @click="openUrl(url)">{{ url }}</div>
+      <div class="text-caption">S3 Bucket: {{ bucketName }}</div>
       <div v-if="description.length" class="text-body2 q-pt-sm">
         {{ description }}
       </div>
@@ -134,7 +134,7 @@ export default defineComponent({
       type: String,
       required: true,
     },
-    url: {
+    bucketName: {
       type: String,
       required: true,
     },
@@ -162,21 +162,18 @@ export default defineComponent({
     },
   },
   methods: {
-    openUrl (url) {
-      window.electron.openExternal(url)
-    },
     isAdded () {
       return (
         this.$q.localStorage
           .getItem('RepositoryList')
-          .find((repo) => repo.url === this.url) !== undefined
+          .find((repo) => repo.bucketName === this.bucketName) !== undefined
       )
     },
     addRepo () {
       let repoList = this.$q.localStorage.getItem('RepositoryList')
       repoList.push({
         name: this.name,
-        url: this.url,
+        bucketName: this.bucketName,
         description: this.description,
         isDownloaded: false,
         lastUpdated: new Date().toISOString(),

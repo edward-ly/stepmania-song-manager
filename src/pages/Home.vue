@@ -23,7 +23,7 @@
       <div class="col">
         <RepositoryCard
           v-for="(repo, index) in repoList"
-          :key="repo.url"
+          :key="repo.bucketName"
           v-bind="repo"
           :route="this.$route.path"
           :delete-function="() => deleteRepo(index)"

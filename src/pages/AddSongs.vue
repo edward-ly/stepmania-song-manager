@@ -23,7 +23,7 @@
       <div class="col">
         <RepositoryCard
           v-for="repo in defaultRepos"
-          :key="repo.url"
+          :key="repo.bucketName"
           v-bind="repo"
           :route="this.$route.path"
         />
