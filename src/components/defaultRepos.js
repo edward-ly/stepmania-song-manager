@@ -12,7 +12,7 @@ const defaultRepos = [
       'DDR custom simfiles from the creator of StepMania Song Manager! Contains a wide variety of songs including BEMANI crossovers, K-Pop, video game OSTs, and much more!',
   },
   {
-    name: 'led_light\'s Tech Experiments',
+    name: "led_light's Tech Experiments",
     bucketName: 'led-light-simfiles-itg',
     description:
       'ITG tech-style custom charts from the creator of StepMania Song Manager.',

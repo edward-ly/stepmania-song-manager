@@ -54,7 +54,10 @@ export default defineComponent({
       $q.dialog({ component: AddRepoDialog }).onOk((data) => {
         data.isDownloaded = false
         data.lastUpdated = new Date().toISOString()
-        data.localPath = window.electron.getDownloadPath($q.localStorage.getItem('DownloadPath'), data.bucketName)
+        data.localPath = window.electron.getDownloadPath(
+          $q.localStorage.getItem('DownloadPath'),
+          data.bucketName
+        )
 
         let repoList = $q.localStorage.getItem('RepositoryList')
         repoList.push(data)

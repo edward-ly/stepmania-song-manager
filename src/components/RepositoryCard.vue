@@ -178,7 +178,10 @@ export default defineComponent({
         description: this.description,
         isDownloaded: false,
         lastUpdated: new Date().toISOString(),
-        localPath: window.electron.getDownloadPath(this.$q.localStorage.getItem('DownloadPath'), this.bucketName),
+        localPath: window.electron.getDownloadPath(
+          this.$q.localStorage.getItem('DownloadPath'),
+          this.bucketName
+        ),
       })
       this.$q.localStorage.set('RepositoryList', repoList)
       this.$router.push('/')
