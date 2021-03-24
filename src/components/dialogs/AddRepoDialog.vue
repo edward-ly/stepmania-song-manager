@@ -81,10 +81,10 @@ export default defineComponent({
             `Invalid character${length > 1 ? 's' : ''}: ${invalidChars}`
           )
         },
-        (val) => !/\s/.test(val) || `Cannot contain spaces`,
+        (val) => !/\s/.test(val) || 'Cannot contain spaces',
         (val) =>
           /^[a-z0-9].*[a-z0-9]$/.test(val) ||
-          `Must begin and end with a letter or number`,
+          'Must begin and end with a letter or number',
       ],
       description,
       dialogRef,
