@@ -12,7 +12,7 @@
           v-model="downloadPath"
           dense
           outlined
-          @update:modelValue="saveDownloadPath"
+          readonly
         >
           <template #append>
             <q-icon
@@ -144,17 +144,13 @@ export default defineComponent({
 
     let downloadPath = ref($q.localStorage.getItem('DownloadPath'))
 
-    function saveDownloadPath (newPath) {
-      $q.localStorage.set('DownloadPath', newPath)
-    }
-
     function openDownloadPath () {
       const result = window.electron.openFolderDialog(this.downloadPath)
       if (result === undefined) return
 
       const newPath = result[0]
       this.downloadPath = newPath
-      saveDownloadPath(newPath)
+      $q.localStorage.set('DownloadPath', newPath)
     }
 
     // ==================================================================
@@ -276,7 +272,6 @@ export default defineComponent({
 
     return {
       downloadPath,
-      saveDownloadPath,
       openDownloadPath,
       preferencesIniPath,
       addPreferencesIniPath,
