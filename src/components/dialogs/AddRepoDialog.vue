@@ -68,7 +68,23 @@ export default defineComponent({
       bucketName,
       bucketNameRules: [
         (val) => !!val || 'Required',
-        // TODO: validate bucket name format
+        (val) =>
+          (val.length >= 3 && val.length <= 63) ||
+          'Must be between 3 and 63 characters long',
+        (val) => {
+          const invalidChars = Array.from(
+            new Set(val.match(/[^a-z0-9-\s]/g))
+          ).join('')
+          const length = invalidChars.length
+          return (
+            !length ||
+            `Invalid character${length > 1 ? 's' : ''}: ${invalidChars}`
+          )
+        },
+        (val) => !/\s/.test(val) || `Cannot contain spaces`,
+        (val) =>
+          /^[a-z0-9].*[a-z0-9]$/.test(val) ||
+          `Must begin and end with a letter or number`,
       ],
       description,
       dialogRef,
