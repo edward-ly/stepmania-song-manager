@@ -8,12 +8,7 @@
       <q-separator inset />
 
       <q-card-section>
-        <q-input
-          v-model="downloadPath"
-          dense
-          outlined
-          readonly
-        >
+        <q-input v-model="downloadPath" dense outlined readonly>
           <template #append>
             <q-icon
               name="folder_open"
