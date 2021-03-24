@@ -41,7 +41,7 @@
         class="btn-icon-left-padding-sm"
         size="md"
         padding="xs md xs sm"
-        @click="syncRepo"
+        @click="syncFunction"
       />
       <q-btn
         no-wrap
@@ -141,6 +141,12 @@ export default defineComponent({
       type: String,
       default: new Date().toISOString(),
     },
+    syncFunction: {
+      type: Function,
+      default: () => {
+        return
+      },
+    },
     deleteFunction: {
       type: Function,
       default: () => {
@@ -172,10 +178,6 @@ export default defineComponent({
       })
       this.$q.localStorage.set('RepositoryList', repoList)
       this.$router.push('/')
-    },
-    syncRepo () {
-      // TODO: perform sync operation on current bucket
-      // TODO: set isDownloaded to true
     },
     getSongListLocal () {
       // TODO: if found, parse all local .sm and .ssc files

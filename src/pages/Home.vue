@@ -26,6 +26,7 @@
           :key="repo.bucketName"
           v-bind="repo"
           :route="this.$route.path"
+          :sync-function="() => syncRepo(index)"
           :delete-function="() => deleteRepo(index)"
         />
 
@@ -59,6 +60,15 @@ export default defineComponent({
 
     const repoList = ref($q.localStorage.getItem('RepositoryList'))
 
+    function syncRepo (index) {
+      // TODO: perform sync operation on current bucket
+
+      if (!repoList.value[index].isDownloaded) {
+        repoList.value[index].isDownloaded = true
+        $q.localStorage.set('RepositoryList', repoList.value)
+      }
+    }
+
     function deleteRepo (index) {
       $q.dialog({
         component: ConfirmDialog,
@@ -74,6 +84,7 @@ export default defineComponent({
 
     return {
       repoList,
+      syncRepo,
       deleteRepo,
     }
   },
