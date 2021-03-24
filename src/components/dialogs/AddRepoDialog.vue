@@ -14,7 +14,7 @@
             dense
             outlined
             label="Name *"
-            lazy-rules
+            lazy-rules="ondemand"
             :rules="nameRules"
           />
           <q-input
@@ -22,7 +22,7 @@
             dense
             outlined
             label="S3 Bucket Name *"
-            lazy-rules
+            lazy-rules="ondemand"
             :rules="bucketNameRules"
           />
           <q-input
