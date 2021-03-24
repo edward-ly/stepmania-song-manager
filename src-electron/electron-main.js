@@ -9,8 +9,6 @@ import {
 import path from 'path'
 import fs from 'fs'
 import glob from 'glob'
-import * as sh from 'shelljs'
-import semver from 'semver'
 import AutoLaunch from 'auto-launch'
 
 try {
@@ -81,10 +79,6 @@ const autoLauncher = new AutoLaunch({
 // Main Process Methods for Renderer
 // ===========================================================================
 
-// Configure shelljs for Electron
-sh.config.execPath = sh.env.npm_node_execpath
-sh.config.silent = true
-
 ipcMain.on('is-auto-launch-enabled', async (event) => {
   event.returnValue = await autoLauncher.isEnabled()
 })
@@ -95,50 +89,6 @@ ipcMain.handle('enable-auto-launch', () => {
 
 ipcMain.handle('disable-auto-launch', () => {
   return autoLauncher.disable()
-})
-
-ipcMain.handle('init-git-lfs', () => {
-  // Check if Git LFS exists, and install it if not on Windows
-  if (sh.exec('git lfs --version').code !== 0) {
-    if (process.platform === 'win32') {
-      return {
-        code: 2,
-        errorMessage:
-          'Git is not installed. Please download and install Git for Windows (https://git-scm.com/download/win), then restart the program.',
-      }
-    }
-
-    // Check if Homebrew exists, and return error if not
-    if (!sh.which('brew')) {
-      return {
-        code: 1,
-        errorMessage:
-          'Homebrew is not installed. Please download and install Homebrew (https://brew.sh/), then restart the program.',
-      }
-    }
-
-    // Make sure Homebrew and all formulae are updated
-    sh.exec('brew update')
-
-    // Check if Git exists, and install it if not
-    if (!sh.which('git')) {
-      sh.exec('brew install git')
-    }
-
-    // Check if Git >= 1.8.2, and install new Git from Homebrew if not
-    // (probably came from a different package manager)
-    const gitVersion = sh
-      .exec('git --version')
-      .stdout.match(/\d+\.\d+\.\d+/g)[0]
-    if (semver.satisfies(gitVersion, '>=1.8.2')) {
-      sh.exec('brew install git')
-    }
-
-    sh.exec('brew install git-lfs')
-  }
-
-  sh.exec('git lfs install')
-  return { code: 0, errorMessage: '' }
 })
 
 ipcMain.on('init-download-path', (event) => {
