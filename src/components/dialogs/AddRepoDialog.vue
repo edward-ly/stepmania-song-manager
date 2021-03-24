@@ -64,7 +64,7 @@ export default defineComponent({
 
     return {
       name,
-      nameRules: [(val) => !!val || 'Required'],
+      nameRules: [(val) => (!!val && /\S/.test(val)) || 'Required'],
       bucketName,
       bucketNameRules: [
         (val) => !!val || 'Required',
@@ -91,7 +91,7 @@ export default defineComponent({
       onDialogHide,
       onOKClick () {
         onDialogOK({
-          name: name.value,
+          name: name.value.trim().replace(/\s+/g, ' '),
           bucketName: bucketName.value,
           description: !description.value ? '' : description.value,
         })
