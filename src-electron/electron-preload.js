@@ -22,6 +22,9 @@ contextBridge.exposeInMainWorld('electron', {
   initDownloadPath: () => {
     return ipcRenderer.sendSync('init-download-path')
   },
+  getDownloadPath: (downloadPath, bucketName) => {
+    return ipcRenderer.sendSync('get-download-path', downloadPath, bucketName)
+  },
   getPreferencesIniPath: () => {
     return ipcRenderer.sendSync('get-preferences-ini-path')
   },

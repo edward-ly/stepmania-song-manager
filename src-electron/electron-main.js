@@ -99,6 +99,14 @@ ipcMain.on('init-download-path', (event) => {
   event.returnValue = downloadPath
 })
 
+ipcMain.on('get-download-path', (event, downloadPath, bucketName) => {
+  const bucketPath = path.join(downloadPath, bucketName)
+  if (!fs.existsSync(bucketPath)) {
+    fs.mkdirSync(bucketPath)
+  }
+  event.returnValue = bucketPath
+})
+
 ipcMain.on('get-preferences-ini-path', (event) => {
   let files
 
