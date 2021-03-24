@@ -33,28 +33,15 @@
       <q-space />
 
       <q-btn
-        v-if="isDownloaded"
         no-wrap
         no-caps
         color="primary"
-        icon="sync"
-        label="Update"
+        :icon="isDownloaded ? 'sync' : 'download'"
+        :label="isDownloaded ? 'Update' : 'Download'"
         class="btn-icon-left-padding-sm"
         size="md"
         padding="xs md xs sm"
-        @click="pullRepo"
-      />
-      <q-btn
-        v-else
-        no-wrap
-        no-caps
-        color="primary"
-        icon="download"
-        label="Download"
-        class="btn-icon-left-padding-sm"
-        size="md"
-        padding="xs md xs sm"
-        @click="cloneRepo"
+        @click="syncRepo"
       />
       <q-btn
         no-wrap
@@ -186,19 +173,16 @@ export default defineComponent({
       this.$q.localStorage.set('RepositoryList', repoList)
       this.$router.push('/')
     },
-    cloneRepo () {
-      // TODO: if local repo already exists, call pullRepo()
-      // TODO: else, clone repo from remote
-    },
-    pullRepo () {
-      // TODO: if local repo not found, call cloneRepo()
-      // TODO: else, pull latest commits from remote
+    syncRepo () {
+      // TODO: perform sync operation on current bucket
+      // TODO: set isDownloaded to true
     },
     getSongListLocal () {
-      // TODO: display song list from local song list file
+      // TODO: if found, parse all local .sm and .ssc files
+      // TODO: else, call getSongListRemote()
     },
     getSongListRemote () {
-      // TODO: display song list from remote song list file
+      // TODO: download and parse all .sm and .ssc files from bucket
     },
   },
 })

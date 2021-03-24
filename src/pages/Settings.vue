@@ -169,6 +169,8 @@ export default defineComponent({
       if (!newFile.includes('Preferences.ini')) return
       if (preferencesIniPath.value.includes(newFile)) return
 
+      // TODO: add local paths of installed packs to new Preferences.ini file
+
       preferencesIniPath.value.push(newFile)
       savePreferencesIniPath()
     }
