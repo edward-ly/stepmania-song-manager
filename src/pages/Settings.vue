@@ -166,6 +166,7 @@ export default defineComponent({
       if (result === undefined) return
 
       const newFile = result[0]
+      if (!newFile.includes('Preferences.ini')) return
       if (preferencesIniPath.value.includes(newFile)) return
 
       preferencesIniPath.value.push(newFile)
