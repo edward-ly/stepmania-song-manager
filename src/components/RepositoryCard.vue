@@ -109,6 +109,10 @@
         @click="addRepo"
       />
     </q-card-actions>
+
+    <q-card-section v-if="loading">
+      <q-linear-progress stripe rounded :value="progress" />
+    </q-card-section>
   </q-card>
 </template>
 
@@ -141,6 +145,10 @@ export default defineComponent({
       type: String,
       default: new Date().toISOString(),
     },
+    localPath: {
+      type: String,
+      default: '',
+    },
     syncFunction: {
       type: Function,
       default: () => {
@@ -152,6 +160,14 @@ export default defineComponent({
       default: () => {
         return
       },
+    },
+    loading: {
+      type: Boolean,
+      default: false,
+    },
+    progress: {
+      type: Number,
+      default: null,
     },
   },
   methods: {
@@ -180,8 +196,27 @@ export default defineComponent({
       this.$router.push('/')
     },
     getSongListLocal () {
+      // TODO: pause current timer for syncAllRepos
+      // TODO: disable all repo buttons, show loading animation
+
       // TODO: if found, parse all local .sm and .ssc files
       // TODO: else, call getSongListRemote()
+      window.aws.s3SyncSongList(this.bucketName, this.localPath)
+      window.aws.subscribeSyncEvents(
+        (err) => {
+          // TODO: display error message
+          console.log(err)
+          window.aws.unsubscribeSyncEvents()
+        },
+        (progress) => {
+          // TODO: display loading animation
+          console.log(progress)
+        },
+        () => {
+          window.aws.unsubscribeSyncEvents()
+          // TODO: parse all local .sm and .ssc files
+        }
+      )
     },
     getSongListRemote () {
       // TODO: download and parse all .sm and .ssc files from bucket

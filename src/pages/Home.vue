@@ -61,12 +61,30 @@ export default defineComponent({
     const repoList = ref($q.localStorage.getItem('RepositoryList'))
 
     function syncRepo (index) {
-      // TODO: perform sync operation on current bucket
-
-      if (!repoList.value[index].isDownloaded) {
-        repoList.value[index].isDownloaded = true
-        $q.localStorage.set('RepositoryList', repoList.value)
-      }
+      // TODO: clear current timer for syncAllRepos
+      // TODO: disable all repo buttons, show loading animation
+      let repo = repoList.value[index]
+      window.aws.s3Sync(repo.bucketName, repo.localPath)
+      window.aws.subscribeSyncEvents(
+        (err) => {
+          // TODO: display error message
+          console.log(err)
+          window.aws.unsubscribeSyncEvents()
+        },
+        (progress) => {
+          // TODO: display loading animation
+          console.log(progress)
+        },
+        () => {
+          window.aws.unsubscribeSyncEvents()
+          repoList.value[index].lastUpdated = new Date().toISOString()
+          if (!repo.isDownloaded) {
+            repoList.value[index].isDownloaded = true
+          }
+          $q.localStorage.set('RepositoryList', repoList.value)
+          // TODO: set timer for next call to syncAllRepos
+        }
+      )
     }
 
     function deleteRepo (index) {
