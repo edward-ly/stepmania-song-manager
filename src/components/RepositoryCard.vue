@@ -22,12 +22,7 @@
         v-if="route === '/' && isDownloaded"
         class="text-body2 text-italic text-no-wrap"
       >
-        Last Updated:
-        {{
-          new Date(lastUpdated).toLocaleString(
-            this.$q.localStorage.getItem('Locale')
-          )
-        }}
+        Last Updated: {{ lastUpdatedString }}
       </div>
 
       <q-space />
@@ -160,6 +155,14 @@ export default defineComponent({
       songListLoading: false,
       songListProgress: NaN,
     }
+  },
+
+  computed: {
+    lastUpdatedString () {
+      return new Date(this.lastUpdated).toLocaleString(
+        this.$q.localStorage.getItem('Locale')
+      )
+    },
   },
 
   methods: {
