@@ -62,7 +62,7 @@ export default defineComponent({
 
     function syncRepo (index) {
       // TODO: clear current timer for syncAllRepos
-      // TODO: disable all repo buttons, show loading animation
+
       let repo = repoList.value[index]
       repo.loading = true
       window.aws.s3Sync(repo.bucketName, repo.localPath)
@@ -80,6 +80,7 @@ export default defineComponent({
           repo.loading = false
           repo.lastUpdated = new Date().toISOString()
           $q.localStorage.set('RepositoryList', repoList.value)
+
           // TODO: set timer for next call to syncAllRepos
         }
       )
@@ -93,6 +94,7 @@ export default defineComponent({
         },
       }).onOk(() => {
         // TODO: remove local repo path from Preferences.ini files
+
         this.repoList.splice(index, 1)
         $q.localStorage.set('RepositoryList', repoList.value)
       })

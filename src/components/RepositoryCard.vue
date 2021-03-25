@@ -175,6 +175,7 @@ export default defineComponent({
     },
     addRepo () {
       // TODO: add local repo path to Preferences.ini files
+
       let repoList = this.$q.localStorage.getItem('RepositoryList')
       repoList.push({
         name: this.name,
@@ -194,7 +195,6 @@ export default defineComponent({
     },
     getSongListLocal () {
       // TODO: pause current timer for syncAllRepos
-      // TODO: disable all repo buttons, show loading animation
 
       // TODO: if found, parse all local .sm and .ssc files
       // TODO: else, download .sm and .ssc files from bucket first
