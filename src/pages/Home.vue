@@ -64,23 +64,21 @@ export default defineComponent({
       // TODO: clear current timer for syncAllRepos
       // TODO: disable all repo buttons, show loading animation
       let repo = repoList.value[index]
+      repo.loading = true
       window.aws.s3Sync(repo.bucketName, repo.localPath)
       window.aws.subscribeSyncEvents(
         (err) => {
           // TODO: display error message
           console.log(err)
           window.aws.unsubscribeSyncEvents()
+          repo.loading = false
         },
-        (progress) => {
-          // TODO: display loading animation
-          console.log(progress)
-        },
+        (progress) => (repo.progress = progress),
         () => {
           window.aws.unsubscribeSyncEvents()
-          repoList.value[index].lastUpdated = new Date().toISOString()
-          if (!repo.isDownloaded) {
-            repoList.value[index].isDownloaded = true
-          }
+          repo.isDownloaded = true
+          repo.loading = false
+          repo.lastUpdated = new Date().toISOString()
           $q.localStorage.set('RepositoryList', repoList.value)
           // TODO: set timer for next call to syncAllRepos
         }

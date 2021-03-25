@@ -35,6 +35,7 @@
       <q-btn
         no-wrap
         no-caps
+        :disable="loading || songListLoading"
         color="primary"
         :icon="isDownloaded ? 'sync' : 'download'"
         :label="isDownloaded ? 'Update' : 'Download'"
@@ -46,6 +47,7 @@
       <q-btn
         no-wrap
         no-caps
+        :disable="loading || songListLoading"
         color="accent"
         icon="list"
         label="View Song List"
@@ -57,6 +59,7 @@
       <q-btn
         no-wrap
         no-caps
+        :disable="loading || songListLoading"
         color="negative"
         icon="delete"
         label="Delete"
@@ -86,8 +89,13 @@
       />
     </q-card-actions>
 
-    <q-card-section v-if="loading">
-      <q-linear-progress stripe rounded :value="progress" />
+    <q-card-section v-if="loading" class="q-pt-none">
+      <q-linear-progress v-if="isNaN(progress)" indeterminate />
+      <q-linear-progress v-else :value="progress" />
+    </q-card-section>
+    <q-card-section v-else-if="songListLoading" class="q-pt-none">
+      <q-linear-progress v-if="isNaN(songListProgress)" indeterminate />
+      <q-linear-progress v-else :value="songListProgress" />
     </q-card-section>
   </q-card>
 </template>
@@ -143,9 +151,17 @@ export default defineComponent({
     },
     progress: {
       type: Number,
-      default: null,
+      default: NaN,
     },
   },
+
+  data () {
+    return {
+      songListLoading: false,
+      songListProgress: NaN,
+    }
+  },
+
   methods: {
     isAdded () {
       return (
@@ -162,6 +178,8 @@ export default defineComponent({
         bucketName: this.bucketName,
         description: this.description,
         isDownloaded: false,
+        loading: false,
+        progress: null,
         lastUpdated: new Date().toISOString(),
         localPath: window.electron.getDownloadPath(
           this.$q.localStorage.getItem('DownloadPath'),
@@ -177,19 +195,19 @@ export default defineComponent({
 
       // TODO: if found, parse all local .sm and .ssc files
       // TODO: else, download .sm and .ssc files from bucket first
+      this.songListLoading = true
       window.aws.s3SyncSongList(this.bucketName, this.localPath)
       window.aws.subscribeSyncEvents(
         (err) => {
           // TODO: display error message
           console.log(err)
           window.aws.unsubscribeSyncEvents()
+          this.songListLoading = false
         },
-        (progress) => {
-          // TODO: display loading animation
-          console.log(progress)
-        },
+        (progress) => (this.songListProgress = progress),
         () => {
           window.aws.unsubscribeSyncEvents()
+          this.songListLoading = false
           // TODO: parse all local .sm and .ssc files
         }
       )
