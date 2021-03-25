@@ -73,24 +73,12 @@
       class="q-pa-md q-gutter-sm"
     >
       <q-btn
-        v-if="isAdded()"
         no-wrap
         no-caps
-        disable
+        :disable="isAdded()"
         color="positive"
-        icon="done"
-        label="Added"
-        class="btn-icon-left-padding-sm"
-        size="md"
-        padding="xs md xs sm"
-      />
-      <q-btn
-        v-else
-        no-wrap
-        no-caps
-        color="positive"
-        icon="add"
-        label="Add"
+        :icon="isAdded() ? 'done' : 'add'"
+        :label="isAdded() ? 'Added' : 'Add'"
         class="btn-icon-left-padding-sm"
         size="md"
         padding="xs md xs sm"
