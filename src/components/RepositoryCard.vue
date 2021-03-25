@@ -73,18 +73,6 @@
       class="q-pa-md q-gutter-sm"
     >
       <q-btn
-        v-if="!isAdded()"
-        no-wrap
-        no-caps
-        color="accent"
-        icon="list"
-        label="View Song List"
-        class="btn-icon-left-padding-sm"
-        size="md"
-        padding="xs md xs sm"
-        @click="getSongListRemote"
-      />
-      <q-btn
         v-if="isAdded()"
         no-wrap
         no-caps
@@ -200,7 +188,7 @@ export default defineComponent({
       // TODO: disable all repo buttons, show loading animation
 
       // TODO: if found, parse all local .sm and .ssc files
-      // TODO: else, call getSongListRemote()
+      // TODO: else, download .sm and .ssc files from bucket first
       window.aws.s3SyncSongList(this.bucketName, this.localPath)
       window.aws.subscribeSyncEvents(
         (err) => {
@@ -217,9 +205,6 @@ export default defineComponent({
           // TODO: parse all local .sm and .ssc files
         }
       )
-    },
-    getSongListRemote () {
-      // TODO: download and parse all .sm and .ssc files from bucket
     },
   },
 })
