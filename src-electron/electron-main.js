@@ -10,6 +10,7 @@ import path from 'path'
 import fs from 'fs'
 import glob from 'glob'
 import AutoLaunch from 'auto-launch'
+import s3 from '@auth0/s3'
 
 try {
   if (
@@ -74,6 +75,8 @@ app.on('activate', () => {
 const autoLauncher = new AutoLaunch({
   name: 'StepMania Song Manager',
 })
+
+const s3client = s3.createClient()
 
 // ===========================================================================
 // Main Process Methods for Renderer
@@ -162,4 +165,44 @@ ipcMain.on('open-ini-file-dialog', (event) => {
     ],
     properties: ['openFile', 'showHiddenFiles'],
   })
+})
+
+ipcMain.on('sync-bucket', (event, bucketName, downloadPath) => {
+  const dl = s3client.downloadDir({
+    localDir: downloadPath,
+    s3Params: {
+      Bucket: bucketName,
+      Prefix: '',
+    },
+    deleteRemoved: true,
+  })
+
+  dl.on('error', (err) => event.reply('sync-error', err))
+  dl.on('progress', () =>
+    event.reply('sync-progress', dl.progressAmount / dl.progressTotal)
+  )
+  dl.on('end', () => event.reply('sync-end'))
+})
+
+ipcMain.on('sync-song-list', (event, bucketName, downloadPath) => {
+  const dl = s3client.downloadDir({
+    localDir: downloadPath,
+    s3Params: {
+      Bucket: bucketName,
+      Prefix: '',
+    },
+    getS3Params: (localFile, s3Object, callback) => {
+      if (s3Object.Key.includes('.sm') || s3Object.Key.includes('.ssc')) {
+        callback(null, {})
+      } else {
+        callback(null, null)
+      }
+    },
+  })
+
+  dl.on('error', (err) => event.reply('sync-error', err))
+  dl.on('progress', () =>
+    event.reply('sync-progress', dl.progressAmount / dl.progressTotal)
+  )
+  dl.on('end', () => event.reply('sync-end'))
 })

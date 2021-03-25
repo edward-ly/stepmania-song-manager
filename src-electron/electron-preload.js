@@ -50,3 +50,28 @@ contextBridge.exposeInMainWorld('autoLaunch', {
     return await ipcRenderer.invoke('disable-auto-launch')
   },
 })
+
+contextBridge.exposeInMainWorld('aws', {
+  s3Sync: (bucketName, downloadPath) => {
+    ipcRenderer.send('sync-bucket', bucketName, downloadPath)
+  },
+  s3SyncSongList: (bucketName, downloadPath) => {
+    ipcRenderer.send('sync-song-list', bucketName, downloadPath)
+  },
+  subscribeSyncEvents: (errorCallback, progressCallback, endCallback) => {
+    ipcRenderer.on('sync-error', (event, err) => {
+      errorCallback(err)
+    })
+    ipcRenderer.on('sync-progress', (event, progress) => {
+      progressCallback(progress)
+    })
+    ipcRenderer.on('sync-end', () => {
+      endCallback()
+    })
+  },
+  unsubscribeSyncEvents: () => {
+    ipcRenderer.removeAllListeners('sync-error')
+    ipcRenderer.removeAllListeners('sync-progress')
+    ipcRenderer.removeAllListeners('sync-end')
+  },
+})
