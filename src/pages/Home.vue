@@ -102,7 +102,10 @@ export default defineComponent({
             'Are you sure you want to remove this bucket? No files will be deleted, but all songs in this bucket will be removed from StepMania.',
         },
       }).onOk(() => {
-        // TODO: remove local repo path from Preferences.ini files
+        window.fs.deletePathsFromPreferencesIni(
+          $q.localStorage.getItem('PreferencesIniPath'),
+          [repoList.value[index].localPath]
+        )
 
         this.repoList.splice(index, 1)
         $q.localStorage.set('RepositoryList', repoList.value)

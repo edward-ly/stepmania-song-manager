@@ -61,7 +61,10 @@ export default defineComponent({
 
     function addCustomRepo () {
       $q.dialog({ component: AddRepoDialog }).onOk((data) => {
-        // TODO: add local repo path to Preferences.ini files
+        window.fs.addPathsToPreferencesIni(
+          $q.localStorage.getItem('PreferencesIniPath'),
+          [data.localPath]
+        )
 
         let repoList = $q.localStorage.getItem('RepositoryList')
         repoList.push(data)

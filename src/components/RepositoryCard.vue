@@ -187,7 +187,15 @@ export default defineComponent({
 
   methods: {
     addRepo () {
-      // TODO: add local repo path to Preferences.ini files
+      const localPath = window.electron.getDownloadPath(
+        this.$q.localStorage.getItem('DownloadPath'),
+        this.bucketName
+      )
+
+      window.fs.addPathsToPreferencesIni(
+        this.$q.localStorage.getItem('PreferencesIniPath'),
+        [localPath]
+      )
 
       let repoList = this.$q.localStorage.getItem('RepositoryList')
       repoList.push({
@@ -199,10 +207,7 @@ export default defineComponent({
         loading: false,
         progress: null,
         lastUpdated: new Date().toISOString(),
-        localPath: window.electron.getDownloadPath(
-          this.$q.localStorage.getItem('DownloadPath'),
-          this.bucketName
-        ),
+        localPath: localPath,
       })
       this.$q.localStorage.set('RepositoryList', repoList)
       this.$router.push('/')
