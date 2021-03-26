@@ -3,19 +3,25 @@ const defaultRepos = [
     name: 'DanceDanceRevolution (Arcade, Latest)',
     bucketName: 'ddr-arcade-simfiles',
     description:
-      'A collection of simfiles containing every song in the latest official arcade release of DDR. Will include new songs, song fixes, songs removals, etc. as the arcade game is updated.',
+      'Includes every song in the latest official arcade release of DDR, sorted in chronological order by mix. Will include new songs, song fixes, songs removals, etc. as the arcade game is updated.',
+  },
+  {
+    name: 'DanceDanceRevolution XX',
+    bucketName: 'ddr-xx-simfiles',
+    description:
+      'A 20th anniversary celebration of DDR. By Zenius, for Zenius.',
   },
   {
     name: 'The Complete led_light Collection',
     bucketName: 'led-light-simfiles',
     description:
-      'DDR-style custom simfiles from the creator of StepMania Song Manager! Contains a wide variety of songs including BEMANI crossovers, K-Pop, video game OSTs, and much more! All charts are rated on the X-scale and synced to null offset.',
+      "DDR custom simfiles from the creator of StepMania Song Manager! Includes the entire K/DA discography as well as the Friday Night Funkin' OST, on top of a wide selection of BEMANI and rhythm game crossovers, K-Pop, and much more!",
   },
   {
     name: "led_light's Tech Experiments",
     bucketName: 'led-light-simfiles-itg',
     description:
-      'A selection of ITG tech-style custom charts from the creator of StepMania Song Manager! Charts are rated on the ITG scale and synced to +9ms offset.',
+      'ITG tech-style custom charts from the creator of StepMania Song Manager.',
   },
 ]
 
