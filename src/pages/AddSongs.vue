@@ -29,6 +29,16 @@
         />
       </div>
     </div>
+
+    <div v-if="!defaultRepos.length" class="text-muted absolute-center">
+      <div class="column items-center q-gutter-y-xs">
+        <q-icon name="info" size="xl" color="dark" />
+        <div class="text-body1 text-dark text-center">
+          No repositories found.<br />Click on "+ Add Custom Repo" to add a new
+          repository.
+        </div>
+      </div>
+    </div>
   </q-page>
 </template>
 
