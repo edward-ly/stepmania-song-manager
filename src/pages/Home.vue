@@ -60,24 +60,32 @@ export default defineComponent({
 
     const repoList = ref($q.localStorage.getItem('RepositoryList'))
 
+    function setLoadingStatus (index, status) {
+      repoList.value[index].loading = status
+      repoList.value = repoList.value.map((repo) => {
+        repo.disable = status
+        return repo
+      })
+    }
+
     function syncRepo (index) {
       // TODO: clear current timer for syncAllRepos
 
       let repo = repoList.value[index]
-      repo.loading = true
+      setLoadingStatus(index, true)
       window.aws.s3Sync(repo.bucketName, repo.localPath)
       window.aws.subscribeSyncEvents(
         (err) => {
           // TODO: display error message
           console.log(err)
           window.aws.unsubscribeSyncEvents()
-          repo.loading = false
+          setLoadingStatus(index, false)
         },
         (progress) => (repo.progress = progress),
         () => {
           window.aws.unsubscribeSyncEvents()
+          setLoadingStatus(index, false)
           repo.isDownloaded = true
-          repo.loading = false
           repo.lastUpdated = new Date().toISOString()
           $q.localStorage.set('RepositoryList', repoList.value)
 
