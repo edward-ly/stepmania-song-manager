@@ -30,7 +30,8 @@
       <q-btn
         no-wrap
         no-caps
-        :disable="loading || songListLoading"
+        :disable="disable"
+        :loading="isLoading"
         color="primary"
         :icon="isDownloaded ? 'sync' : 'download'"
         :label="isDownloaded ? 'Update' : 'Download'"
@@ -38,11 +39,16 @@
         size="md"
         padding="xs md xs sm"
         @click="syncFunction"
-      />
+      >
+        <template #loading>
+          <q-spinner color="white" class="loading-spinner" />
+          {{ isDownloaded ? 'Update' : 'Download' }}
+        </template>
+      </q-btn>
       <q-btn
         no-wrap
         no-caps
-        :disable="loading || songListLoading"
+        :disable="disable"
         color="accent"
         icon="list"
         label="View Song List"
@@ -54,7 +60,7 @@
       <q-btn
         no-wrap
         no-caps
-        :disable="loading || songListLoading"
+        :disable="disable"
         color="negative"
         icon="delete"
         label="Delete"
@@ -140,6 +146,10 @@ export default defineComponent({
         return
       },
     },
+    disable: {
+      type: Boolean,
+      default: false,
+    },
     loading: {
       type: Boolean,
       default: false,
@@ -163,6 +173,9 @@ export default defineComponent({
         this.$q.localStorage.getItem('Locale')
       )
     },
+    isLoading () {
+      return this.loading || this.songListLoading
+    },
   },
 
   methods: {
@@ -182,6 +195,7 @@ export default defineComponent({
         bucketName: this.bucketName,
         description: this.description,
         isDownloaded: false,
+        disable: false,
         loading: false,
         progress: null,
         lastUpdated: new Date().toISOString(),
@@ -218,3 +232,10 @@ export default defineComponent({
   },
 })
 </script>
+
+<style lang="scss" scoped>
+  .loading-spinner {
+    margin-left: -8px;
+    margin-right: 8px;
+  }
+</style>
