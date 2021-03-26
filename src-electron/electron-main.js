@@ -76,8 +76,6 @@ const autoLauncher = new AutoLaunch({
   name: 'StepMania Song Manager',
 })
 
-const s3client = s3.createClient()
-
 // ===========================================================================
 // Main Process Methods for Renderer
 // ===========================================================================
@@ -212,7 +210,7 @@ ipcMain.handle('disable-auto-launch', () => {
 // AWS S3 ====================================================================
 
 ipcMain.on('sync-bucket', (event, bucketName, downloadPath) => {
-  const dl = s3client.downloadDir({
+  const dl = s3.createClient().downloadDir({
     localDir: downloadPath,
     s3Params: {
       Bucket: bucketName,
@@ -229,7 +227,7 @@ ipcMain.on('sync-bucket', (event, bucketName, downloadPath) => {
 })
 
 ipcMain.on('sync-song-list', (event, bucketName, downloadPath) => {
-  const dl = s3client.downloadDir({
+  const dl = s3.createClient().downloadDir({
     localDir: downloadPath,
     s3Params: {
       Bucket: bucketName,
