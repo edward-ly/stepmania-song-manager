@@ -79,10 +79,10 @@
       <q-btn
         no-wrap
         no-caps
-        :disable="isAdded()"
+        :disable="isAdded"
         color="positive"
-        :icon="isAdded() ? 'done' : 'add'"
-        :label="isAdded() ? 'Added' : 'Add'"
+        :icon="isAdded ? 'done' : 'add'"
+        :label="isAdded ? 'Added' : 'Add'"
         class="btn-icon-left-padding-sm"
         size="md"
         padding="xs md xs sm"
@@ -176,9 +176,6 @@ export default defineComponent({
     isLoading () {
       return this.loading || this.songListLoading
     },
-  },
-
-  methods: {
     isAdded () {
       return (
         this.$q.localStorage
@@ -186,6 +183,9 @@ export default defineComponent({
           .find((repo) => repo.bucketName === this.bucketName) !== undefined
       )
     },
+  },
+
+  methods: {
     addRepo () {
       // TODO: add local repo path to Preferences.ini files
 
