@@ -234,8 +234,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-  .loading-spinner {
-    margin-left: -8px;
-    margin-right: 8px;
-  }
+.loading-spinner {
+  margin-left: -8px;
+  margin-right: 8px;
+}
 </style>
