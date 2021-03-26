@@ -8,15 +8,8 @@
           <q-btn flat round dense icon="close" @click="onCancelClick" />
         </q-card-section>
 
-        <q-card-section class="q-gutter-xs">
-          <q-input
-            v-model="name"
-            dense
-            outlined
-            label="Name *"
-            lazy-rules="ondemand"
-            :rules="nameRules"
-          />
+        <q-card-section class="q-gutter-sm">
+          <q-input v-model="name" dense outlined label="Name" class="q-pb-sm" />
           <q-input
             v-model="bucketName"
             dense
@@ -64,7 +57,6 @@ export default defineComponent({
 
     return {
       name,
-      nameRules: [(val) => (!!val && /\S/.test(val)) || 'Required'],
       bucketName,
       bucketNameRules: [
         (val) => !!val || 'Required',
@@ -91,7 +83,7 @@ export default defineComponent({
       onDialogHide,
       onOKClick () {
         onDialogOK({
-          name: name.value.trim().replace(/\s+/g, ' '),
+          name: name.value ? name.value.trim().replace(/\s+/g, ' ') : '',
           bucketName: bucketName.value,
           description: !description.value ? '' : description.value,
         })
