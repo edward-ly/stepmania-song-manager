@@ -2,7 +2,7 @@
 
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
-A cross-platform companion app for [StepMania](https://github.com/stepmania/stepmania) that downloads and automatically updates song ("simfile") packs hosted in AWS S3 buckets.
+A cross-platform companion app for [StepMania](https://github.com/stepmania/stepmania) that downloads and automatically updates song ("simfile") packs hosted in Amazon S3 buckets.
 
 Made with [Electron](https://www.electronjs.org/) and [Vue.js](https://vuejs.org/) via the [Quasar](https://quasar.dev/) framework.
 
@@ -33,20 +33,21 @@ To customize the Quasar configuration, see [Configuring quasar.conf.js](https://
 
 ### Adding Song Packs
 
-Simply click on the `+ Add Songs` button and select a bucket repository from the list.
-You can also add a new S3 bucket that is not already in the list, in which case the name of the S3 bucket as well as a nickname for the bucket are required.
+Simply click on the `+ Add Songs` button and select a bucket from the list.
+You can also add a new S3 bucket that is not already in the list, in which case the name of the S3 bucket is required.
 *Please note that the S3 bucket must be publicly accessible in order for the app to be able to download the files within!*
 
-In any case, the chosen repository will then be displayed on the home page where you can view information about the songs in the repository, clone the repository, or delete the repository.
+The chosen bucket will then be displayed on the home page where you can view information about the songs in the bucket, download all files in the bucket, or remove the bucket from the app.
 
-> Note: deleting a repository from the app does not delete any local files from your computer!
-  This is to reduce the size of future downloads should you decide to re-add the repository.
-  If you want to completely remove the downloaded packs from your computer, you can manually delete the folders yourself.
+> Note: removing a bucket from the app does not delete any local files from your computer!
+  This is to reduce the size of future downloads should you decide to re-add the bucket.
+  If you want to completely remove the downloaded packs from your computer, you can manually delete the files and folders yourself.
 
 ### Updating Song Packs
 
-Once downloaded, all song packs will be updated periodically as long as the app is open or running in the background.
-The app itself will check for and download updates automatically, or you can perform a manual update by clicking on the `Update` button for each bucket.
+Once downloaded, all song packs will automatically be detected and playable in StepMania the next time you run the game.
+The packs will also be updated automatically as long as the app is open or running in the background.
+The app itself will check for and download updates periodically, or you can perform a manual update by clicking on the `Update` button for each bucket.
 
 ### Settings
 
