@@ -38,12 +38,13 @@
 
 <script>
 import { defineComponent, ref } from 'vue'
-import { useDialogPluginComponent } from 'quasar'
+import { useQuasar, useDialogPluginComponent } from 'quasar'
 
 export default defineComponent({
   emits: [...useDialogPluginComponent.emits],
 
   setup () {
+    const $q = useQuasar()
     const {
       dialogRef,
       onDialogHide,
@@ -82,10 +83,22 @@ export default defineComponent({
       dialogRef,
       onDialogHide,
       onOKClick () {
+        const sanitizedName = name.value
+          ? name.value.trim().replace(/\s+/g, ' ')
+          : ''
         onDialogOK({
-          name: name.value ? name.value.trim().replace(/\s+/g, ' ') : '',
+          name: sanitizedName.length ? sanitizedName : bucketName.value,
           bucketName: bucketName.value,
           description: !description.value ? '' : description.value,
+          isDownloaded: false,
+          disable: false,
+          loading: false,
+          progress: null,
+          lastUpdated: new Date().toISOString(),
+          localPath: window.electron.getDownloadPath(
+            $q.localStorage.getItem('DownloadPath'),
+            bucketName.value
+          ),
         })
       },
       onReset () {

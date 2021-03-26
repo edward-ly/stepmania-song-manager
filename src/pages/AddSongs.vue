@@ -60,15 +60,8 @@ export default defineComponent({
     const router = useRouter()
 
     function addCustomRepo () {
-      // TODO: add local repo path to Preferences.ini files
       $q.dialog({ component: AddRepoDialog }).onOk((data) => {
-        if (!data.name.length) data.name = data.bucketName
-        data.isDownloaded = false
-        data.lastUpdated = new Date().toISOString()
-        data.localPath = window.electron.getDownloadPath(
-          $q.localStorage.getItem('DownloadPath'),
-          data.bucketName
-        )
+        // TODO: add local repo path to Preferences.ini files
 
         let repoList = $q.localStorage.getItem('RepositoryList')
         repoList.push(data)
