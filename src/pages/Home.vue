@@ -98,7 +98,8 @@ export default defineComponent({
       $q.dialog({
         component: ConfirmDialog,
         componentProps: {
-          message: 'Are you sure you want to remove this repository?',
+          message:
+            'Are you sure you want to remove this bucket? No files will be deleted, but all songs in this bucket will be removed from StepMania.',
         },
       }).onOk(() => {
         // TODO: remove local repo path from Preferences.ini files
