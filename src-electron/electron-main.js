@@ -82,17 +82,7 @@ const s3client = s3.createClient()
 // Main Process Methods for Renderer
 // ===========================================================================
 
-ipcMain.on('is-auto-launch-enabled', async (event) => {
-  event.returnValue = await autoLauncher.isEnabled()
-})
-
-ipcMain.handle('enable-auto-launch', () => {
-  return autoLauncher.enable()
-})
-
-ipcMain.handle('disable-auto-launch', () => {
-  return autoLauncher.disable()
-})
+// Electron ==================================================================
 
 ipcMain.on('init-download-path', (event) => {
   const downloadPath = path.join(app.getPath('userData'), 'Songs')
@@ -166,6 +156,60 @@ ipcMain.on('open-ini-file-dialog', (event) => {
     properties: ['openFile', 'showHiddenFiles'],
   })
 })
+
+// File System ===============================================================
+
+ipcMain.on('add-paths-preferences-ini', (event, iniFiles, paths) => {
+  for (let file of iniFiles) {
+    fs.readFile(file, 'utf8', (err, data) => {
+      if (err) return
+
+      const newData = data.replace(/(?<=AdditionalSongFolders=).*/, (match) => {
+        let newPaths = new Set(match.length ? match.split(',') : [])
+        for (let path of paths) {
+          newPaths.add(path)
+        }
+        return [...newPaths].join(',')
+      })
+
+      fs.writeFile(file, newData, () => {})
+    })
+  }
+})
+
+ipcMain.on('delete-paths-preferences-ini', (event, iniFiles, paths) => {
+  for (let file of iniFiles) {
+    fs.readFile(file, 'utf8', (err, data) => {
+      if (err) return
+
+      const newData = data.replace(/(?<=AdditionalSongFolders=).*/, (match) => {
+        let newPaths = new Set(match.length ? match.split(',') : [])
+        for (let path of paths) {
+          newPaths.delete(path)
+        }
+        return [...newPaths].join(',')
+      })
+
+      fs.writeFile(file, newData, () => {})
+    })
+  }
+})
+
+// Auto-launcher =============================================================
+
+ipcMain.on('is-auto-launch-enabled', async (event) => {
+  event.returnValue = await autoLauncher.isEnabled()
+})
+
+ipcMain.handle('enable-auto-launch', () => {
+  return autoLauncher.enable()
+})
+
+ipcMain.handle('disable-auto-launch', () => {
+  return autoLauncher.disable()
+})
+
+// AWS S3 ====================================================================
 
 ipcMain.on('sync-bucket', (event, bucketName, downloadPath) => {
   const dl = s3client.downloadDir({

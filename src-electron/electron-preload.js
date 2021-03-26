@@ -39,6 +39,15 @@ contextBridge.exposeInMainWorld('electron', {
   },
 })
 
+contextBridge.exposeInMainWorld('fs', {
+  addPathsToPreferencesIni: (iniFiles, paths) => {
+    ipcRenderer.send('add-paths-preferences-ini', iniFiles, paths)
+  },
+  deletePathsFromPreferencesIni: (iniFiles, paths) => {
+    ipcRenderer.send('delete-paths-preferences-ini', iniFiles, paths)
+  },
+})
+
 contextBridge.exposeInMainWorld('autoLaunch', {
   isEnabled: () => {
     return ipcRenderer.sendSync('is-auto-launch-enabled')
