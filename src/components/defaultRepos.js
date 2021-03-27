@@ -1,9 +1,9 @@
 const defaultRepos = [
   {
-    name: 'DanceDanceRevolution (Arcade, Latest)',
+    name: 'DanceDanceRevolution A20 PLUS',
     bucketName: 'ddr-arcade-simfiles',
     description:
-      'Includes every song in the latest official arcade release of DDR, sorted in chronological order by mix. Will include new songs, song fixes, songs removals, etc. as the arcade game is updated.',
+      'The latest official arcade release of DDR, with all songs grouped by mix in chronological order. Will include new songs, rating adjustments, songs removals, etc. as the arcade game is updated.',
   },
   {
     name: 'DanceDanceRevolution XX',
@@ -15,13 +15,13 @@ const defaultRepos = [
     name: 'The Complete led_light Collection',
     bucketName: 'led-light-simfiles',
     description:
-      "DDR custom simfiles from the creator of StepMania Song Manager! Includes the entire K/DA discography as well as the Friday Night Funkin' OST, on top of a wide selection of BEMANI and rhythm game crossovers, K-Pop, and much more!",
+      'DDR custom simfiles from the creator of StepMania Song Manager.',
   },
   {
     name: "led_light's Tech Experiments",
     bucketName: 'led-light-simfiles-itg',
     description:
-      'ITG tech-style custom charts from the creator of StepMania Song Manager.',
+      'ITG tech-style charts from the creator of StepMania Song Manager.',
   },
 ]
 
