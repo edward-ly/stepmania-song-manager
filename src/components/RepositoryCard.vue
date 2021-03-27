@@ -136,15 +136,11 @@ export default defineComponent({
     },
     syncFunction: {
       type: Function,
-      default: () => {
-        return
-      },
+      default: () => {},
     },
     deleteFunction: {
       type: Function,
-      default: () => {
-        return
-      },
+      default: () => {},
     },
     disable: {
       type: Boolean,
