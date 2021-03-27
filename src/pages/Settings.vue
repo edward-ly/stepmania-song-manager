@@ -189,10 +189,6 @@ export default defineComponent({
 
     const updateFrequencyOptions = [
       {
-        label: '1 minute',
-        value: 60000,
-      },
-      {
         label: '5 minutes',
         value: 300000,
       },
