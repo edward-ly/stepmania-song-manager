@@ -60,7 +60,15 @@ export default defineComponent({
     const $q = useQuasar()
 
     const repoList = ref($q.localStorage.getItem('RepositoryList'))
-    const syncAllReposTimer = ref(setTimeout(syncAllRepos, 0))
+    const syncAllReposTimer = setSyncAllReposInitTimeout()
+
+    function setSyncAllReposInitTimeout () {
+      const interval = $q.localStorage.getItem('UpdateInterval')
+      if (interval >= 0) {
+        return ref(setTimeout(syncAllRepos, interval))
+      }
+      return ref(null)
+    }
 
     function setSyncAllReposTimeout () {
       const interval = $q.localStorage.getItem('UpdateInterval')
