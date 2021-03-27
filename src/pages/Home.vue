@@ -135,8 +135,6 @@ export default defineComponent({
           () => {
             window.aws.unsubscribeSyncEvents()
             setSongListLoadingStatus(index, false)
-            repo.lastUpdated = new Date().toISOString()
-            $q.localStorage.set('RepositoryList', repoList.value)
             resolve(null)
           }
         )
