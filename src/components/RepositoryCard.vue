@@ -104,6 +104,18 @@
       <q-linear-progress v-if="isNaN(songListProgress)" indeterminate />
       <q-linear-progress v-else :value="songListProgress" />
     </q-card-section>
+
+    <q-card-section v-if="error.length" class="q-pt-none">
+      <q-banner inline-actions dense rounded class="text-white bg-negative">
+        {{ error }}
+        <template #avatar>
+          <q-icon name="warning" color="white" />
+        </template>
+        <template #action>
+          <q-btn flat round dense icon="close" color="white" @click="closeErrorMessageFunction" />
+        </template>
+      </q-banner>
+    </q-card-section>
   </q-card>
 </template>
 
@@ -148,6 +160,10 @@ export default defineComponent({
       type: Function,
       default: () => {},
     },
+    closeErrorMessageFunction: {
+      type: Function,
+      default: () => {},
+    },
     deleteFunction: {
       type: Function,
       default: () => {},
@@ -171,6 +187,10 @@ export default defineComponent({
     songListProgress: {
       type: Number,
       default: NaN,
+    },
+    error: {
+      type: String,
+      default: '',
     },
   },
 
@@ -215,6 +235,7 @@ export default defineComponent({
         songListLoading: false,
         progress: null,
         songListProgress: null,
+        error: '',
         lastUpdated: new Date().toISOString(),
         localPath: localPath,
       })

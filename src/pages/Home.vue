@@ -28,6 +28,7 @@
           :route="this.$route.path"
           :sync-function="() => syncOneRepo(index)"
           :get-song-list-function="() => getSongList(index)"
+          :close-error-message-function="() => closeErrorMessage(index)"
           :delete-function="() => deleteRepo(index)"
         />
 
@@ -144,11 +145,11 @@ export default defineComponent({
 
     async function syncOneRepo (index) {
       clearTimeout(syncAllReposTimer.value)
+      closeErrorMessage(index)
 
       const err = await syncRepo(index)
       if (err) {
-        // TODO: display error message
-        console.log(err)
+        repoList.value[index].error = err.toString()
       }
 
       setSyncAllReposTimeout()
@@ -156,13 +157,13 @@ export default defineComponent({
 
     async function syncAllRepos () {
       clearTimeout(syncAllReposTimer.value)
+      closeAllErrorMessages()
 
       for (let i = 0; i < repoList.value.length; i++) {
         if (repoList.value[i].isDownloaded) {
           const err = await syncRepo(i)
           if (err) {
-            // TODO: display error message
-            console.log(err)
+            repoList.value[i].error = err.toString()
           }
         }
       }
@@ -172,17 +173,28 @@ export default defineComponent({
 
     async function getSongList (index) {
       clearTimeout(syncAllReposTimer.value)
+      closeErrorMessage(index)
 
       // TODO: if no .sm and .ssc files found, download files from bucket first
       const err = await syncSongList(index)
       if (err) {
-        // TODO: display error message
-        console.log(err)
+        repoList.value[index].error = err.toString()
       }
 
       // TODO: parse all local .sm and .ssc files
 
       setSyncAllReposTimeout()
+    }
+
+    function closeErrorMessage (index) {
+      repoList.value[index].error = ''
+    }
+
+    function closeAllErrorMessages () {
+      repoList.value = repoList.value.map((repo) => {
+        repo.error = ''
+        return repo
+      })
     }
 
     function deleteRepo (index) {
@@ -213,6 +225,7 @@ export default defineComponent({
       repoList,
       syncOneRepo,
       getSongList,
+      closeErrorMessage,
       deleteRepo,
     }
   },
