@@ -26,7 +26,7 @@
           :key="repo.bucketName"
           v-bind="repo"
           :route="this.$route.path"
-          :sync-function="() => syncRepo(index)"
+          :sync-function="() => syncOneRepo(index)"
           :delete-function="() => deleteRepo(index)"
         />
 
@@ -59,6 +59,14 @@ export default defineComponent({
     const $q = useQuasar()
 
     const repoList = ref($q.localStorage.getItem('RepositoryList'))
+    const syncAllReposTimer = ref(setTimeout(syncAllRepos, 0))
+
+    function setSyncAllReposTimeout () {
+      const interval = $q.localStorage.getItem('UpdateInterval')
+      if (interval >= 0) {
+        syncAllReposTimer.value = setTimeout(syncAllRepos, interval)
+      }
+    }
 
     function setLoadingStatus (index, status) {
       repoList.value[index].loading = status
@@ -69,52 +77,85 @@ export default defineComponent({
     }
 
     function syncRepo (index) {
-      // TODO: clear current timer for syncAllRepos
+      return new Promise((resolve) => {
+        let repo = repoList.value[index]
+        setLoadingStatus(index, true)
 
-      let repo = repoList.value[index]
-      setLoadingStatus(index, true)
-      window.aws.s3Sync(repo.bucketName, repo.localPath)
-      window.aws.subscribeSyncEvents(
-        (err) => {
-          // TODO: display error message
-          console.log(err)
-          window.aws.unsubscribeSyncEvents()
-          setLoadingStatus(index, false)
-        },
-        (progress) => (repo.progress = progress),
-        () => {
-          window.aws.unsubscribeSyncEvents()
-          setLoadingStatus(index, false)
-          repo.isDownloaded = true
-          repo.lastUpdated = new Date().toISOString()
-          $q.localStorage.set('RepositoryList', repoList.value)
+        window.aws.s3Sync(repo.bucketName, repo.localPath)
+        window.aws.subscribeSyncEvents(
+          (err) => {
+            window.aws.unsubscribeSyncEvents()
+            setLoadingStatus(index, false)
+            resolve(err)
+          },
+          (progress) => (repo.progress = progress),
+          () => {
+            window.aws.unsubscribeSyncEvents()
+            setLoadingStatus(index, false)
+            repo.isDownloaded = true
+            repo.lastUpdated = new Date().toISOString()
+            $q.localStorage.set('RepositoryList', repoList.value)
+            resolve(null)
+          }
+        )
+      })
+    }
 
-          // TODO: set timer for next call to syncAllRepos
+    async function syncOneRepo (index) {
+      clearTimeout(syncAllReposTimer.value)
+
+      const err = await syncRepo(index)
+      if (err) {
+        // TODO: display error message
+        console.log(err)
+      }
+
+      setSyncAllReposTimeout()
+    }
+
+    async function syncAllRepos () {
+      clearTimeout(syncAllReposTimer.value)
+
+      for (let i = 0; i < repoList.value.length; i++) {
+        if (repoList.value[i].isDownloaded) {
+          const err = await syncRepo(i)
+          if (err) {
+            // TODO: display error message
+            console.log(err)
+          }
         }
-      )
+      }
+
+      setSyncAllReposTimeout()
     }
 
     function deleteRepo (index) {
+      clearTimeout(syncAllReposTimer.value)
+
       $q.dialog({
         component: ConfirmDialog,
         componentProps: {
           message:
             'Are you sure you want to remove this bucket? No files will be deleted, but all songs in this bucket will be removed from StepMania.',
         },
-      }).onOk(() => {
-        window.fs.deletePathsFromPreferencesIni(
-          $q.localStorage.getItem('PreferencesIniPath'),
-          [repoList.value[index].localPath]
-        )
-
-        this.repoList.splice(index, 1)
-        $q.localStorage.set('RepositoryList', repoList.value)
       })
+        .onOk(() => {
+          window.fs.deletePathsFromPreferencesIni(
+            $q.localStorage.getItem('PreferencesIniPath'),
+            [repoList.value[index].localPath]
+          )
+
+          this.repoList.splice(index, 1)
+          $q.localStorage.set('RepositoryList', repoList.value)
+        })
+        .onDismiss(() => {
+          setSyncAllReposTimeout()
+        })
     }
 
     return {
       repoList,
-      syncRepo,
+      syncOneRepo,
       deleteRepo,
     }
   },
