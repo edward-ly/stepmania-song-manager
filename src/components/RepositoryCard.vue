@@ -112,7 +112,14 @@
           <q-icon name="warning" color="white" />
         </template>
         <template #action>
-          <q-btn flat round dense icon="close" color="white" @click="closeErrorMessageFunction" />
+          <q-btn
+            flat
+            round
+            dense
+            icon="close"
+            color="white"
+            @click="closeErrorMessageFunction"
+          />
         </template>
       </q-banner>
     </q-card-section>
