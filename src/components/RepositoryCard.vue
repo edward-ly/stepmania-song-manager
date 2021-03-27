@@ -31,7 +31,7 @@
         no-wrap
         no-caps
         :disable="disable"
-        :loading="isLoading"
+        :loading="loading"
         color="primary"
         :icon="isDownloaded ? 'sync' : 'download'"
         :label="isDownloaded ? 'Update' : 'Download'"
@@ -49,14 +49,20 @@
         no-wrap
         no-caps
         :disable="disable"
+        :loading="songListLoading"
         color="accent"
         icon="list"
         label="View Song List"
         class="btn-icon-left-padding-sm"
         size="md"
         padding="xs md xs sm"
-        @click="getSongListLocal"
-      />
+        @click="getSongListFunction"
+      >
+        <template #loading>
+          <q-spinner color="white" class="loading-spinner" />
+          View Song List
+        </template>
+      </q-btn>
       <q-btn
         no-wrap
         no-caps
@@ -138,6 +144,10 @@ export default defineComponent({
       type: Function,
       default: () => {},
     },
+    getSongListFunction: {
+      type: Function,
+      default: () => {},
+    },
     deleteFunction: {
       type: Function,
       default: () => {},
@@ -150,17 +160,18 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    songListLoading: {
+      type: Boolean,
+      default: false,
+    },
     progress: {
       type: Number,
       default: NaN,
     },
-  },
-
-  data () {
-    return {
-      songListLoading: false,
-      songListProgress: NaN,
-    }
+    songListProgress: {
+      type: Number,
+      default: NaN,
+    },
   },
 
   computed: {
@@ -201,34 +212,14 @@ export default defineComponent({
         isDownloaded: false,
         disable: false,
         loading: false,
+        songListLoading: false,
         progress: null,
+        songListProgress: null,
         lastUpdated: new Date().toISOString(),
         localPath: localPath,
       })
       this.$q.localStorage.set('RepositoryList', repoList)
       this.$router.push('/')
-    },
-    getSongListLocal () {
-      // TODO: pause current timer for syncAllRepos
-
-      // TODO: if found, parse all local .sm and .ssc files
-      // TODO: else, download .sm and .ssc files from bucket first
-      this.songListLoading = true
-      window.aws.s3SyncSongList(this.bucketName, this.localPath)
-      window.aws.subscribeSyncEvents(
-        (err) => {
-          // TODO: display error message
-          console.log(err)
-          window.aws.unsubscribeSyncEvents()
-          this.songListLoading = false
-        },
-        (progress) => (this.songListProgress = progress),
-        () => {
-          window.aws.unsubscribeSyncEvents()
-          this.songListLoading = false
-          // TODO: parse all local .sm and .ssc files
-        }
-      )
     },
   },
 })

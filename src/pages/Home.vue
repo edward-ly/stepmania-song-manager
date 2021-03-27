@@ -27,6 +27,7 @@
           v-bind="repo"
           :route="this.$route.path"
           :sync-function="() => syncOneRepo(index)"
+          :get-song-list-function="() => getSongList(index)"
           :delete-function="() => deleteRepo(index)"
         />
 
@@ -76,6 +77,14 @@ export default defineComponent({
       })
     }
 
+    function setSongListLoadingStatus (index, status) {
+      repoList.value[index].songListLoading = status
+      repoList.value = repoList.value.map((repo) => {
+        repo.disable = status
+        return repo
+      })
+    }
+
     function syncRepo (index) {
       return new Promise((resolve) => {
         let repo = repoList.value[index]
@@ -93,6 +102,30 @@ export default defineComponent({
             window.aws.unsubscribeSyncEvents()
             setLoadingStatus(index, false)
             repo.isDownloaded = true
+            repo.lastUpdated = new Date().toISOString()
+            $q.localStorage.set('RepositoryList', repoList.value)
+            resolve(null)
+          }
+        )
+      })
+    }
+
+    function syncSongList (index) {
+      return new Promise((resolve) => {
+        let repo = repoList.value[index]
+        setSongListLoadingStatus(index, true)
+
+        window.aws.s3SyncSongList(repo.bucketName, repo.localPath)
+        window.aws.subscribeSyncEvents(
+          (err) => {
+            window.aws.unsubscribeSyncEvents()
+            setSongListLoadingStatus(index, false)
+            resolve(err)
+          },
+          (progress) => (repo.songListProgress = progress),
+          () => {
+            window.aws.unsubscribeSyncEvents()
+            setSongListLoadingStatus(index, false)
             repo.lastUpdated = new Date().toISOString()
             $q.localStorage.set('RepositoryList', repoList.value)
             resolve(null)
@@ -129,6 +162,21 @@ export default defineComponent({
       setSyncAllReposTimeout()
     }
 
+    async function getSongList (index) {
+      clearTimeout(syncAllReposTimer.value)
+
+      // TODO: if no .sm and .ssc files found, download files from bucket first
+      const err = await syncSongList(index)
+      if (err) {
+        // TODO: display error message
+        console.log(err)
+      }
+
+      // TODO: parse all local .sm and .ssc files
+
+      setSyncAllReposTimeout()
+    }
+
     function deleteRepo (index) {
       clearTimeout(syncAllReposTimer.value)
 
@@ -156,6 +204,7 @@ export default defineComponent({
     return {
       repoList,
       syncOneRepo,
+      getSongList,
       deleteRepo,
     }
   },
