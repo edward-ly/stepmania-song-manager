@@ -99,12 +99,69 @@ function readDir (root, files, prefix) {
   return files
 }
 
-function parseSMData () {
-  // TODO: parse .sm file
+function getChartLevel (data, fileExtension, style, difficulty) {
+  let matchStr = 'a^'
+  if (fileExtension === '.sm') {
+    matchStr = `(?<=#NOTES:\\s*${style}:\\s*.*:\\s*${difficulty}:\\s*)\\d+`
+  }
+  if (fileExtension === '.ssc') {
+    matchStr = `(?<=#STEPSTYPE:${style};\\s*(.*\\s*){0,2}#DIFFICULTY:${difficulty};\\s*#METER:)\\d+`
+  }
+  const match = data.match(new RegExp(matchStr))
+  return !match ? '-' : match[0]
 }
 
-function parseSSCData () {
-  // TODO: parse .ssc file
+function getDisplayBPM (data) {
+  const displayBpmMatch = data.match(/(?<=#DISPLAYBPM:).*(?=;)/)
+  const displayBPM = !displayBpmMatch ? '' : displayBpmMatch[0]
+  if (!displayBPM.length) {
+    const trueBPMs = data
+      .match(/(?<=#BPMS:)[^;]*(?=;)/)[0]
+      .replace(/\s+/g, '')
+      .split(',')
+      .map((entry) => Number(entry.substring(entry.indexOf('=') + 1)))
+    const minBPM = trueBPMs.reduce((a, b) => Math.min(a, b))
+    const maxBPM = trueBPMs.reduce((a, b) => Math.max(a, b))
+    if (minBPM === maxBPM) return Math.round(maxBPM).toString()
+    return `${Math.round(minBPM)}-${Math.round(maxBPM)}`
+  }
+  if (displayBPM === '*') return '???'
+  if (displayBPM.includes(':')) {
+    const bpms = displayBPM.split(':')
+    const minBPM = Math.round(Number(bpms[0]))
+    const maxBPM = Math.round(Number(bpms[1]))
+    return `${minBPM}-${maxBPM}`
+  } // else: displayBPM is a single number
+  return Math.round(Number(displayBPM)).toString()
+}
+
+function getSimfileField (data, field) {
+  const match = data.match(new RegExp(`(?<=#${field}:).*(?=;)`))
+  return !match ? '' : match[0]
+}
+
+function parseSimfileData (data, fileExtension) {
+  if (fileExtension !== '.sm' && fileExtension !== '.ssc') return {}
+
+  return {
+    title: getSimfileField(data, 'TITLE'),
+    subtitle: getSimfileField(data, 'SUBTITLE'),
+    artist: getSimfileField(data, 'ARTIST'),
+    titleTranslit: getSimfileField(data, 'TITLETRANSLIT'),
+    subtitleTranslit: getSimfileField(data, 'SUBTITLETRANSLIT'),
+    artistTranslit: getSimfileField(data, 'ARTISTTRANSLIT'),
+    genre: getSimfileField(data, 'GENRE'),
+    displayBPM: getDisplayBPM(data),
+    begLevel: getChartLevel(data, fileExtension, 'dance-single', 'Beginner'),
+    bspLevel: getChartLevel(data, fileExtension, 'dance-single', 'Easy'),
+    dspLevel: getChartLevel(data, fileExtension, 'dance-single', 'Medium'),
+    espLevel: getChartLevel(data, fileExtension, 'dance-single', 'Hard'),
+    cspLevel: getChartLevel(data, fileExtension, 'dance-single', 'Challenge'),
+    bdpLevel: getChartLevel(data, fileExtension, 'dance-double', 'Easy'),
+    ddpLevel: getChartLevel(data, fileExtension, 'dance-double', 'Medium'),
+    edpLevel: getChartLevel(data, fileExtension, 'dance-double', 'Hard'),
+    cdpLevel: getChartLevel(data, fileExtension, 'dance-double', 'Challenge'),
+  }
 }
 
 // ===========================================================================
@@ -248,13 +305,7 @@ ipcMain.handle('read-sm-files', (event, files) => {
     return group.map((file) => {
       try {
         const data = fs.readFileSync(file, 'utf8')
-        if (path.extname(file) === '.sm') {
-          return parseSMData(data)
-        } else if (path.extname(file) === '.ssc') {
-          return parseSSCData(data)
-        } else {
-          return {}
-        }
+        return parseSimfileData(data, path.extname(file))
       } catch (err) {
         return { error: err }
       }
