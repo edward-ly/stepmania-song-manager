@@ -225,13 +225,22 @@ ipcMain.on('delete-paths-preferences-ini', (event, iniFiles, paths) => {
 })
 
 ipcMain.handle('list-sm-files', (event, folderPath) => {
-  return readDir(folderPath).filter((fileName) => {
-    if (path.extname(fileName) === '.sm') {
-      // Remove .sm file if an .ssc file for the same song exists
-      return !fs.existsSync(fileName.slice(0, fileName.length - 1) + 'sc')
+  let files = []
+  const packPaths = fs.readdirSync(folderPath)
+  for (let packPath of packPaths) {
+    const packFullPath = path.join(folderPath, packPath)
+    if (fs.lstatSync(packFullPath).isDirectory()) {
+      const packFiles = readDir(packFullPath).filter((fileName) => {
+        if (path.extname(fileName) === '.sm') {
+          // Remove .sm file if an .ssc file for the same song exists
+          return !fs.existsSync(fileName.slice(0, fileName.length - 1) + 'sc')
+        }
+        return path.extname(fileName) === '.ssc'
+      })
+      files.push(packFiles)
     }
-    return path.extname(fileName) === '.ssc'
-  })
+  }
+  return files
 })
 
 ipcMain.handle('read-sm-files', (event, files) => {
