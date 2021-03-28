@@ -49,9 +49,9 @@ contextBridge.exposeInMainWorld('fs', {
   getSongList: async (folderPath) => {
     return await ipcRenderer.invoke('list-sm-files', folderPath)
   },
-  // readSongList: async (files) => {
-  //   return await ipcRenderer.invoke('read-sm-files', files)
-  // },
+  readSongList: async (files) => {
+    return await ipcRenderer.invoke('read-sm-files', files)
+  },
 })
 
 contextBridge.exposeInMainWorld('autoLaunch', {

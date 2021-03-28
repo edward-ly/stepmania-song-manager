@@ -99,6 +99,14 @@ function readDir (root, files, prefix) {
   return files
 }
 
+function parseSMData () {
+  // TODO: parse .sm file
+}
+
+function parseSSCData () {
+  // TODO: parse .ssc file
+}
+
 // ===========================================================================
 // Main Process Methods for Renderer
 // ===========================================================================
@@ -226,20 +234,24 @@ ipcMain.handle('list-sm-files', (event, folderPath) => {
   })
 })
 
-// TODO: parse all local .sm and .ssc files
-// ipcMain.handle('read-sm-files', (event, files) => {
-//   let songList = []
-//   for (let file of files) {
-//     try {
-//       const data = fs.readFileSync(file, 'utf8')
-//       console.log(data)
-//
-//       songList.push({})
-//     } catch (err) {
-//       console.error(err)
-//     }
-//   }
-// })
+ipcMain.handle('read-sm-files', (event, files) => {
+  return files.map((group) => {
+    return group.map((file) => {
+      try {
+        const data = fs.readFileSync(file, 'utf8')
+        if (path.extname(file) === '.sm') {
+          return parseSMData(data)
+        } else if (path.extname(file) === '.ssc') {
+          return parseSSCData(data)
+        } else {
+          return {}
+        }
+      } catch (err) {
+        return { error: err }
+      }
+    })
+  })
+})
 
 // Auto-launcher =============================================================
 
