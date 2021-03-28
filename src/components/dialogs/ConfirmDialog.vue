@@ -25,10 +25,7 @@ import { useDialogPluginComponent } from 'quasar'
 
 export default defineComponent({
   props: {
-    message: {
-      type: String,
-      default: 'Are you sure?',
-    },
+    message: { type: String, default: 'Are you sure?' },
   },
 
   emits: [...useDialogPluginComponent.emits],

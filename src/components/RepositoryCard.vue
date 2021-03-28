@@ -137,78 +137,24 @@ import { defineComponent } from 'vue'
 
 export default defineComponent({
   props: {
-    name: {
-      type: String,
-      required: true,
-    },
-    bucketName: {
-      type: String,
-      required: true,
-    },
-    description: {
-      type: String,
-      default: '',
-    },
-    route: {
-      type: String,
-      required: true,
-    },
-    isDownloaded: {
-      type: Boolean,
-      default: false,
-    },
-    lastUpdated: {
-      type: String,
-      default: new Date().toISOString(),
-    },
-    localPath: {
-      type: String,
-      default: '',
-    },
-    syncFunction: {
-      type: Function,
-      default: () => {},
-    },
-    getSongListFunction: {
-      type: Function,
-      default: () => {},
-    },
-    closeErrorMessageFunction: {
-      type: Function,
-      default: () => {},
-    },
-    deleteFunction: {
-      type: Function,
-      default: () => {},
-    },
-    disable: {
-      type: Boolean,
-      default: false,
-    },
-    loading: {
-      type: Boolean,
-      default: false,
-    },
-    songListLoading: {
-      type: Boolean,
-      default: false,
-    },
-    progress: {
-      type: Number,
-      default: NaN,
-    },
-    // showSongList: {
-    //   type: Boolean,
-    //   default: false,
-    // },
-    // songList: {
-    //   type: Array,
-    //   default: [],
-    // },
-    error: {
-      type: String,
-      default: '',
-    },
+    name: { type: String, required: true },
+    bucketName: { type: String, required: true },
+    description: { type: String, default: '' },
+    route: { type: String, required: true },
+    isDownloaded: { type: Boolean, default: false },
+    lastUpdated: { type: String, default: new Date().toISOString() },
+    localPath: { type: String, default: '' },
+    syncFunction: { type: Function, default: () => {} },
+    getSongListFunction: { type: Function, default: () => {} },
+    closeErrorMessageFunction: { type: Function, default: () => {} },
+    deleteFunction: { type: Function, default: () => {} },
+    disable: { type: Boolean, default: false },
+    loading: { type: Boolean, default: false },
+    songListLoading: { type: Boolean, default: false },
+    progress: { type: Number, default: NaN },
+    // showSongList: { type: Boolean, default: false },
+    // songList: { type: Array, default: [] },
+    error: { type: String, default: '' },
   },
 
   computed: {
