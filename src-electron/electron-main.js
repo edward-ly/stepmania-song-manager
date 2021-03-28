@@ -282,7 +282,8 @@ ipcMain.on('sync-song-list', (event, bucketName, downloadPath) => {
       Prefix: '',
     },
     getS3Params: (localFile, s3Object, callback) => {
-      if (s3Object.Key.includes('.sm') || s3Object.Key.includes('.ssc')) {
+      const ext = path.extname(s3Object.Key)
+      if (ext === '.sm' || ext === '.ssc') {
         callback(null, {})
       } else {
         callback(null, null)
