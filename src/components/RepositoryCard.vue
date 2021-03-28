@@ -100,10 +100,6 @@
       <q-linear-progress v-if="isNaN(progress)" indeterminate />
       <q-linear-progress v-else :value="progress" />
     </q-card-section>
-    <q-card-section v-else-if="songListLoading" class="q-pt-none">
-      <q-linear-progress v-if="isNaN(songListProgress)" indeterminate />
-      <q-linear-progress v-else :value="songListProgress" />
-    </q-card-section>
 
     <q-card-section v-if="error.length" class="q-pt-none">
       <q-banner inline-actions dense rounded class="text-white bg-negative">
@@ -201,10 +197,6 @@ export default defineComponent({
       type: Number,
       default: NaN,
     },
-    songListProgress: {
-      type: Number,
-      default: NaN,
-    },
     // showSongList: {
     //   type: Boolean,
     //   default: false,
@@ -259,7 +251,6 @@ export default defineComponent({
         loading: false,
         songListLoading: false,
         progress: null,
-        songListProgress: null,
         // showSongList: false,
         // songList: [],
         error: '',

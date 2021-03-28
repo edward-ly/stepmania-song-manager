@@ -129,7 +129,7 @@ export default defineComponent({
             window.aws.unsubscribeSyncEvents()
             resolve(err)
           },
-          (progress) => (repo.songListProgress = progress),
+          () => {},
           () => {
             window.aws.unsubscribeSyncEvents()
             resolve(null)
