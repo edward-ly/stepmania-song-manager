@@ -122,19 +122,16 @@ export default defineComponent({
     function syncSongList (index) {
       return new Promise((resolve) => {
         let repo = repoList.value[index]
-        setSongListLoadingStatus(index, true)
 
         window.aws.s3SyncSongList(repo.bucketName, repo.localPath)
         window.aws.subscribeSyncEvents(
           (err) => {
             window.aws.unsubscribeSyncEvents()
-            setSongListLoadingStatus(index, false)
             resolve(err)
           },
           (progress) => (repo.songListProgress = progress),
           () => {
             window.aws.unsubscribeSyncEvents()
-            setSongListLoadingStatus(index, false)
             resolve(null)
           }
         )
@@ -172,15 +169,22 @@ export default defineComponent({
     async function getSongList (index) {
       clearTimeout(syncAllReposTimer.value)
       closeErrorMessage(index)
+      setSongListLoadingStatus(index, true)
 
-      // TODO: if no .sm and .ssc files found, download files from bucket first
-      const err = await syncSongList(index)
-      if (err) {
-        repoList.value[index].error = err.toString()
+      let files = await window.fs.getSongList(repoList.value[index].localPath)
+      if (!files.length) {
+        const err = await syncSongList(index)
+        if (err) {
+          repoList.value[index].error = err.toString()
+          setSyncAllReposTimeout()
+          return
+        }
+        files = await window.fs.getSongList(repoList.value[index].localPath)
       }
 
-      // TODO: parse all local .sm and .ssc files
-
+      console.log(files)
+      // repoList.value[index].songList = await window.fs.readSongList(files)
+      setSongListLoadingStatus(index, false)
       setSyncAllReposTimeout()
     }
 
