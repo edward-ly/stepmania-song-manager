@@ -77,6 +77,29 @@ const autoLauncher = new AutoLaunch({
 })
 
 // ===========================================================================
+// Helper Functions
+// ===========================================================================
+
+// Based on the 'fs-readdir-recursive' npm package, modified for this app
+// https://github.com/fs-utils/fs-readdir-recursive
+function readDir (root, files, prefix) {
+  files = files || []
+  prefix = prefix || ''
+
+  let dir = path.join(root, prefix)
+  if (!fs.existsSync(dir)) return files
+  if (fs.statSync(dir).isDirectory()) {
+    fs.readdirSync(dir)
+      .filter((name) => name[0] !== '.')
+      .forEach((name) => readDir(root, files, path.join(prefix, name)))
+  } else {
+    files.push(dir)
+  }
+
+  return files
+}
+
+// ===========================================================================
 // Main Process Methods for Renderer
 // ===========================================================================
 
@@ -192,6 +215,31 @@ ipcMain.on('delete-paths-preferences-ini', (event, iniFiles, paths) => {
     })
   }
 })
+
+ipcMain.handle('list-sm-files', (event, folderPath) => {
+  return readDir(folderPath).filter((fileName) => {
+    if (path.extname(fileName) === '.sm') {
+      // Remove .sm file if an .ssc file for the same song exists
+      return !fs.existsSync(fileName.slice(0, fileName.length - 1) + 'sc')
+    }
+    return path.extname(fileName) === '.ssc'
+  })
+})
+
+// TODO: parse all local .sm and .ssc files
+// ipcMain.handle('read-sm-files', (event, files) => {
+//   let songList = []
+//   for (let file of files) {
+//     try {
+//       const data = fs.readFileSync(file, 'utf8')
+//       console.log(data)
+//
+//       songList.push({})
+//     } catch (err) {
+//       console.error(err)
+//     }
+//   }
+// })
 
 // Auto-launcher =============================================================
 
