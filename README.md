@@ -39,7 +39,7 @@ You can also add a new S3 bucket that is not already in the list, in which case 
 
 The chosen bucket will then be displayed on the home page where you can view information about the songs in the bucket, download all files in the bucket, or remove the bucket from the app.
 
-> Note: removing a bucket from the app does not delete any local files from your computer!
+> Note: Removing a bucket from the app does not delete any local files from your computer!
   This is to reduce the size of future downloads should you decide to re-add the bucket.
   If you want to completely remove the downloaded packs from your computer, you can manually delete the files and folders yourself.
 
@@ -54,10 +54,12 @@ The app itself will check for and download updates periodically, or you can perf
 The settings page includes the following parameters.
 Parameters are set to their default values when the app is launched for the first time.
 
+> Note: Unless you know what you are doing, I do not recommend changing the download path, as using a path that already exists can potentially overwrite or delete any unwanted files!
+
 | Name | Default Value | Description |
 | :- | :- | :- |
 | `Download Path` | (See below.) | The directory in which song packs will be downloaded. Only applies to newly added packs. |
-| `Preferences.ini Path` | Paths to all `Preferences.ini` files automatically found/detected. | The full path to the `Preferences.ini` file for StepMania (or paths if multiple copies of StepMania are installed). |
+| `Preferences.ini Path` | Paths to all `Preferences.ini` files automatically found/detected. | The full path to the `Preferences.ini` file used by StepMania (or paths if multiple copies of StepMania are installed). |
 | `Update Frequency` | `1 hour` | How often the app will check for and download updates. |
 | `Auto-Launch on Login` | `false` | Whether or not to open the app when the computer starts. |
 | `Language` | `English` | Language of the app's user interface. |
@@ -67,8 +69,8 @@ Default download paths:
 -   Windows: `%APPDATA%/StepMania Song Manager/Songs`
 -   macOS: `~/Library/Application Support/StepMania Song Manager/Songs`
 -   Linux:
-  -   `$XDG_CONFIG_HOME/StepMania Song Manager/Songs`, or
-  -   `~/.config/StepMania Song Manager/Songs`
+    -   `$XDG_CONFIG_HOME/StepMania Song Manager/Songs`, or
+    -   `~/.config/StepMania Song Manager/Songs`
 
 ## License
 
