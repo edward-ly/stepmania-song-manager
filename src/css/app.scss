@@ -13,3 +13,35 @@
 .text-muted {
   opacity: 0.5;
 }
+
+// Additional Colors
+.text-beginner {
+  color: $beginner !important;
+}
+.bg-beginner {
+  background: $beginner !important;
+}
+.text-basic {
+  color: $basic !important;
+}
+.bg-basic {
+  background: $basic !important;
+}
+.text-difficult {
+  color: $difficult !important;
+}
+.bg-difficult {
+  background: $difficult !important;
+}
+.text-expert {
+  color: $expert !important;
+}
+.bg-expert {
+  background: $expert !important;
+}
+.text-challenge {
+  color: $challenge !important;
+}
+.bg-challenge {
+  background: $challenge !important;
+}
