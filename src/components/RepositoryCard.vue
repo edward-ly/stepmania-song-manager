@@ -119,16 +119,6 @@
         </template>
       </q-banner>
     </q-card-section>
-
-    <!-- TODO: add song list component -->
-    <!-- <q-slide-transition>
-      <div v-show="showSongList">
-        <q-separator />
-        <q-card-section>
-          {{ songList }}
-        </q-card-section>
-      </div>
-    </q-slide-transition> -->
   </q-card>
 </template>
 
@@ -152,8 +142,6 @@ export default defineComponent({
     loading: { type: Boolean, default: false },
     songListLoading: { type: Boolean, default: false },
     progress: { type: Number, default: NaN },
-    // showSongList: { type: Boolean, default: false },
-    // songList: { type: Array, default: [] },
     error: { type: String, default: '' },
   },
 
@@ -197,8 +185,6 @@ export default defineComponent({
         loading: false,
         songListLoading: false,
         progress: null,
-        // showSongList: false,
-        // songList: [],
         error: '',
         lastUpdated: new Date().toISOString(),
         localPath: localPath,
