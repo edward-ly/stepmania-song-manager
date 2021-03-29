@@ -24,6 +24,7 @@ try {
 }
 
 let mainWindow
+let songListWindow
 
 function createWindow () {
   /* Initial window options */
@@ -54,11 +55,49 @@ function createWindow () {
   }
 
   mainWindow.on('closed', () => {
+    songListWindow.destroy()
+    songListWindow = null
     mainWindow = null
   })
 }
 
-app.on('ready', createWindow)
+function createSongListWindow () {
+  songListWindow = new BrowserWindow({
+    width: 1280,
+    height: 720,
+    minWidth: 854,
+    minHeight: 480,
+    useContentSize: true,
+    show: false,
+    webPreferences: {
+      contextIsolation: true,
+      // More info: /quasar-cli/developing-electron-apps/electron-preload-script
+      preload: path.resolve(__dirname, process.env.QUASAR_ELECTRON_PRELOAD),
+    },
+  })
+
+  songListWindow.loadURL(process.env.APP_URL + '/#/songs')
+
+  if (process.env.DEBUGGING) {
+    // if on DEV or Production with debug enabled
+    songListWindow.webContents.openDevTools()
+  } else {
+    // we're on production; no access to devtools pls
+    songListWindow.webContents.on('devtools-opened', () => {
+      songListWindow.webContents.closeDevTools()
+    })
+  }
+
+  songListWindow.on('close', (event) => {
+    event.preventDefault()
+    songListWindow.hide()
+  })
+}
+
+app.on('ready', () => {
+  createWindow()
+  createSongListWindow()
+})
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
@@ -69,6 +108,7 @@ app.on('window-all-closed', () => {
 app.on('activate', () => {
   if (mainWindow === null) {
     createWindow()
+    createSongListWindow()
   }
 })
 
@@ -241,6 +281,12 @@ ipcMain.on('open-ini-file-dialog', (event) => {
     ],
     properties: ['openFile', 'showHiddenFiles'],
   })
+})
+
+ipcMain.on('open-song-list', (event, songList, bucketName) => {
+  songListWindow.setTitle('Song List: ' + bucketName)
+  songListWindow.webContents.send('song-list-data', songList)
+  songListWindow.show()
 })
 
 // File System ===============================================================

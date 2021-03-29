@@ -37,6 +37,14 @@ contextBridge.exposeInMainWorld('electron', {
   openIniFileDialog: () => {
     return ipcRenderer.sendSync('open-ini-file-dialog')
   },
+  openSongListWindow: (songList, bucketName) => {
+    ipcRenderer.send('open-song-list', songList, bucketName)
+  },
+  getSongListData: (callback) => {
+    ipcRenderer.on('song-list-data', (event, songList) => {
+      callback(songList)
+    })
+  },
 })
 
 contextBridge.exposeInMainWorld('fs', {
