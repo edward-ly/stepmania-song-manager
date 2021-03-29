@@ -170,20 +170,21 @@ export default defineComponent({
       clearTimeout(syncAllReposTimer.value)
       closeErrorMessage(index)
       setSongListLoadingStatus(index, true)
+      let repo = repoList.value[index]
 
-      let files = await window.fs.getSongList(repoList.value[index].localPath)
+      let files = await window.fs.getSongList(repo.localPath)
       if (!files.length) {
         const err = await syncSongList(index)
         if (err) {
-          repoList.value[index].error = err.toString()
+          repo.error = err.toString()
           setSyncAllReposTimeout()
           return
         }
-        files = await window.fs.getSongList(repoList.value[index].localPath)
+        files = await window.fs.getSongList(repo.localPath)
       }
 
-      console.log(files)
-      // repoList.value[index].songList = await window.fs.readSongList(files)
+      const songList = await window.fs.readSongList(files)
+      window.electron.openSongListWindow(songList, repo.name)
       setSongListLoadingStatus(index, false)
       setSyncAllReposTimeout()
     }
