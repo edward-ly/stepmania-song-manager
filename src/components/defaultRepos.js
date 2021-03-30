@@ -5,12 +5,12 @@ const defaultRepos = [
     description:
       'The latest official arcade release of DDR, with all songs grouped by mix in chronological order. Will include new songs, rating adjustments, songs removals, etc. as the arcade game is updated.',
   },
-  {
-    name: 'DanceDanceRevolution XX',
-    bucketName: 'ddr-xx-simfiles',
-    description:
-      'A 20th anniversary celebration of DDR. By Zenius, for Zenius.',
-  },
+  // {
+  //   name: 'DanceDanceRevolution XX',
+  //   bucketName: 'ddr-xx-simfiles',
+  //   description:
+  //     'A 20th anniversary celebration of DDR. By Zenius, for Zenius.',
+  // },
   {
     name: 'The Complete led_light Collection',
     bucketName: 'led-light-simfiles',
