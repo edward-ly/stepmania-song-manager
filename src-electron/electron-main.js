@@ -152,7 +152,7 @@ function getChartLevel (data, fileExtension, style, difficulty) {
 }
 
 function getDisplayBPM (data) {
-  const displayBpmMatch = data.match(/(?<=#DISPLAYBPM:).*(?=;)/)
+  const displayBpmMatch = data.match(/(?<=#DISPLAYBPM:).*(?=;\s*#BPMS:)/)
   const displayBPM = !displayBpmMatch ? '' : displayBpmMatch[0]
   if (!displayBPM.length) {
     const trueBPMs = data
