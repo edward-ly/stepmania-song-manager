@@ -1,47 +1,78 @@
 <template>
-  <q-scroll-area
-    class="bg-grey-1 q-py-sm window-height window-width"
-    :thumb-style="thumbScrollStyle"
-  >
-    <!-- TODO: add expand/collapse all header buttons -->
-    <!-- TODO: add songNativeLanguage toggle -->
-    <!-- TODO: add search bar -->
-    <div
-      v-for="(pack, index) in packs"
-      :key="index"
-      class="q-pl-md q-pr-lg q-py-sm q-gutter-y-sm"
-    >
-      <q-btn
-        flat
-        rounded
-        dense
-        no-caps
-        :icon="expanded[index] ? 'keyboard_arrow_up' : 'keyboard_arrow_down'"
-        :label="`${pack.name} (${pack.songs.length})`"
-        class="q-pr-md"
-        size="lg"
-        @click="expanded[index] = !expanded[index]"
-      />
-      <q-slide-transition :duration="duration[index]">
-        <div v-show="expanded[index]">
-          <q-table
-            class="fill-width"
-            dense
-            :rows="pack.songs"
-            :columns="columns"
-            :row-key="getSongTitle"
-            :pagination="{ rowsPerPage: 0 }"
-            hide-pagination
-            wrap-cells
-          />
-        </div>
-      </q-slide-transition>
-    </div>
+  <q-layout view="hHh lpR fFf" class="fullscreen">
+    <q-header bordered class="bg-blue-grey-1 text-dark q-pa-sm">
+      <q-toolbar>
+        <q-btn outline label="Expand All" class="q-mr-md" />
+        <q-btn outline label="Collapse All" class="q-mr-md" />
+        <q-toggle v-model="showTranslit" label="Show Transliterated" />
+        <q-space />
+        <q-input
+          v-model="searchText"
+          dense
+          filled
+          label="Search"
+          class="song-search"
+        >
+          <template #append>
+            <q-icon v-if="!searchText" name="search" />
+            <q-icon
+              v-else
+              name="close"
+              class="cursor-pointer"
+              @click="searchText = null"
+            />
+          </template>
+        </q-input>
+      </q-toolbar>
+    </q-header>
 
-    <EmptyMessage :show="!packs.length" icon="info">
-      No songs found.
-    </EmptyMessage>
-  </q-scroll-area>
+    <q-page-container class="bg-grey-1 full-height full-width">
+      <q-scroll-area
+        class="full-height full-width"
+        :thumb-style="thumbScrollStyle"
+      >
+        <!-- TODO: add expand/collapse all header buttons -->
+        <!-- TODO: add search bar -->
+        <div
+          v-for="(pack, index) in packs"
+          :key="index"
+          class="q-pl-md q-pr-lg q-py-sm q-gutter-y-sm"
+        >
+          <q-btn
+            flat
+            rounded
+            dense
+            no-caps
+            :icon="
+              expanded[index] ? 'keyboard_arrow_up' : 'keyboard_arrow_down'
+            "
+            :label="`${pack.name} (${pack.songs.length})`"
+            class="q-pr-md"
+            size="lg"
+            @click="expanded[index] = !expanded[index]"
+          />
+          <q-slide-transition :duration="duration[index]">
+            <div v-show="expanded[index]">
+              <q-table
+                class="fill-width"
+                dense
+                :rows="pack.songs"
+                :columns="columns"
+                :row-key="getSongTitle"
+                :pagination="{ rowsPerPage: 0 }"
+                hide-pagination
+                wrap-cells
+              />
+            </div>
+          </q-slide-transition>
+        </div>
+
+        <EmptyMessage :show="!packs.length" icon="info">
+          No songs found.
+        </EmptyMessage>
+      </q-scroll-area>
+    </q-page-container>
+  </q-layout>
 </template>
 
 <script>
@@ -66,7 +97,8 @@ export default defineComponent({
       )
     })
 
-    const songNativeLanguage = ref(true)
+    const showTranslit = ref(false)
+    const searchText = ref(null)
 
     function levelSort (a, b) {
       const aInt = Number(a) || -1
@@ -76,11 +108,11 @@ export default defineComponent({
 
     function getSongTitle (row) {
       const title =
-        !songNativeLanguage.value && row.titleTranslit.length
+        showTranslit.value && row.titleTranslit.length
           ? row.titleTranslit
           : row.title
       const subtitle =
-        !songNativeLanguage.value && row.subtitleTranslit.length
+        showTranslit.value && row.subtitleTranslit.length
           ? row.subtitleTranslit
           : row.subtitle
       return subtitle.length ? `${title} ${subtitle}` : title
@@ -100,7 +132,7 @@ export default defineComponent({
         name: 'artist',
         label: 'Artist',
         field: (row) =>
-          !songNativeLanguage.value && row.artistTranslit.length
+          showTranslit.value && row.artistTranslit.length
             ? row.artistTranslit
             : row.artist,
         align: 'left',
@@ -253,7 +285,8 @@ export default defineComponent({
       duration,
       columns,
       rows,
-      songNativeLanguage,
+      showTranslit,
+      searchText,
     }
   },
 })
@@ -263,5 +296,10 @@ export default defineComponent({
 .q-table--dense .q-table th.padding-level,
 .q-table--dense .q-table td.padding-level {
   padding: 4px 2px;
+}
+
+.song-search {
+  min-width: 240px;
+  width: 25%;
 }
 </style>
