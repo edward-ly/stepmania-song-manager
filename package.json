@@ -7,8 +7,9 @@
   "private": true,
   "scripts": {
     "dev": "genversion --es6 version.js && quasar dev -m electron",
-    "build": "genversion --es6 version.js && quasar build -m electron",
     "lint": "prettier --write . && eslint --ext .js,.vue ./ --fix",
+    "icon": "icongenie generate -m electron -i src/assets/master-icon.png --skip-trim --quality 12",
+    "build": "genversion --es6 version.js && quasar build -m electron",
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
