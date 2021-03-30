@@ -3,11 +3,15 @@
     class="bg-grey-1 q-py-sm window-height window-width"
     :thumb-style="thumbScrollStyle"
   >
+    <!-- TODO: add expand/collapse all header buttons -->
+    <!-- TODO: add songNativeLanguage toggle -->
+    <!-- TODO: add search bar -->
     <div
       v-for="(pack, index) in packs"
       :key="index"
       class="q-pl-md q-pr-lg q-py-sm q-gutter-y-sm"
     >
+      <!-- TODO: create separate expanded for each table -->
       <q-btn
         flat
         rounded

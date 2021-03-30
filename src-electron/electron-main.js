@@ -10,6 +10,7 @@ import path from 'path'
 import fs from 'fs'
 import glob from 'glob'
 import AutoLaunch from 'auto-launch'
+// TODO: replace with native '@aws-sdk/client-s3' package and md5 file caching
 import s3 from '@auth0/s3'
 
 try {
@@ -26,6 +27,7 @@ try {
 let mainWindow
 let songListWindow
 
+// TODO: create frameless window with custom menu bar
 function createWindow () {
   /* Initial window options */
   /* global __dirname */
