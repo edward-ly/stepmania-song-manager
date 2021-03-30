@@ -6,8 +6,6 @@ A cross-platform companion app for [StepMania](https://github.com/stepmania/step
 
 Made with [Electron](https://www.electronjs.org/) and [Vue.js](https://vuejs.org/) via the [Quasar](https://quasar.dev/) framework.
 
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Z8Z42UJNY)
-
 ## Development
 
 ```bash
@@ -35,7 +33,9 @@ To customize the Quasar configuration, see [Configuring quasar.conf.js](https://
 
 Simply click on the `+ Add Songs` button and select a bucket from the list.
 You can also add a new S3 bucket that is not already in the list, in which case the name of the S3 bucket is required.
-*Please note that the S3 bucket must be publicly accessible in order for the app to be able to download the files within!*
+
+*Please note that any S3 buckets added must be publicly accessible in order for the app to be able to download the files within!*
+*More specifically, the `s3:GetObject` and `s3:ListBucket` permissions must be enabled for everyone.*
 
 The chosen bucket will then be displayed on the home page where you can view information about the songs in the bucket, download all files in the bucket, or remove the bucket from the app.
 
@@ -71,6 +71,15 @@ Default download paths:
 -   Linux:
     -   `$XDG_CONFIG_HOME/StepMania Song Manager/Songs`, or
     -   `~/.config/StepMania Song Manager/Songs`
+
+## Donate
+
+Like the app?
+Consider donating to help pay for the costs of hosting simfiles in Amazon S3.
+
+[![PayPal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/donate?hosted_button_id=R3F883NUQFLP2)
+
+[![Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Z8Z42UJNY)
 
 ## License
 
