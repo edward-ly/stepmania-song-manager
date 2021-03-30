@@ -1,6 +1,6 @@
 const defaultRepos = [
   {
-    name: 'DanceDanceRevolution A20 PLUS',
+    name: 'DanceDanceRevolution (Arcade)',
     bucketName: 'ddr-arcade-simfiles',
     description:
       'The latest official arcade release of DDR, with all songs grouped by mix in chronological order. Will include new songs, rating adjustments, songs removals, etc. as the arcade game is updated.',
