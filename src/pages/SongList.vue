@@ -2,8 +2,18 @@
   <q-layout view="hHh lpR fFf" class="fullscreen">
     <q-header bordered class="bg-blue-grey-1 text-dark q-pa-sm">
       <q-toolbar>
-        <q-btn outline label="Expand All" class="q-mr-md" />
-        <q-btn outline label="Collapse All" class="q-mr-md" />
+        <q-btn
+          outline
+          label="Expand All"
+          class="q-mr-md"
+          @click="expanded.fill(true)"
+        />
+        <q-btn
+          outline
+          label="Collapse All"
+          class="q-mr-md"
+          @click="expanded.fill(false)"
+        />
         <q-toggle v-model="showTranslit" label="Show Transliterated" />
         <q-space />
         <q-input
@@ -31,8 +41,6 @@
         class="full-height full-width"
         :thumb-style="thumbScrollStyle"
       >
-        <!-- TODO: add expand/collapse all header buttons -->
-        <!-- TODO: add search bar -->
         <div
           v-for="(pack, index) in packs"
           :key="index"
@@ -99,6 +107,8 @@ export default defineComponent({
 
     const showTranslit = ref(false)
     const searchText = ref(null)
+
+    // TODO: implmement search filter
 
     function levelSort (a, b) {
       const aInt = Number(a) || -1
