@@ -1,5 +1,8 @@
 <template>
-  <q-scroll-area class="bg-grey-1 q-py-sm window-height window-width">
+  <q-scroll-area
+    class="bg-grey-1 q-py-sm window-height window-width"
+    :thumb-style="thumbScrollStyle"
+  >
     <div
       v-for="(pack, index) in packs"
       :key="index"
@@ -41,6 +44,7 @@
 <script>
 import { defineComponent, ref } from 'vue'
 import EmptyMessage from 'components/EmptyMessage.vue'
+import thumbScrollStyle from 'components/thumbScrollStyle'
 
 export default defineComponent({
   components: {
@@ -233,6 +237,7 @@ export default defineComponent({
     const rows = []
 
     return {
+      thumbScrollStyle,
       getSongTitle,
       packs,
       expanded,

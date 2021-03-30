@@ -76,7 +76,10 @@
     </q-drawer>
 
     <q-page-container class="bg-grey-1 full-height full-width">
-      <q-scroll-area class="full-height full-width">
+      <q-scroll-area
+        class="full-height full-width"
+        :thumb-style="thumbScrollStyle"
+      >
         <router-view />
       </q-scroll-area>
     </q-page-container>
@@ -86,6 +89,7 @@
 <script>
 import { defineComponent, ref } from 'vue'
 import { version } from '../../version'
+import thumbScrollStyle from 'components/thumbScrollStyle'
 
 export default defineComponent({
   setup () {
@@ -97,6 +101,7 @@ export default defineComponent({
 
     return {
       version,
+      thumbScrollStyle,
       leftDrawerOpen,
       toggleLeftDrawer () {
         leftDrawerOpen.value = !leftDrawerOpen.value
