@@ -1,6 +1,7 @@
 <template>
   <q-card class="q-mb-lg">
     <q-card-section>
+      <!-- TODO: add popups to edit name and description -->
       <div class="text-h6">{{ name }}</div>
       <div class="text-caption">S3 Bucket: {{ bucketName }}</div>
       <div v-if="description.length" class="text-body2 q-pt-sm">

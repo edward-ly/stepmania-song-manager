@@ -250,6 +250,7 @@ export default defineComponent({
 
     // ==================================================================
 
+    // TODO: add 'en-GB' and 'ja' locales
     const localeOptions = [
       {
         label: 'English',
@@ -266,6 +267,8 @@ export default defineComponent({
     }
 
     // ==================================================================
+
+    // TODO: add dark mode setting
 
     return {
       downloadPath,
