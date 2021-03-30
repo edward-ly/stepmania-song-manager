@@ -22,6 +22,7 @@
           filled
           label="Search"
           class="song-search"
+          @update:modelValue="filterSongList"
         >
           <template #append>
             <q-icon v-if="!searchText" name="search" />
@@ -29,7 +30,7 @@
               v-else
               name="close"
               class="cursor-pointer"
-              @click="searchText = null"
+              @click="() => filterSongList((searchText = null))"
             />
           </template>
         </q-input>
@@ -41,41 +42,42 @@
         class="full-height full-width"
         :thumb-style="thumbScrollStyle"
       >
-        <div
-          v-for="(pack, index) in packs"
-          :key="index"
-          class="q-pl-md q-pr-lg q-py-sm q-gutter-y-sm"
-        >
-          <q-btn
-            flat
-            rounded
-            dense
-            no-caps
-            :icon="
-              expanded[index] ? 'keyboard_arrow_up' : 'keyboard_arrow_down'
-            "
-            :label="`${pack.name} (${pack.songs.length})`"
-            class="q-pr-md"
-            size="lg"
-            @click="expanded[index] = !expanded[index]"
-          />
-          <q-slide-transition :duration="duration[index]">
-            <div v-show="expanded[index]">
-              <q-table
-                class="fill-width"
-                dense
-                :rows="pack.songs"
-                :columns="columns"
-                :row-key="getSongTitle"
-                :pagination="{ rowsPerPage: 0 }"
-                hide-pagination
-                wrap-cells
-              />
-            </div>
-          </q-slide-transition>
+        <div v-for="(pack, index) in filteredSongList" :key="index">
+          <div
+            v-if="pack.songs.length"
+            class="q-pl-md q-pr-lg q-py-sm q-gutter-y-sm"
+          >
+            <q-btn
+              flat
+              rounded
+              dense
+              no-caps
+              :icon="
+                expanded[index] ? 'keyboard_arrow_up' : 'keyboard_arrow_down'
+              "
+              :label="`${pack.name} (${pack.songs.length})`"
+              class="q-pr-md"
+              size="lg"
+              @click="expanded[index] = !expanded[index]"
+            />
+            <q-slide-transition :duration="duration[index]">
+              <div v-show="expanded[index]">
+                <q-table
+                  class="fill-width"
+                  dense
+                  :rows="pack.songs"
+                  :columns="columns"
+                  :row-key="getSongTitle"
+                  :pagination="{ rowsPerPage: 0 }"
+                  hide-pagination
+                  wrap-cells
+                />
+              </div>
+            </q-slide-transition>
+          </div>
         </div>
 
-        <EmptyMessage :show="!packs.length" icon="info">
+        <EmptyMessage :show="!filteredSongList.length" icon="info">
           No songs found.
         </EmptyMessage>
       </q-scroll-area>
@@ -94,21 +96,50 @@ export default defineComponent({
   },
 
   setup () {
-    const packs = ref([])
+    const songList = ref([])
+    const filteredSongList = ref([])
     const expanded = ref([])
     const duration = ref([])
-    window.electron.getSongListData((data) => {
-      packs.value = data
-      expanded.value = Array(data.length).fill(data.length < 2)
-      duration.value = data.map((pack) =>
-        Math.max(Math.log1p(pack.songs.length) * 100, 150)
-      )
-    })
-
     const showTranslit = ref(false)
     const searchText = ref(null)
 
-    // TODO: implmement search filter
+    function getDuration (pack) {
+      return Math.max(Math.log1p(pack.songs.length) * 100, 150)
+    }
+
+    window.electron.getSongListData((data) => {
+      searchText.value = null
+      songList.value = data
+      filteredSongList.value = data
+      expanded.value = Array(data.length).fill(data.length < 2)
+      duration.value = data.map((pack) => getDuration(pack))
+    })
+
+    // TODO: implement searching by bpm and level
+    function filterSongList (input) {
+      if (!input || /^\s*$/.test(input)) {
+        filteredSongList.value = songList.value
+        return
+      }
+
+      const query = input.trim().toLowerCase()
+      filteredSongList.value = songList.value.map((pack) => {
+        return {
+          name: pack.name,
+          songs: pack.songs.filter((song) => {
+            const matchConds = [
+              `${song.title} ${song.artist}`.toLowerCase().includes(query),
+              `${song.titleTranslit} ${song.artistTranslit}`
+                .toLowerCase()
+                .includes(query),
+            ]
+            return matchConds.reduce((a, b) => a || b)
+          }),
+        }
+      })
+
+      duration.value = filteredSongList.value.map((pack) => getDuration(pack))
+    }
 
     function levelSort (a, b) {
       const aInt = Number(a) || -1
@@ -285,18 +316,16 @@ export default defineComponent({
       },
     ]
 
-    const rows = []
-
     return {
       thumbScrollStyle,
       getSongTitle,
-      packs,
+      filteredSongList,
       expanded,
       duration,
-      columns,
-      rows,
       showTranslit,
       searchText,
+      filterSongList,
+      columns,
     }
   },
 })
