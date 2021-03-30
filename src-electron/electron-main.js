@@ -333,29 +333,48 @@ ipcMain.handle('list-sm-files', (event, folderPath) => {
   for (let packPath of packPaths) {
     const packFullPath = path.join(folderPath, packPath)
     if (fs.lstatSync(packFullPath).isDirectory()) {
-      const packFiles = readDir(packFullPath).filter((fileName) => {
+      let packName = packPath
+      const packFiles = readDir(packFullPath)
+      const groupIni = packFiles.find((el) => el.endsWith('group.ini'))
+      if (groupIni) {
+        try {
+          const data = fs.readFileSync(groupIni, 'utf8')
+          const newPackName = getSimfileField(data, 'NAME')
+          if (newPackName.length) packName = newPackName
+        } catch (err) {
+          /* continue */
+        }
+      }
+      const songFiles = packFiles.filter((fileName) => {
         if (path.extname(fileName) === '.sm') {
           // Remove .sm file if an .ssc file for the same song exists
           return !fs.existsSync(fileName.slice(0, fileName.length - 1) + 'sc')
         }
         return path.extname(fileName) === '.ssc'
       })
-      files.push(packFiles)
+      files.push({
+        name: packName,
+        songs: songFiles,
+      })
     }
   }
   return files
 })
 
-ipcMain.handle('read-sm-files', (event, files) => {
-  return files.map((group) => {
-    return group.map((file) => {
-      try {
-        const data = fs.readFileSync(file, 'utf8')
-        return parseSimfileData(data, path.extname(file))
-      } catch (err) {
-        return { error: err }
-      }
-    })
+ipcMain.handle('read-sm-files', (event, packs) => {
+  return packs.map((pack) => {
+    let packData = pack
+    packData.songs = pack.songs
+      .map((file) => {
+        try {
+          const data = fs.readFileSync(file, 'utf8')
+          return parseSimfileData(data, path.extname(file))
+        } catch (err) {
+          return null
+        }
+      })
+      .filter((data) => !!data)
+    return packData
   })
 })
 
