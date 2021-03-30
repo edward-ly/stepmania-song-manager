@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="hHh lpR fFf">
+  <q-layout view="hHh lpR fFf" class="fullscreen">
     <q-header elevated>
       <q-toolbar>
         <q-btn
@@ -75,8 +75,10 @@
       </q-scroll-area>
     </q-drawer>
 
-    <q-page-container class="bg-grey-1">
-      <router-view />
+    <q-page-container class="bg-grey-1 full-height full-width">
+      <q-scroll-area class="full-height full-width">
+        <router-view />
+      </q-scroll-area>
     </q-page-container>
   </q-layout>
 </template>
