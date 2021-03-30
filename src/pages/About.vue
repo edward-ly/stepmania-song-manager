@@ -1,6 +1,7 @@
 <template>
-  <q-page class="q-pa-lg q-gutter-y-md">
+  <q-page class="q-px-lg q-py-sm q-gutter-y-md">
     <div class="text-center q-gutter-y-md">
+      <q-img src="~assets/master-icon.png" ratio="1" width="64px" />
       <div class="text-h5 text-bold">StepMania Song Manager</div>
       <div class="text-subtitle1">Version: {{ version }}</div>
       <div class="q-gutter-sm" @click="openUrl(appGitHub)">
