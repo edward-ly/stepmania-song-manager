@@ -11,20 +11,19 @@
       :key="index"
       class="q-pl-md q-pr-lg q-py-sm q-gutter-y-sm"
     >
-      <!-- TODO: create separate expanded for each table -->
       <q-btn
         flat
         rounded
         dense
         no-caps
-        :icon="expanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down'"
+        :icon="expanded[index] ? 'keyboard_arrow_up' : 'keyboard_arrow_down'"
         :label="`${pack.name} (${pack.songs.length})`"
         class="q-pr-md"
         size="lg"
-        @click="expanded = !expanded"
+        @click="expanded[index] = !expanded[index]"
       />
       <q-slide-transition>
-        <div v-show="expanded">
+        <div v-show="expanded[index]">
           <q-table
             class="fill-width"
             dense
@@ -57,10 +56,10 @@ export default defineComponent({
 
   setup () {
     const packs = ref([])
-    const expanded = ref(false)
+    const expanded = ref([])
     window.electron.getSongListData((data) => {
       packs.value = data
-      expanded.value = data.length < 2
+      expanded.value = Array(data.length).fill(data.length < 2)
     })
 
     const songNativeLanguage = ref(true)
