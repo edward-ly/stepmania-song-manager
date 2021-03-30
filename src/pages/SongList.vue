@@ -22,7 +22,7 @@
         size="lg"
         @click="expanded[index] = !expanded[index]"
       />
-      <q-slide-transition>
+      <q-slide-transition :duration="duration[index]">
         <div v-show="expanded[index]">
           <q-table
             class="fill-width"
@@ -57,9 +57,13 @@ export default defineComponent({
   setup () {
     const packs = ref([])
     const expanded = ref([])
+    const duration = ref([])
     window.electron.getSongListData((data) => {
       packs.value = data
       expanded.value = Array(data.length).fill(data.length < 2)
+      duration.value = data.map((pack) =>
+        Math.max(Math.log1p(pack.songs.length) * 100, 150)
+      )
     })
 
     const songNativeLanguage = ref(true)
@@ -246,6 +250,7 @@ export default defineComponent({
       getSongTitle,
       packs,
       expanded,
+      duration,
       columns,
       rows,
       songNativeLanguage,
