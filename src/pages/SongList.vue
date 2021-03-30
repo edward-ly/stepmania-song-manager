@@ -1,19 +1,44 @@
 <template>
-  <div class="bg-grey-1 q-pa-lg">
-    <!-- TODO: build tables -->
-    <div v-for="(songs, index) in songList" :key="index" class="q-pt-md">
-      <!-- TODO: {{ pack.name }} -->
-      <q-table
+  <q-scroll-area class="bg-grey-1 q-py-sm window-height window-width">
+    <div
+      v-for="(pack, index) in packs"
+      :key="index"
+      class="q-pl-md q-pr-lg q-py-sm q-gutter-y-sm"
+    >
+      <q-btn
+        flat
+        rounded
         dense
-        :rows="songs"
-        :columns="columns"
-        :row-key="getSongTitle"
-        :pagination="{ rowsPerPage: 0 }"
-        hide-pagination
-        wrap-cells
+        no-caps
+        :icon="expanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down'"
+        :label="`${pack.name} (${pack.songs.length})`"
+        class="q-pr-md"
+        size="lg"
+        @click="expanded = !expanded"
       />
+      <q-slide-transition>
+        <div v-show="expanded">
+          <q-table
+            class="fill-width"
+            dense
+            :rows="pack.songs"
+            :columns="columns"
+            :row-key="getSongTitle"
+            :pagination="{ rowsPerPage: 0 }"
+            hide-pagination
+            wrap-cells
+          />
+        </div>
+      </q-slide-transition>
     </div>
-  </div>
+
+    <div v-if="!packs.length" class="text-muted absolute-center">
+      <div class="column items-center q-gutter-y-xs">
+        <q-icon name="info" size="xl" color="dark" />
+        <div class="text-body1 text-dark text-center">No songs found.</div>
+      </div>
+    </div>
+  </q-scroll-area>
 </template>
 
 <script>
@@ -21,8 +46,12 @@ import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
   setup () {
-    const songList = ref([])
-    window.electron.getSongListData((data) => (songList.value = data))
+    const packs = ref([])
+    const expanded = ref(false)
+    window.electron.getSongListData((data) => {
+      packs.value = data
+      expanded.value = data.length < 2
+    })
 
     const songNativeLanguage = ref(true)
 
@@ -203,7 +232,8 @@ export default defineComponent({
 
     return {
       getSongTitle,
-      songList,
+      packs,
+      expanded,
       columns,
       rows,
       songNativeLanguage,
