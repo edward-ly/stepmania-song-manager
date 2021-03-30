@@ -66,8 +66,8 @@ export default defineComponent({
     const songNativeLanguage = ref(true)
 
     function levelSort (a, b) {
-      const aInt = Number(a) || 999
-      const bInt = Number(b) || 999
+      const aInt = Number(a) || -1
+      const bInt = Number(b) || -1
       return bInt - aInt
     }
 
@@ -111,17 +111,19 @@ export default defineComponent({
         align: 'center',
         sortable: true,
         sort: (a, b) => {
+          if (a === b) return 0
+
           let aInt
           let bInt
-          if (a === '*') {
-            aInt = 9999
+          if (a === '???') {
+            aInt = Infinity
           } else if (a.includes('-')) {
             aInt = Number(a.substring(a.indexOf('-') + 1))
           } else {
             aInt = Number(a)
           }
-          if (b === '*') {
-            bInt = 9999
+          if (b === '???') {
+            bInt = Infinity
           } else if (b.includes('-')) {
             bInt = Number(b.substring(b.indexOf('-') + 1))
           } else {
