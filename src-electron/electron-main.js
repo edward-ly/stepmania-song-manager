@@ -37,7 +37,7 @@ function createWindow () {
     minWidth: 360,
     minHeight: 480,
     useContentSize: true,
-    autoHideMenuBar: true,
+    // autoHideMenuBar: true,
     webPreferences: {
       contextIsolation: true,
       // More info: /quasar-cli/developing-electron-apps/electron-preload-script
@@ -72,7 +72,7 @@ function createSongListWindow () {
     minHeight: 480,
     useContentSize: true,
     show: false,
-    autoHideMenuBar: true,
+    // autoHideMenuBar: true,
     webPreferences: {
       contextIsolation: true,
       // More info: /quasar-cli/developing-electron-apps/electron-preload-script
