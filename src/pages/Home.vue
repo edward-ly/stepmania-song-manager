@@ -32,15 +32,9 @@
           :delete-function="() => deleteRepo(index)"
         />
 
-        <div v-if="!repoList.length" class="text-muted absolute-center">
-          <div class="column items-center q-gutter-y-xs">
-            <q-icon name="info" size="xl" color="dark" />
-            <div class="text-body1 text-dark text-center">
-              No song packs installed.<br />Click on "+ Add Songs" to get
-              started!
-            </div>
-          </div>
-        </div>
+        <EmptyMessage :show="!repoList.length" icon="info">
+          No song packs installed.<br />Click on "+ Add Songs" to get started!
+        </EmptyMessage>
       </div>
     </div>
   </q-page>
@@ -51,10 +45,12 @@ import { defineComponent, ref } from 'vue'
 import { useQuasar } from 'quasar'
 import RepositoryCard from 'components/RepositoryCard.vue'
 import ConfirmDialog from 'components/dialogs/ConfirmDialog.vue'
+import EmptyMessage from 'components/EmptyMessage.vue'
 
 export default defineComponent({
   components: {
     RepositoryCard,
+    EmptyMessage,
   },
 
   setup () {

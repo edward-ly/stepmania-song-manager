@@ -32,19 +32,21 @@
       </q-slide-transition>
     </div>
 
-    <div v-if="!packs.length" class="text-muted absolute-center">
-      <div class="column items-center q-gutter-y-xs">
-        <q-icon name="info" size="xl" color="dark" />
-        <div class="text-body1 text-dark text-center">No songs found.</div>
-      </div>
-    </div>
+    <EmptyMessage :show="!packs.length" icon="info">
+      No songs found.
+    </EmptyMessage>
   </q-scroll-area>
 </template>
 
 <script>
 import { defineComponent, ref } from 'vue'
+import EmptyMessage from 'components/EmptyMessage.vue'
 
 export default defineComponent({
+  components: {
+    EmptyMessage,
+  },
+
   setup () {
     const packs = ref([])
     const expanded = ref(false)

@@ -30,15 +30,10 @@
       </div>
     </div>
 
-    <div v-if="!defaultRepos.length" class="text-muted absolute-center">
-      <div class="column items-center q-gutter-y-xs">
-        <q-icon name="info" size="xl" color="dark" />
-        <div class="text-body1 text-dark text-center">
-          No repositories found.<br />Click on "+ Add Custom Repo" to add a new
-          repository.
-        </div>
-      </div>
-    </div>
+    <EmptyMessage :show="!defaultRepos.length" icon="info">
+      No repositories found.<br />Click on "+ Add Custom Repo" to add a new
+      repository.
+    </EmptyMessage>
   </q-page>
 </template>
 
@@ -49,10 +44,12 @@ import { useQuasar } from 'quasar'
 import RepositoryCard from 'components/RepositoryCard.vue'
 import defaultRepos from 'components/defaultRepos'
 import AddRepoDialog from 'components/dialogs/AddRepoDialog.vue'
+import EmptyMessage from 'components/EmptyMessage.vue'
 
 export default defineComponent({
   components: {
     RepositoryCard,
+    EmptyMessage,
   },
 
   setup () {
