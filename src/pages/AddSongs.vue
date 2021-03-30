@@ -1,5 +1,5 @@
 <template>
-  <q-page class="q-pa-lg">
+  <q-page class="q-pt-lg q-px-lg">
     <div class="row">
       <div class="col-auto">
         <div class="text-h5 q-my-none">Select a Repository</div>

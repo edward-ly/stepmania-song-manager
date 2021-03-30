@@ -1,5 +1,5 @@
 <template>
-  <q-page class="q-pa-lg">
+  <q-page class="q-pt-lg q-px-lg">
     <q-card class="q-mb-lg">
       <q-card-section>
         <div class="text-h6">Download Path</div>
@@ -105,7 +105,7 @@
       </q-card-section>
     </q-card>
 
-    <q-card>
+    <q-card class="q-mb-lg">
       <q-card-section>
         <div class="text-h6">Language</div>
       </q-card-section>
