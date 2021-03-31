@@ -194,7 +194,19 @@ module.exports = configure(function (/* ctx */) {
       builder: {
         // https://www.electron.build/configuration/configuration
 
-        appId: 'com.electron.stepmania-song-manager'
+        appId: 'com.electron.stepmania-song-manager',
+        win: {
+          target: 'nsis'
+        },
+        mac: {
+          target: 'dmg'
+        },
+        linux: {
+          target: 'AppImage'
+        },
+        publish: {
+          provider: 'github'
+        }
       },
 
       // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
