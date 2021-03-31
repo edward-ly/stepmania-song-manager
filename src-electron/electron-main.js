@@ -38,7 +38,7 @@ function createWindow () {
     minWidth: 360,
     minHeight: 480,
     useContentSize: true,
-    // autoHideMenuBar: true,
+    frame: false,
     webPreferences: {
       contextIsolation: true,
       // More info: /quasar-cli/developing-electron-apps/electron-preload-script
@@ -58,9 +58,13 @@ function createWindow () {
     })
   }
 
-  mainWindow.on('closed', () => {
+  mainWindow.on('close', () => {
     songListWindow.destroy()
     songListWindow = null
+    mainWindow.destroy()
+  })
+
+  mainWindow.on('closed', () => {
     mainWindow = null
   })
 }
@@ -73,7 +77,7 @@ function createSongListWindow () {
     minHeight: 480,
     useContentSize: true,
     show: false,
-    // autoHideMenuBar: true,
+    frame: false,
     webPreferences: {
       contextIsolation: true,
       // More info: /quasar-cli/developing-electron-apps/electron-preload-script
@@ -293,6 +297,26 @@ ipcMain.on('open-song-list', (event, songList, bucketName) => {
   songListWindow.setTitle('Song List: ' + bucketName)
   songListWindow.webContents.send('song-list-data', songList)
   songListWindow.show()
+})
+
+// Window ====================================================================
+
+ipcMain.on('minimize', () => {
+  BrowserWindow.getFocusedWindow().minimize()
+})
+
+ipcMain.on('toggle-maximize', () => {
+  const win = BrowserWindow.getFocusedWindow()
+
+  if (win.isMaximized()) {
+    win.unmaximize()
+  } else {
+    win.maximize()
+  }
+})
+
+ipcMain.on('window-close', () => {
+  BrowserWindow.getFocusedWindow().close()
 })
 
 // File System ===============================================================

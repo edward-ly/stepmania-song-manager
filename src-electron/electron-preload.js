@@ -47,6 +47,18 @@ contextBridge.exposeInMainWorld('electron', {
   },
 })
 
+contextBridge.exposeInMainWorld('windowAPI', {
+  minimize: () => {
+    ipcRenderer.send('minimize')
+  },
+  toggleMaximize: () => {
+    ipcRenderer.send('toggle-maximize')
+  },
+  close: () => {
+    ipcRenderer.send('window-close')
+  },
+})
+
 contextBridge.exposeInMainWorld('fs', {
   addPathsToPreferencesIni: (iniFiles, paths) => {
     ipcRenderer.send('add-paths-preferences-ini', iniFiles, paths)
