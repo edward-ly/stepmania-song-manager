@@ -41,8 +41,7 @@
     </div>
 
     <EmptyMessage :show="!defaultRepos.length" icon="info">
-      No buckets found.<br />Click on "+ New Bucket" to add a new
-      bucket.
+      No buckets found.<br />Click on "+ New Bucket" to add a new bucket.
     </EmptyMessage>
   </q-page>
 </template>

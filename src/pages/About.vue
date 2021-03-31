@@ -9,7 +9,10 @@
     <q-separator />
 
     <q-card-section class="bg-grey-1 no-padding full-width full-height-dialog">
-      <q-scroll-area :thumb-style="thumbScrollStyle" class="full-width full-height">
+      <q-scroll-area
+        :thumb-style="thumbScrollStyle"
+        class="full-width full-height"
+      >
         <div class="q-px-lg q-py-sm q-gutter-y-md">
           <div class="text-center q-gutter-y-sm">
             <q-img src="~assets/master-icon.png" ratio="1" width="64px" />
@@ -17,21 +20,26 @@
             <div class="text-subtitle1">Version: {{ version }}</div>
             <div class="q-gutter-sm" @click="openUrl(appGitHub)">
               <q-icon name="fab fa-github" size="xl" class="cursor-pointer" />
-              <p class="text-body2 text-link">Free and Open-Source on GitHub!</p>
+              <p class="text-body2 text-link">
+                Free and Open-Source on GitHub!
+              </p>
             </div>
           </div>
 
           <p class="text-body2">
             Want to report a bug or submit feedback? Create an issue or start a
-            discussion on GitHub from the link above, or contact me on social media!
+            discussion on GitHub from the link above, or contact me on social
+            media!
           </p>
 
           <ul class="text-body2">
             <li>
               Email:
-              <span class="text-link" @click="openUrl('mailto:' + personalEmail)">{{
-                personalEmail
-              }}</span>
+              <span
+                class="text-link"
+                @click="openUrl('mailto:' + personalEmail)"
+                >{{ personalEmail }}</span
+              >
             </li>
             <!-- <li>
               GitHub:
@@ -63,7 +71,9 @@
             </li>
           </ul>
 
-          <p class="text-body2">Want to donate and support the work that I do?</p>
+          <p class="text-body2">
+            Want to donate and support the work that I do?
+          </p>
 
           <q-card-actions class="q-gutter-lg">
             <q-img
@@ -96,26 +106,27 @@
               Copyright <q-icon name="copyright" /> 2021 Edward Ly
             </p>
             <p class="text-body2">
-              Permission is hereby granted, free of charge, to any person obtaining a
-              copy of this software and associated documentation files (the
-              "Software"), to deal in the Software without restriction, including
-              without limitation the rights to use, copy, modify, merge, publish,
-              distribute, sublicense, and/or sell copies of the Software, and to
-              permit persons to whom the Software is furnished to do so, subject to
-              the following conditions:
+              Permission is hereby granted, free of charge, to any person
+              obtaining a copy of this software and associated documentation
+              files (the "Software"), to deal in the Software without
+              restriction, including without limitation the rights to use, copy,
+              modify, merge, publish, distribute, sublicense, and/or sell copies
+              of the Software, and to permit persons to whom the Software is
+              furnished to do so, subject to the following conditions:
             </p>
             <p class="text-body2">
-              The above copyright notice and this permission notice shall be included
-              in all copies or substantial portions of the Software.
+              The above copyright notice and this permission notice shall be
+              included in all copies or substantial portions of the Software.
             </p>
             <p class="text-body2">
-              THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-              OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-              MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-              IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-              CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-              TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-              SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+              THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+              EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+              MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+              NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+              HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+              WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+              OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+              DEALINGS IN THE SOFTWARE.
             </p>
           </div>
         </div>

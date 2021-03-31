@@ -14,7 +14,11 @@
 
               <q-separator />
 
-              <q-item v-close-popup clickable @click="showSettingsDialog = true">
+              <q-item
+                v-close-popup
+                clickable
+                @click="showSettingsDialog = true"
+              >
                 <q-item-section>Settings</q-item-section>
               </q-item>
 
