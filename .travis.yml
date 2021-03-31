@@ -4,7 +4,7 @@ node_js:
 os:
   - osx
   - linux
-dist: focal
+dist: xenial
 jobs:
   include:
     - os: windows
