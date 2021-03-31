@@ -16,7 +16,7 @@
     "dev": "genversion --es6 version.js && quasar dev -m electron",
     "lint": "prettier --write . && eslint --ext .js,.vue ./ --fix",
     "icon": "icongenie generate -m electron -i src/assets/master-icon.png --skip-trim --quality 12",
-    "build": "genversion --es6 version.js && quasar build -m electron",
+    "build": "genversion --es6 version.js && quasar build -m electron -P never",
     "release": "genversion --es6 version.js && quasar build -m electron -P onTagOrDraft"
   },
   "dependencies": {
