@@ -1,79 +1,47 @@
 <template>
   <q-layout view="hHh lpR fFf" class="fullscreen">
     <q-header elevated>
-      <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
+      <q-bar class="bg-grey-9 text-white q-electron-drag">
+        <q-btn dense flat icon="menu">
+          <q-menu>
+            <q-list dense>
+              <q-item v-close-popup clickable to="/" exact>
+                <q-item-section>Home</q-item-section>
+              </q-item>
+              <q-item v-close-popup clickable to="/add" exact>
+                <q-item-section>Add Songs...</q-item-section>
+              </q-item>
 
-        <q-toolbar-title>SM Song Manager</q-toolbar-title>
+              <q-separator />
 
-        <div>v{{ version }}</div>
-      </q-toolbar>
+              <q-item v-close-popup clickable to="/settings" exact>
+                <q-item-section>Settings</q-item-section>
+              </q-item>
+
+              <q-item v-close-popup clickable to="/about" exact>
+                <q-item-section>About</q-item-section>
+              </q-item>
+
+              <q-separator />
+
+              <q-item v-close-popup clickable @click="closeApp">
+                <q-item-section>Quit</q-item-section>
+              </q-item>
+            </q-list>
+          </q-menu>
+        </q-btn>
+
+        <q-space />
+
+        <div>StepMania Song Manager</div>
+
+        <q-space />
+
+        <q-btn dense flat icon="minimize" @click="minimize" />
+        <q-btn dense flat icon="crop_square" @click="toggleMaximize" />
+        <q-btn dense flat icon="close" @click="closeApp" />
+      </q-bar>
     </q-header>
-
-    <q-drawer
-      v-model="leftDrawerOpen"
-      side="left"
-      :width="200"
-      overlay
-      behavior="desktop"
-      elevated
-      class="bg-grey-3"
-    >
-      <q-scroll-area class="fit">
-        <q-list padding>
-          <q-item v-ripple clickable to="/" exact>
-            <q-item-section avatar>
-              <q-icon name="home" />
-            </q-item-section>
-
-            <q-item-section>Home</q-item-section>
-          </q-item>
-
-          <q-item v-ripple clickable to="/add" exact>
-            <q-item-section avatar>
-              <q-icon name="create_new_folder" />
-            </q-item-section>
-
-            <q-item-section>Add Songs...</q-item-section>
-          </q-item>
-
-          <q-separator />
-
-          <q-item v-ripple clickable to="/settings" exact>
-            <q-item-section avatar>
-              <q-icon name="settings" />
-            </q-item-section>
-
-            <q-item-section>Settings</q-item-section>
-          </q-item>
-
-          <q-item v-ripple clickable to="/about" exact>
-            <q-item-section avatar>
-              <q-icon name="info" />
-            </q-item-section>
-
-            <q-item-section>About</q-item-section>
-          </q-item>
-
-          <q-separator />
-
-          <q-item v-ripple v-close-popup clickable @click="closeApp">
-            <q-item-section avatar>
-              <q-icon name="close" />
-            </q-item-section>
-
-            <q-item-section>Quit</q-item-section>
-          </q-item>
-        </q-list>
-      </q-scroll-area>
-    </q-drawer>
 
     <q-page-container class="bg-grey-1 full-height full-width">
       <q-scroll-area
@@ -87,25 +55,27 @@
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
-import { version } from '../../version'
+import { defineComponent } from 'vue'
 import thumbScrollStyle from 'components/thumbScrollStyle'
 
 export default defineComponent({
   setup () {
-    const leftDrawerOpen = ref(false)
+    function minimize () {
+      window.windowAPI.minimize()
+    }
+
+    function toggleMaximize () {
+      window.windowAPI.toggleMaximize()
+    }
 
     function closeApp () {
-      window.close()
+      window.windowAPI.close()
     }
 
     return {
-      version,
       thumbScrollStyle,
-      leftDrawerOpen,
-      toggleLeftDrawer () {
-        leftDrawerOpen.value = !leftDrawerOpen.value
-      },
+      minimize,
+      toggleMaximize,
       closeApp,
     }
   },
