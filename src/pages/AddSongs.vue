@@ -2,7 +2,7 @@
   <q-page class="q-pt-lg q-px-lg">
     <div class="row">
       <div class="col-auto">
-        <div class="text-h5 q-my-none">Select a Repository</div>
+        <div class="text-h5 q-my-none">Select a Bucket</div>
       </div>
       <div class="col" />
       <div class="col-auto q-my-auto">

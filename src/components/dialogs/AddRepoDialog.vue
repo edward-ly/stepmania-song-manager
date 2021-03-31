@@ -3,7 +3,7 @@
     <q-card class="q-dialog-plugin">
       <q-form @submit="onOKClick" @reset="onReset">
         <q-card-section class="row">
-          <div class="text-h6">New Repository</div>
+          <div class="text-h6">New Bucket</div>
           <q-space />
           <q-btn flat round dense icon="close" @click="onCancelClick" />
         </q-card-section>
