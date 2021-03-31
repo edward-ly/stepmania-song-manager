@@ -7,4 +7,3 @@ os:
   - linux
 env:
   - YARN_GPG=no
-script: yarn build
