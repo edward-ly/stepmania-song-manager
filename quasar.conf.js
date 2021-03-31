@@ -194,8 +194,7 @@ module.exports = configure(function (/* ctx */) {
       builder: {
         // https://www.electron.build/configuration/configuration
 
-        appId: 'com.electron.stepmania-song-manager',
-        publish: 'github'
+        appId: 'com.electron.stepmania-song-manager'
       },
 
       // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
