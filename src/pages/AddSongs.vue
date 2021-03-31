@@ -5,7 +5,17 @@
         <div class="text-h5 q-my-none">Select a Bucket</div>
       </div>
       <div class="col" />
-      <div class="col-auto q-my-auto">
+      <div class="col-auto q-my-auto q-gutter-x-sm">
+        <q-btn
+          no-wrap
+          no-caps
+          color="negative"
+          label="Cancel"
+          size="md"
+          padding="xs md"
+          to="/"
+          exact
+        />
         <q-btn
           no-wrap
           no-caps
