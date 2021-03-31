@@ -14,11 +14,11 @@
 
               <q-separator />
 
-              <q-item v-close-popup clickable to="/settings" exact>
+              <q-item v-close-popup clickable @click="showSettingsDialog = true">
                 <q-item-section>Settings</q-item-section>
               </q-item>
 
-              <q-item v-close-popup clickable to="/about" exact>
+              <q-item v-close-popup clickable @click="showAboutDialog = true">
                 <q-item-section>About</q-item-section>
               </q-item>
 
@@ -52,14 +52,31 @@
       </q-scroll-area>
     </q-page-container>
   </q-layout>
+
+  <q-dialog v-model="showSettingsDialog" full-width full-height>
+    <Settings />
+  </q-dialog>
+  <q-dialog v-model="showAboutDialog" full-width full-height>
+    <About />
+  </q-dialog>
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 import thumbScrollStyle from 'components/thumbScrollStyle'
+import Settings from 'pages/Settings.vue'
+import About from 'pages/About.vue'
 
 export default defineComponent({
+  components: {
+    Settings,
+    About,
+  },
+
   setup () {
+    const showSettingsDialog = ref(false)
+    const showAboutDialog = ref(false)
+
     function minimize () {
       window.windowAPI.minimize()
     }
@@ -73,6 +90,8 @@ export default defineComponent({
     }
 
     return {
+      showSettingsDialog,
+      showAboutDialog,
       thumbScrollStyle,
       minimize,
       toggleMaximize,
