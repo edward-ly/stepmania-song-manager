@@ -1,16 +1,13 @@
 language: node_js
 node_js:
   - lts/*
-script: yarn build
-deploy: yarn release
-jobs:
-  include:
-    - os: windows
-      env: YARN_GPG=no
-    - os: osx
-    - os: linux
-stages:
-  - name: script
+os:
+  - windows
+    env: YARN_GPG=no
+  - osx
+  - linux
+script:
+  - yarn build
     if: NOT branch = master OR NOT type = push
-  - name: deploy
+  - yarn release
     if: branch = master AND type = push
