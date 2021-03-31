@@ -10,7 +10,6 @@ jobs:
       osx_image: xcode10.2
     - os: linux
       dist: xenial
-      sudo: required
 script:
   - if [ $TRAVIS_BRANCH == "master" ] && [ $TRAVIS_PULL_REQUEST == "false" ]; then
       yarn release;
