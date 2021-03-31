@@ -21,7 +21,7 @@
           no-caps
           color="primary"
           icon="add"
-          label="Add Custom Repo"
+          label="New Bucket"
           class="btn-icon-left-padding-sm"
           size="md"
           padding="xs md xs sm"
@@ -41,8 +41,8 @@
     </div>
 
     <EmptyMessage :show="!defaultRepos.length" icon="info">
-      No repositories found.<br />Click on "+ Add Custom Repo" to add a new
-      repository.
+      No buckets found.<br />Click on "+ New Bucket" to add a new
+      bucket.
     </EmptyMessage>
   </q-page>
 </template>
