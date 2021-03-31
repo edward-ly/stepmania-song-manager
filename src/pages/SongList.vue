@@ -1,7 +1,17 @@
 <template>
   <q-layout view="hHh lpR fFf" class="fullscreen">
-    <q-header bordered class="bg-blue-grey-1 text-dark q-pa-sm">
-      <q-toolbar>
+    <q-header>
+      <q-bar class="bg-grey-9 text-white q-electron-drag">
+        <q-space />
+        <div>Song List: {{ bucketName }}</div>
+        <q-space />
+
+        <q-btn dense flat icon="minimize" @click="minimize" />
+        <q-btn dense flat icon="crop_square" @click="toggleMaximize" />
+        <q-btn dense flat icon="close" @click="closeApp" />
+      </q-bar>
+
+      <q-toolbar class="bg-blue-grey-1 text-dark q-pa-sm q-header--bordered">
         <q-btn
           outline
           label="Expand All"
@@ -96,6 +106,7 @@ export default defineComponent({
   },
 
   setup () {
+    const bucketName = ref(null)
     const songList = ref([])
     const filteredSongList = ref([])
     const expanded = ref([])
@@ -107,7 +118,8 @@ export default defineComponent({
       return Math.max(Math.log1p(pack.songs.length) * 100, 150)
     }
 
-    window.electron.getSongListData((data) => {
+    window.electron.getSongListData((data, name) => {
+      bucketName.value = name
       searchText.value = null
       songList.value = data
       filteredSongList.value = data
@@ -316,9 +328,22 @@ export default defineComponent({
       },
     ]
 
+    function minimize () {
+      window.windowAPI.minimize()
+    }
+
+    function toggleMaximize () {
+      window.windowAPI.toggleMaximize()
+    }
+
+    function closeApp () {
+      window.windowAPI.close()
+    }
+
     return {
       thumbScrollStyle,
       getSongTitle,
+      bucketName,
       filteredSongList,
       expanded,
       duration,
@@ -326,6 +351,9 @@ export default defineComponent({
       searchText,
       filterSongList,
       columns,
+      minimize,
+      toggleMaximize,
+      closeApp,
     }
   },
 })
