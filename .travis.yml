@@ -1,14 +1,16 @@
 language: node_js
 node_js:
   - lts/*
-os:
-  - osx
-  - linux
-dist: xenial
 jobs:
   include:
     - os: windows
-      env: YARN_GPG=no
+      env:
+        - YARN_GPG=no
+    - os: osx
+      osx_image: xcode10.2
+    - os: linux
+      dist: xenial
+      sudo: required
 script:
   - if [ $TRAVIS_BRANCH == "master" ] && [ $TRAVIS_PULL_REQUEST == "false" ]; then
       yarn release;
