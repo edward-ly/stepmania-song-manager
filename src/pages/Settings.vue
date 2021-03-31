@@ -8,10 +8,10 @@
 
     <q-separator />
 
-    <q-card-section class="bg-grey-1 no-padding full-height full-width">
+    <q-card-section class="bg-grey-1 no-padding full-width full-height-dialog">
       <q-scroll-area
         :thumb-style="thumbScrollStyle"
-        class="full-height full-width"
+        class="full-width full-height"
       >
         <div class="q-pa-lg full-dialog-header-fix">
           <q-card class="q-mb-lg">

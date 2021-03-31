@@ -8,9 +8,9 @@
 
     <q-separator />
 
-    <q-card-section class="bg-grey-1 no-padding full-height full-width">
-      <q-scroll-area :thumb-style="thumbScrollStyle" class="full-height full-width">
-        <div class="q-pt-sm q-px-lg q-gutter-y-md full-dialog-header-fix">
+    <q-card-section class="bg-grey-1 no-padding full-width full-height-dialog">
+      <q-scroll-area :thumb-style="thumbScrollStyle" class="full-width full-height">
+        <div class="q-px-lg q-py-sm q-gutter-y-md">
           <div class="text-center q-gutter-y-sm">
             <q-img src="~assets/master-icon.png" ratio="1" width="64px" />
             <div class="text-h5 text-bold">StepMania Song Manager</div>

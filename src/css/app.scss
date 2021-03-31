@@ -4,6 +4,10 @@
   margin-right: map-get($space-sm, 'x');
 }
 
+.full-height-dialog {
+  height: calc(100% - 67px);
+}
+
 .text-link {
   color: #00f;
   text-decoration: underline;
