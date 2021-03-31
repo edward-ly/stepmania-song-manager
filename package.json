@@ -1,9 +1,13 @@
 {
   "name": "stepmania-song-manager",
   "version": "0.0.1",
-  "description": "Easily download and update song packs for StepMania",
+  "description": "Download and update song packs for StepMania",
   "productName": "StepMania Song Manager",
-  "author": "Edward Ly <edward.ly@pm.me>",
+  "author": {
+    "name": "Edward Ly",
+    "email": "edward.ly@pm.me"
+  },
+  "repository": "https://github.com/edward-ly/stepmania-song-manager",
   "homepage": "https://github.com/edward-ly/stepmania-song-manager#readme",
   "bugs": "https://github.com/edward-ly/stepmania-song-manager/issues",
   "license" : "MIT",
@@ -13,7 +17,6 @@
     "lint": "prettier --write . && eslint --ext .js,.vue ./ --fix",
     "icon": "icongenie generate -m electron -i src/assets/master-icon.png --skip-trim --quality 12",
     "build": "genversion --es6 version.js && quasar build -m electron",
-    "release": "electron-builder",
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
