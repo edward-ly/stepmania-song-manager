@@ -10,7 +10,7 @@
   "repository": "https://github.com/edward-ly/stepmania-song-manager",
   "homepage": "https://github.com/edward-ly/stepmania-song-manager#readme",
   "bugs": "https://github.com/edward-ly/stepmania-song-manager/issues",
-  "license" : "MIT",
+  "license": "MIT",
   "private": true,
   "scripts": {
     "dev": "genversion --es6 version.js && quasar dev -m electron",
