@@ -28,7 +28,6 @@ try {
 let mainWindow
 let songListWindow
 
-// TODO: create frameless window with custom menu bar
 function createWindow () {
   /* Initial window options */
   /* global __dirname */
