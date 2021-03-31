@@ -4,6 +4,9 @@
   "description": "Easily download and update song packs for StepMania",
   "productName": "StepMania Song Manager",
   "author": "Edward Ly <edward.ly@pm.me>",
+  "homepage": "https://github.com/edward-ly/stepmania-song-manager#readme",
+  "bugs": "https://github.com/edward-ly/stepmania-song-manager/issues",
+  "license" : "MIT",
   "private": true,
   "scripts": {
     "dev": "genversion --es6 version.js && quasar dev -m electron",
