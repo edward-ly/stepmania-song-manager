@@ -41,8 +41,8 @@ contextBridge.exposeInMainWorld('electron', {
     ipcRenderer.send('open-song-list', songList, bucketName)
   },
   getSongListData: (callback) => {
-    ipcRenderer.on('song-list-data', (event, songList) => {
-      callback(songList)
+    ipcRenderer.on('song-list-data', (event, songList, bucketName) => {
+      callback(songList, bucketName)
     })
   },
 })

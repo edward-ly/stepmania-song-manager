@@ -295,7 +295,7 @@ ipcMain.on('open-ini-file-dialog', (event) => {
 
 ipcMain.on('open-song-list', (event, songList, bucketName) => {
   songListWindow.setTitle('Song List: ' + bucketName)
-  songListWindow.webContents.send('song-list-data', songList)
+  songListWindow.webContents.send('song-list-data', songList, bucketName)
   songListWindow.show()
 })
 
