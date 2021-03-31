@@ -1,5 +1,6 @@
 # StepMania Song Manager
 
+[![Build Status](https://travis-ci.com/edward-ly/stepmania-song-manager.svg?token=k4pB9yRruTswjTJnoxLt&branch=master)](https://travis-ci.com/edward-ly/stepmania-song-manager)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
 A cross-platform companion app for [StepMania](https://github.com/stepmania/stepmania) that downloads and automatically updates song ("simfile") packs hosted in Amazon S3 buckets.
