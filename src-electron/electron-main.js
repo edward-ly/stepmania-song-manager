@@ -10,6 +10,7 @@ import path from 'path'
 import fs from 'fs'
 import glob from 'glob'
 import AutoLaunch from 'auto-launch'
+import { autoUpdater } from 'electron-updater'
 // TODO: replace with native '@aws-sdk/client-s3' package and md5 file caching
 import s3 from '@auth0/s3'
 
@@ -99,6 +100,7 @@ function createSongListWindow () {
 }
 
 app.on('ready', () => {
+  autoUpdater.checkForUpdatesAndNotify()
   createWindow()
   createSongListWindow()
 })
