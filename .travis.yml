@@ -2,12 +2,16 @@ language: node_js
 node_js:
   - lts/*
 os:
-  - windows
-    env: YARN_GPG=no
   - osx
   - linux
+dist: focal
+jobs:
+  include:
+    - os: windows
+      env: YARN_GPG=no
 script:
-  - yarn build
-    if: NOT branch = master OR NOT type = push
-  - yarn release
-    if: branch = master AND type = push
+  - if [ $TRAVIS_BRANCH == "master" ] && [ $TRAVIS_PULL_REQUEST == "false" ]; then
+      yarn release;
+    else
+      yarn build;
+    fi
