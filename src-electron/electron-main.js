@@ -14,6 +14,11 @@ import { autoUpdater } from 'electron-updater'
 // TODO: replace with native '@aws-sdk/client-s3' package and md5 file caching
 import s3 from '@auth0/s3'
 
+const appLock = app.requestSingleInstanceLock()
+if (!appLock) {
+  app.quit()
+}
+
 try {
   if (
     process.platform === 'win32' &&
@@ -101,6 +106,14 @@ function createSongListWindow () {
     songListWindow.hide()
   })
 }
+
+app.on('second-instance', () => {
+  // someone tried to run a second instance, we should focus our window
+  if (mainWindow) {
+    if (mainWindow.isMinimized()) mainWindow.restore()
+    mainWindow.focus()
+  }
+})
 
 app.on('ready', () => {
   autoUpdater.checkForUpdatesAndNotify()
