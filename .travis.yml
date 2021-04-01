@@ -1,6 +1,7 @@
 language: node_js
 node_js:
   - lts/*
+if: tag IS blank
 jobs:
   include:
     - os: windows
