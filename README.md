@@ -51,6 +51,7 @@ The app itself will check for and download updates periodically, or you can perf
 
 The settings page includes the following parameters.
 Parameters are set to their default values when the app is launched for the first time.
+Any changes made to these settings will be saved automatically.
 
 > Note: Unless you know what you are doing, I do not recommend changing the download path, as using a path that already exists can potentially overwrite or delete any unwanted files!
 
