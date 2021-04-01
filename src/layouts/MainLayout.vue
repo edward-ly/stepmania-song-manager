@@ -5,15 +5,6 @@
         <q-btn dense flat icon="menu">
           <q-menu>
             <q-list dense>
-              <q-item v-close-popup clickable to="/" exact>
-                <q-item-section>Home</q-item-section>
-              </q-item>
-              <q-item v-close-popup clickable to="/add" exact>
-                <q-item-section>Add Songs...</q-item-section>
-              </q-item>
-
-              <q-separator />
-
               <q-item
                 v-close-popup
                 clickable
