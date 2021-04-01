@@ -37,8 +37,8 @@ You can also add a new S3 bucket that is not already in the list, in which case 
 
 The chosen bucket will then be displayed on the home page where you can view information about the songs in the bucket, download all files in the bucket, or remove the bucket from the app.
 
-> Note: Removing a bucket from the app does not delete any local files from your computer!
-  This is to reduce the size of future downloads should you decide to re-add the bucket.
+> Note: Removing a bucket from the app will only hide the songs from StepMania, and not delete any local files from your computer.
+  This is to prevent re-downloading any files unnecessarily should you decide to re-add the bucket.
   If you want to completely remove the downloaded packs from your computer, you can manually delete the files and folders yourself.
 
 ### Updating Song Packs
@@ -73,7 +73,10 @@ Default download paths:
 ## Donate
 
 Like the app?
-Consider donating to help pay for the costs of hosting simfiles in Amazon S3.
+Consider donating, which will help pay for the costs of:
+
+- hosting simfiles in Amazon S3, and
+- adding code signing certificates.
 
 [![PayPal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/donate?hosted_button_id=R3F883NUQFLP2)
 
