@@ -11,4 +11,4 @@ jobs:
     - os: linux
       dist: xenial
 script:
-  - if [ $TRAVIS_BRANCH == "master" ] && [ $TRAVIS_PULL_REQUEST == "false" ] && [ $TRAVIS_TAG == "" ]; then yarn release; else yarn build; fi
+  - if [ $TRAVIS_BRANCH == "master" ] && [ $TRAVIS_PULL_REQUEST == "false" ]; then yarn release; else yarn build; fi
