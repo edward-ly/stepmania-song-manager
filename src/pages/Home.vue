@@ -10,6 +10,7 @@
           to="/add"
           no-wrap
           no-caps
+          :disable="disableAddSongs"
           color="positive"
           icon="add"
           label="Add Songs"
@@ -56,6 +57,7 @@ export default defineComponent({
   setup () {
     const $q = useQuasar()
 
+    const disableAddSongs = ref(false)
     const repoList = ref($q.localStorage.getItem('RepositoryList'))
     const syncAllReposTimer = setSyncAllReposInitTimeout()
 
@@ -75,6 +77,7 @@ export default defineComponent({
     }
 
     function setLoadingStatus (index, status) {
+      disableAddSongs.value = status
       repoList.value[index].loading = status
       repoList.value = repoList.value.map((repo) => {
         repo.disable = status
@@ -83,6 +86,7 @@ export default defineComponent({
     }
 
     function setSongListLoadingStatus (index, status) {
+      disableAddSongs.value = status
       repoList.value[index].songListLoading = status
       repoList.value = repoList.value.map((repo) => {
         repo.disable = status
@@ -221,6 +225,7 @@ export default defineComponent({
     }
 
     return {
+      disableAddSongs,
       repoList,
       syncOneRepo,
       getSongList,
