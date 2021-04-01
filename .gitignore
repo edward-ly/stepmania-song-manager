@@ -31,3 +31,6 @@ yarn-error.log*
 *.ntvs*
 *.njsproj
 *.sln
+
+# Other auto-generated files
+version.js
