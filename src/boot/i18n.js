@@ -15,7 +15,7 @@ if (!LocalStorage.has('Locale')) {
 
 const i18n = createI18n({
   locale: LocalStorage.getItem('Locale'),
-  messages
+  messages,
 })
 
 export default boot(({ app }) => {

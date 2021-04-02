@@ -280,7 +280,7 @@ export default defineComponent({
     const { locale } = useI18n({ useScope: 'global' })
     const lang = ref(locale)
 
-    watch(lang, val => {
+    watch(lang, (val) => {
       locale.value = val
       $q.localStorage.set('Locale', val)
     })
