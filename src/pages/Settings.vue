@@ -275,11 +275,15 @@ export default defineComponent({
 
     // ==================================================================
 
-    // TODO: add 'en-GB' and 'ja' locales
+    // TODO: add 'ja' locale
     const localeOptions = [
       {
-        label: 'English',
+        label: 'English (United States)',
         value: 'en-US',
+      },
+      {
+        label: 'English (United Kingdom)',
+        value: 'en-GB',
       },
     ]
 
