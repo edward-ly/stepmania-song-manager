@@ -11,10 +11,6 @@ export default defineComponent({
     onMounted(() => {
       const $q = useQuasar()
 
-      $q.loading.show({
-        message: 'Initializing. Please wait...',
-      })
-
       // Initialize Local Storage
       if (!$q.localStorage.has('RepositoryList')) {
         $q.localStorage.set('RepositoryList', [])
@@ -32,8 +28,6 @@ export default defineComponent({
       if (!$q.localStorage.has('UpdateInterval')) {
         $q.localStorage.set('UpdateInterval', 3600000)
       }
-
-      $q.loading.hide()
     })
   },
 })
