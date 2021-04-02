@@ -148,9 +148,7 @@ export default defineComponent({
 
   computed: {
     lastUpdatedString () {
-      return new Date(this.lastUpdated).toLocaleString(
-        this.$q.localStorage.getItem('Locale')
-      )
+      return new Date(this.lastUpdated).toLocaleString(this.$i18n.locale)
     },
     isLoading () {
       return this.loading || this.songListLoading
