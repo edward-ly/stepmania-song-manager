@@ -168,7 +168,6 @@ export default defineComponent({
         this.$q.localStorage.getItem('DownloadPath'),
         this.bucketName
       )
-      console.log(localPath)
 
       window.fs.addPathsToPreferencesIni(
         this.$q.localStorage.getItem('PreferencesIniPath'),
