@@ -285,8 +285,8 @@ ipcMain.on('get-preferences-ini-path', (event) => {
   event.returnValue = files
 })
 
-ipcMain.handle('open-external', (event, url) => {
-  return shell.openExternal(url)
+ipcMain.on('open-external', (event, url) => {
+  shell.openExternal(url)
 })
 
 ipcMain.on('open-folder-dialog', (event, defaultPath) => {

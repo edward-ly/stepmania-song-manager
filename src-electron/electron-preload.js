@@ -32,8 +32,8 @@ contextBridge.exposeInMainWorld('electron', {
   getPreferencesIniPath: () => {
     return ipcRenderer.sendSync('get-preferences-ini-path')
   },
-  openExternal: async (url) => {
-    return await ipcRenderer.invoke('open-external', url)
+  openExternal: (url) => {
+    ipcRenderer.send('open-external', url)
   },
   openFolderDialog: (currentPath) => {
     return ipcRenderer.sendSync('open-folder-dialog', currentPath)
