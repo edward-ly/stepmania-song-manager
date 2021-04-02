@@ -73,7 +73,6 @@
             <q-slide-transition :duration="duration[index]">
               <div v-show="expanded[index]">
                 <q-table
-                  class="fill-width"
                   dense
                   :rows="pack.songs"
                   :columns="columns"
