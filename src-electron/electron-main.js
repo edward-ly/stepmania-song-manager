@@ -7,7 +7,7 @@ import {
   shell,
 } from 'electron'
 import path from 'path'
-import fs from 'fs'
+import fs from 'fs-extra'
 import glob from 'glob'
 import _ from 'lodash'
 import AutoLaunch from 'auto-launch'
@@ -232,20 +232,24 @@ function parseSimfileData (data, fileExtension) {
 
 // Electron ==================================================================
 
-ipcMain.on('init-download-path', (event) => {
-  const downloadPath = path.join(app.getPath('userData'), 'Songs')
-  if (!fs.existsSync(downloadPath)) {
-    fs.mkdirSync(downloadPath)
+ipcMain.handle('init-download-path', async () => {
+  try {
+    const downloadPath = path.join(app.getPath('userData'), 'Songs')
+    await fs.ensureDir(downloadPath)
+    return downloadPath
+  } catch (err) {
+    return ''
   }
-  event.returnValue = downloadPath
 })
 
-ipcMain.on('get-download-path', (event, downloadPath, bucketName) => {
-  const bucketPath = path.join(downloadPath, bucketName)
-  if (!fs.existsSync(bucketPath)) {
-    fs.mkdirSync(bucketPath)
+ipcMain.handle('get-download-path', async (event, downloadPath, bucketName) => {
+  try {
+    const bucketPath = path.join(downloadPath, bucketName)
+    await fs.ensureDir(bucketPath)
+    return bucketPath
+  } catch (err) {
+    return ''
   }
-  event.returnValue = bucketPath
 })
 
 ipcMain.on('get-preferences-ini-path', (event) => {

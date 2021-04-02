@@ -163,11 +163,12 @@ export default defineComponent({
   },
 
   methods: {
-    addRepo () {
-      const localPath = window.electron.getDownloadPath(
+    async addRepo () {
+      const localPath = await window.electron.getDownloadPath(
         this.$q.localStorage.getItem('DownloadPath'),
         this.bucketName
       )
+      console.log(localPath)
 
       window.fs.addPathsToPreferencesIni(
         this.$q.localStorage.getItem('PreferencesIniPath'),

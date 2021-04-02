@@ -82,7 +82,7 @@ export default defineComponent({
       description,
       dialogRef,
       onDialogHide,
-      onOKClick () {
+      onOKClick: async () => {
         const sanitizedName = name.value
           ? name.value.trim().replace(/\s+/g, ' ')
           : ''
@@ -95,7 +95,7 @@ export default defineComponent({
           loading: false,
           progress: null,
           lastUpdated: new Date().toISOString(),
-          localPath: window.electron.getDownloadPath(
+          localPath: await window.electron.getDownloadPath(
             $q.localStorage.getItem('DownloadPath'),
             bucketName.value
           ),

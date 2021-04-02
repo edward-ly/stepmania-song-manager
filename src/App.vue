@@ -8,7 +8,7 @@ import { useQuasar } from 'quasar'
 
 export default defineComponent({
   setup () {
-    onMounted(() => {
+    onMounted(async () => {
       const $q = useQuasar()
 
       // Initialize Local Storage
@@ -17,7 +17,10 @@ export default defineComponent({
       }
 
       if (!$q.localStorage.has('DownloadPath')) {
-        $q.localStorage.set('DownloadPath', window.electron.initDownloadPath())
+        $q.localStorage.set(
+          'DownloadPath',
+          await window.electron.initDownloadPath()
+        )
       }
       if (!$q.localStorage.has('PreferencesIniPath')) {
         $q.localStorage.set(
