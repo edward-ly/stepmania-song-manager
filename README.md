@@ -23,8 +23,6 @@ yarn lint
 yarn build
 ```
 
-To customize the Quasar configuration, see [Configuring quasar.conf.js](https://quasar.dev/quasar-cli/quasar-conf-js).
-
 ## Using the App
 
 ### Adding Song Packs
@@ -32,14 +30,14 @@ To customize the Quasar configuration, see [Configuring quasar.conf.js](https://
 Simply click on the `+ Add Songs` button and select a bucket from the list.
 You can also add a new S3 bucket that is not already in the list, in which case the name of the S3 bucket is required.
 
-*Please note that any S3 buckets added must be publicly accessible in order for the app to be able to download the files within!*
-*More specifically, the `s3:GetObject` and `s3:ListBucket` permissions must be enabled for everyone.*
+> *Note: Any S3 buckets added must be publicly accessible in order for the app to be able to download the files within.
+  More specifically, the `s3:GetObject` and `s3:ListBucket` permissions must be enabled for everyone.*
 
-The chosen bucket will then be displayed on the home page where you can view information about the songs in the bucket, download all files in the bucket, or remove the bucket from the app.
+The chosen bucket will then be displayed on the main page where you can view the songs in the bucket, download all files in the bucket, or remove the bucket from the app.
 
-> Note: Removing a bucket from the app will only hide the songs from StepMania, and not delete any local files from your computer.
+> *Note: Removing a bucket from the app will only hide the songs from StepMania, and not delete any local files from your computer.
   This is to prevent re-downloading any files unnecessarily should you decide to re-add the bucket.
-  If you want to completely remove the downloaded packs from your computer, you can manually delete the files and folders yourself.
+  If you want to completely remove the downloaded packs from your computer, you can manually delete the files and folders yourself.*
 
 ### Updating Song Packs
 
@@ -49,11 +47,8 @@ The app itself will check for and download updates periodically, or you can perf
 
 ### Settings
 
-The settings page includes the following parameters.
-Parameters are set to their default values when the app is launched for the first time.
+The settings page includes the following parameters, which are set to their default values when the app is launched for the first time.
 Any changes made to these settings will be saved automatically.
-
-> Note: Unless you know what you are doing, I do not recommend changing the download path, as using a path that already exists can potentially overwrite or delete any unwanted files!
 
 | Name | Default Value | Description |
 | :- | :- | :- |
@@ -61,7 +56,7 @@ Any changes made to these settings will be saved automatically.
 | `Preferences.ini Path` | Paths to all `Preferences.ini` files automatically found/detected. | The full path to the `Preferences.ini` file used by StepMania (or paths if multiple copies of StepMania are installed). |
 | `Update Frequency` | `1 hour` | How often the app will check for and download updates. |
 | `Auto-Launch on Login` | `false` | Whether or not to open the app when the computer starts. |
-| `Language` | `English` | Language of the app's user interface. |
+| `Language` | `English (United States)` | Language of the app's user interface. |
 
 Default download paths:
 
@@ -74,10 +69,7 @@ Default download paths:
 ## Donate
 
 Like the app?
-Consider donating, which will help pay for the costs of:
-
-- hosting simfiles in Amazon S3, and
-- adding code signing certificates.
+Consider donating, which will help pay for the costs of hosting simfiles in Amazon S3.
 
 [![PayPal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/donate?hosted_button_id=R3F883NUQFLP2)
 
