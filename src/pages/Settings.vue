@@ -195,9 +195,16 @@ export default defineComponent({
       $q.dialog({
         component: ConfirmDialog,
         componentProps: {
-          message: 'Are you sure you want to remove this file?',
+          message:
+            'Are you sure you want to delete this file? This will also remove all installed packs from the version of StepMania associated with this file.',
         },
       }).onOk(() => {
+        console.log(preferencesIniPath.value[index])
+        window.fs.deletePathsFromPreferencesIni(
+          [preferencesIniPath.value[index]],
+          $q.localStorage.getItem('RepositoryList').map((el) => el.localPath)
+        )
+
         this.preferencesIniPath.splice(index, 1)
         savePreferencesIniPath()
       })
