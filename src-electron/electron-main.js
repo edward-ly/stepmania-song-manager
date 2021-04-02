@@ -183,19 +183,18 @@ function getDisplayBPM (data) {
       .replace(/\s+/g, '')
       .split(',')
       .map((entry) => Number(entry.substring(entry.indexOf('=') + 1)))
-    const minBPM = _.min(trueBPMs)
-    const maxBPM = _.max(trueBPMs)
-    if (minBPM === maxBPM) return _.round(maxBPM).toString()
-    return `${_.round(minBPM)}-${_.round(maxBPM)}`
+    const minBPM = _.round(_.min(trueBPMs))
+    const maxBPM = _.round(_.max(trueBPMs))
+    return minBPM === maxBPM ? `${maxBPM}` : `${minBPM}-${maxBPM}`
   }
   if (displayBPM === '*') return '???'
-  if (displayBPM.includes(':')) {
-    const bpms = displayBPM.split(':')
-    const minBPM = _.round(Number(bpms[0]))
+  const bpms = displayBPM.split(':')
+  const minBPM = _.round(Number(bpms[0]))
+  if (bpms.length > 1) {
     const maxBPM = _.round(Number(bpms[1]))
     return `${minBPM}-${maxBPM}`
-  } // else: displayBPM is a single number
-  return _.round(Number(displayBPM)).toString()
+  }
+  return minBPM.toString()
 }
 
 function getSimfileField (data, field) {
