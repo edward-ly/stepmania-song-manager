@@ -129,11 +129,12 @@
             <q-card-section>
               <q-select
                 v-model="lang"
-                dense
-                options-dense
-                outlined
                 :options="langOptions"
-                @update:modelValue="saveLocale"
+                dense
+                outlined
+                emit-value
+                map-options
+                options-dense
               />
             </q-card-section>
           </q-card>
@@ -144,7 +145,8 @@
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useQuasar } from 'quasar'
 import ConfirmDialog from 'components/dialogs/ConfirmDialog.vue'
 import thumbScrollStyle from 'components/thumbScrollStyle'
@@ -275,6 +277,14 @@ export default defineComponent({
 
     // ==================================================================
 
+    const { locale } = useI18n({ useScope: 'global' })
+    const lang = ref(locale)
+
+    watch(lang, val => {
+      locale.value = val
+      $q.localStorage.set('Locale', val)
+    })
+
     // TODO: add 'ja' locale
     const langOptions = [
       {
@@ -286,14 +296,6 @@ export default defineComponent({
         value: 'en-GB',
       },
     ]
-
-    let lang = ref(
-      langOptions.find((i) => i.value === $q.localStorage.getItem('Locale'))
-    )
-
-    function saveLocale (newValue) {
-      $q.localStorage.set('Locale', newValue.value)
-    }
 
     // ==================================================================
 
@@ -311,9 +313,8 @@ export default defineComponent({
       saveUpdateFrequency,
       autoLaunchOnLogin,
       saveAutoLaunchOnLogin,
-      langOptions,
       lang,
-      saveLocale,
+      langOptions,
     }
   },
 })
