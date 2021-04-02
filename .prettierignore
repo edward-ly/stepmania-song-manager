@@ -13,7 +13,6 @@ quasar.conf.js
 version.js
 README.md
 /src-electron/electron-flag.d.ts
-/src/boot
 /src/store
 /src/css/quasar.variables.scss
 /src/pages/Error404.vue
