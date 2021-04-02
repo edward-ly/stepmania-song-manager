@@ -253,36 +253,35 @@ ipcMain.handle('get-download-path', async (event, downloadPath, bucketName) => {
 })
 
 ipcMain.on('get-preferences-ini-path', (event) => {
-  let files
-
-  if (process.platform === 'win32') {
-    files = glob
-      .sync('StepMania 5*/Save/Preferences.ini', {
-        cwd: '/Games',
-        absolute: true,
-      })
-      .concat(
+  switch (process.platform) {
+    case 'win32': {
+      const files = _.concat(
+        glob.sync('StepMania 5*/Save/Preferences.ini', {
+          cwd: '/Games',
+          absolute: true,
+        }),
         glob.sync('StepMania 5*/Save/Preferences.ini', {
           cwd: app.getPath('appData'),
           absolute: true,
         })
       )
-      .map((str) => str.replace(/\//g, '\\'))
-  } else if (process.platform === 'darwin') {
-    // macOS
-    files = glob.sync('StepMania 5*/Preferences.ini', {
-      cwd: path.join(app.getPath('home'), 'Library', 'Preferences'),
-      absolute: true,
-    })
-  } else {
-    // Linux (any)
-    files = glob.sync('.stepmania-5*/Save/Preferences.ini', {
-      cwd: app.getPath('home'),
-      absolute: true,
-    })
+      event.returnValue = _.map(files, (str) => str.replace(/\//g, '\\'))
+      break
+    }
+    case 'darwin': {
+      event.returnValue = glob.sync('StepMania 5*/Preferences.ini', {
+        cwd: path.join(app.getPath('home'), 'Library', 'Preferences'),
+        absolute: true,
+      })
+      break
+    }
+    default: {
+      event.returnValue = glob.sync('.stepmania-5*/Save/Preferences.ini', {
+        cwd: app.getPath('home'),
+        absolute: true,
+      })
+    }
   }
-
-  event.returnValue = files
 })
 
 ipcMain.on('open-external', (event, url) => {
