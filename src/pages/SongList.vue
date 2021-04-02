@@ -219,8 +219,9 @@ export default defineComponent({
           }
           return bInt - aInt
         },
-        classes: 'text-no-wrap q-table--col-auto-width',
-        headerClasses: 'text-center text-no-wrap q-table--col-auto-width',
+        classes: 'text-no-wrap q-table--col-auto-width bpm-width',
+        headerClasses:
+          'text-center text-no-wrap q-table--col-auto-width bpm-width',
       },
       {
         name: 'beg',
@@ -360,6 +361,10 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+.bpm-width {
+  min-width: 64px;
+}
+
 .q-table--dense .q-table th.padding-level,
 .q-table--dense .q-table td.padding-level {
   padding: 4px 2px;
