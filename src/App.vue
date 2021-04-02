@@ -32,9 +32,6 @@ export default defineComponent({
       if (!$q.localStorage.has('UpdateInterval')) {
         $q.localStorage.set('UpdateInterval', 3600000)
       }
-      if (!$q.localStorage.has('Locale')) {
-        $q.localStorage.set('Locale', 'en-US')
-      }
 
       $q.loading.hide()
     })
