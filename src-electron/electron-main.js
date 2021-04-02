@@ -9,6 +9,7 @@ import {
 import path from 'path'
 import fs from 'fs'
 import glob from 'glob'
+import _ from 'lodash'
 import AutoLaunch from 'auto-launch'
 import { autoUpdater } from 'electron-updater'
 // TODO: replace with native '@aws-sdk/client-s3' package and md5 file caching
@@ -182,19 +183,19 @@ function getDisplayBPM (data) {
       .replace(/\s+/g, '')
       .split(',')
       .map((entry) => Number(entry.substring(entry.indexOf('=') + 1)))
-    const minBPM = trueBPMs.reduce((a, b) => Math.min(a, b))
-    const maxBPM = trueBPMs.reduce((a, b) => Math.max(a, b))
-    if (minBPM === maxBPM) return Math.round(maxBPM).toString()
-    return `${Math.round(minBPM)}-${Math.round(maxBPM)}`
+    const minBPM = _.min(trueBPMs)
+    const maxBPM = _.max(trueBPMs)
+    if (minBPM === maxBPM) return _.round(maxBPM).toString()
+    return `${_.round(minBPM)}-${_.round(maxBPM)}`
   }
   if (displayBPM === '*') return '???'
   if (displayBPM.includes(':')) {
     const bpms = displayBPM.split(':')
-    const minBPM = Math.round(Number(bpms[0]))
-    const maxBPM = Math.round(Number(bpms[1]))
+    const minBPM = _.round(Number(bpms[0]))
+    const maxBPM = _.round(Number(bpms[1]))
     return `${minBPM}-${maxBPM}`
   } // else: displayBPM is a single number
-  return Math.round(Number(displayBPM)).toString()
+  return _.round(Number(displayBPM)).toString()
 }
 
 function getSimfileField (data, field) {
@@ -339,11 +340,8 @@ ipcMain.on('add-paths-preferences-ini', (event, iniFiles, paths) => {
       if (err) return
 
       const newData = data.replace(/(?<=AdditionalSongFolders=).*/, (match) => {
-        let newPaths = new Set(match.length ? match.split(',') : [])
-        for (let path of paths) {
-          newPaths.add(path)
-        }
-        return [...newPaths].join(',')
+        const iniPaths = match.length ? match.split(',') : []
+        return _.union(iniPaths, paths).join(',')
       })
 
       fs.writeFile(file, newData, () => {})
@@ -357,11 +355,8 @@ ipcMain.on('delete-paths-preferences-ini', (event, iniFiles, paths) => {
       if (err) return
 
       const newData = data.replace(/(?<=AdditionalSongFolders=).*/, (match) => {
-        let newPaths = new Set(match.length ? match.split(',') : [])
-        for (let path of paths) {
-          newPaths.delete(path)
-        }
-        return [...newPaths].join(',')
+        const iniPaths = match.length ? match.split(',') : []
+        return _.difference(iniPaths, paths).join(',')
       })
 
       fs.writeFile(file, newData, () => {})
