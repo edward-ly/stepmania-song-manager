@@ -423,12 +423,12 @@ ipcMain.on('is-auto-launch-enabled', async (event) => {
   event.returnValue = await autoLauncher.isEnabled()
 })
 
-ipcMain.handle('enable-auto-launch', () => {
-  return autoLauncher.enable()
+ipcMain.on('enable-auto-launch', () => {
+  autoLauncher.enable()
 })
 
-ipcMain.handle('disable-auto-launch', () => {
-  return autoLauncher.disable()
+ipcMain.on('disable-auto-launch', () => {
+  autoLauncher.disable()
 })
 
 // AWS S3 ====================================================================

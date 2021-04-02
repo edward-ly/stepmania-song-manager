@@ -82,11 +82,11 @@ contextBridge.exposeInMainWorld('autoLaunch', {
   isEnabled: () => {
     return ipcRenderer.sendSync('is-auto-launch-enabled')
   },
-  enable: async () => {
-    return await ipcRenderer.invoke('enable-auto-launch')
+  enable: () => {
+    ipcRenderer.send('enable-auto-launch')
   },
-  disable: async () => {
-    return await ipcRenderer.invoke('disable-auto-launch')
+  disable: () => {
+    ipcRenderer.send('disable-auto-launch')
   },
 })
 
