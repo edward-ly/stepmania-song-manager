@@ -128,11 +128,11 @@
 
             <q-card-section>
               <q-select
-                v-model="locale"
+                v-model="lang"
                 dense
                 options-dense
                 outlined
-                :options="localeOptions"
+                :options="langOptions"
                 @update:modelValue="saveLocale"
               />
             </q-card-section>
@@ -276,7 +276,7 @@ export default defineComponent({
     // ==================================================================
 
     // TODO: add 'ja' locale
-    const localeOptions = [
+    const langOptions = [
       {
         label: 'English (United States)',
         value: 'en-US',
@@ -287,8 +287,8 @@ export default defineComponent({
       },
     ]
 
-    let locale = ref(
-      localeOptions.find((i) => i.value === $q.localStorage.getItem('Locale'))
+    let lang = ref(
+      langOptions.find((i) => i.value === $q.localStorage.getItem('Locale'))
     )
 
     function saveLocale (newValue) {
@@ -311,8 +311,8 @@ export default defineComponent({
       saveUpdateFrequency,
       autoLaunchOnLogin,
       saveAutoLaunchOnLogin,
-      localeOptions,
-      locale,
+      langOptions,
+      lang,
       saveLocale,
     }
   },
