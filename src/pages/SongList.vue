@@ -98,6 +98,7 @@
 import { defineComponent, ref } from 'vue'
 import EmptyMessage from 'components/EmptyMessage.vue'
 import thumbScrollStyle from 'components/thumbScrollStyle'
+import _ from 'lodash'
 
 export default defineComponent({
   components: {
@@ -126,7 +127,7 @@ export default defineComponent({
       duration.value = data.map((pack) => getDuration(pack))
     })
 
-    // TODO: implement searching by bpm and level
+    // TODO: implement searching by bpm and level (by chart)
     function filterSongList (input) {
       if (!input || /^\s*$/.test(input)) {
         filteredSongList.value = songList.value
@@ -138,11 +139,14 @@ export default defineComponent({
         return {
           name: pack.name,
           songs: pack.songs.filter((song) => {
+            const ifLevel = /^level:(\d+)$/gi.exec(query)
             const matchConds = [
               `${song.title} ${song.artist}`.toLowerCase().includes(query),
               `${song.titleTranslit} ${song.artistTranslit}`
                 .toLowerCase()
                 .includes(query),
+              ifLevel &&
+                _.values(song).map(Number).includes(Number(ifLevel[1])),
             ]
             return matchConds.reduce((a, b) => a || b)
           }),
