@@ -342,8 +342,11 @@ ipcMain.on('add-paths-preferences-ini', (event, iniFiles, paths) => {
       if (err) return
 
       const newData = data.replace(/(?<=AdditionalSongFolders=).*/, (match) => {
-        const iniPaths = match.length ? match.split(',') : []
-        return _.union(iniPaths, paths).join(',')
+        const iniPaths = match.length
+          ? match.replace(/\\/g, '/').split(',')
+          : []
+        const newPaths = paths.map((path) => path.replace(/\\/g, '/'))
+        return _.union(iniPaths, newPaths).join(',')
       })
 
       fs.writeFile(file, newData, () => {})
@@ -357,8 +360,11 @@ ipcMain.on('delete-paths-preferences-ini', (event, iniFiles, paths) => {
       if (err) return
 
       const newData = data.replace(/(?<=AdditionalSongFolders=).*/, (match) => {
-        const iniPaths = match.length ? match.split(',') : []
-        return _.difference(iniPaths, paths).join(',')
+        const iniPaths = match.length
+          ? match.replace(/\\/g, '/').split(',')
+          : []
+        const newPaths = paths.map((path) => path.replace(/\\/g, '/'))
+        return _.difference(iniPaths, newPaths).join(',')
       })
 
       fs.writeFile(file, newData, () => {})
