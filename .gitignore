@@ -34,3 +34,6 @@ yarn-error.log*
 
 # Other auto-generated files
 version.js
+
+# Environment variables
+.env
