@@ -445,7 +445,7 @@ ipcMain.on('sync-bucket', (event, bucketName, downloadPath) => {
       s3Options: {
         accessKeyId: process.env.AWS_ACCESS_KEY_ID,
         secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-        region: 'us-west-2',
+        region: process.env.AWS_REGION,
       },
     })
     .downloadDir({
@@ -470,7 +470,7 @@ ipcMain.on('sync-song-list', (event, bucketName, downloadPath) => {
       s3Options: {
         accessKeyId: process.env.AWS_ACCESS_KEY_ID,
         secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-        region: 'us-west-2',
+        region: process.env.AWS_REGION,
       },
     })
     .downloadDir({
