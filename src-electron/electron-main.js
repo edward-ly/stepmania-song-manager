@@ -1,3 +1,7 @@
+// Import .env environment variables
+import dotenv from 'dotenv'
+dotenv.config()
+
 import {
   app,
   BrowserWindow,
@@ -440,14 +444,22 @@ ipcMain.on('disable-auto-launch', () => {
 // AWS S3 ====================================================================
 
 ipcMain.on('sync-bucket', (event, bucketName, downloadPath) => {
-  const dl = s3.createClient().downloadDir({
-    localDir: downloadPath,
-    s3Params: {
-      Bucket: bucketName,
-      Prefix: '',
-    },
-    deleteRemoved: true,
-  })
+  const dl = s3
+    .createClient({
+      s3Options: {
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+        region: 'us-west-2',
+      },
+    })
+    .downloadDir({
+      localDir: downloadPath,
+      s3Params: {
+        Bucket: bucketName,
+        Prefix: '',
+      },
+      deleteRemoved: true,
+    })
 
   dl.on('error', (err) => event.reply('sync-error', err))
   dl.on('progress', () =>
@@ -457,21 +469,29 @@ ipcMain.on('sync-bucket', (event, bucketName, downloadPath) => {
 })
 
 ipcMain.on('sync-song-list', (event, bucketName, downloadPath) => {
-  const dl = s3.createClient().downloadDir({
-    localDir: downloadPath,
-    s3Params: {
-      Bucket: bucketName,
-      Prefix: '',
-    },
-    getS3Params: (localFile, s3Object, callback) => {
-      const ext = path.extname(s3Object.Key)
-      if (ext === '.sm' || ext === '.ssc' || ext === '.ini') {
-        callback(null, {})
-      } else {
-        callback(null, null)
-      }
-    },
-  })
+  const dl = s3
+    .createClient({
+      s3Options: {
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+        region: 'us-west-2',
+      },
+    })
+    .downloadDir({
+      localDir: downloadPath,
+      s3Params: {
+        Bucket: bucketName,
+        Prefix: '',
+      },
+      getS3Params: (localFile, s3Object, callback) => {
+        const ext = path.extname(s3Object.Key)
+        if (ext === '.sm' || ext === '.ssc' || ext === '.ini') {
+          callback(null, {})
+        } else {
+          callback(null, null)
+        }
+      },
+    })
 
   dl.on('error', (err) => event.reply('sync-error', err))
   dl.on('progress', () =>
