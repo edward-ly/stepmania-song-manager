@@ -23,6 +23,13 @@ yarn lint
 yarn build
 ```
 
+If you don't have AWS CLI installed on your machine or haven't configured it with your AWS credentials yet, you can also add a `.env` file in the project root directory with the following values:
+
+```
+AWS_ACCESS_KEY_ID=<some-access-key-id>
+AWS_SECRET_ACCESS_KEY=<some-secret-access-key>
+```
+
 ## Using the App
 
 ### Adding Song Packs
