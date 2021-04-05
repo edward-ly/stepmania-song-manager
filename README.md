@@ -28,6 +28,7 @@ If you don't have AWS CLI installed on your machine or haven't configured it wit
 ```
 AWS_ACCESS_KEY_ID=<some-access-key-id>
 AWS_SECRET_ACCESS_KEY=<some-secret-access-key>
+AWS_REGION=<some-aws-region>
 ```
 
 ## Using the App
