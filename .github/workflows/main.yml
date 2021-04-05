@@ -1,4 +1,4 @@
-name: StepMania Song Manager - App Build/Release
+name: build
 
 on:
   push:
