@@ -1,9 +1,9 @@
 # StepMania Song Manager
 
-[![Build Status](https://travis-ci.com/edward-ly/stepmania-song-manager.svg?token=k4pB9yRruTswjTJnoxLt&branch=master)](https://travis-ci.com/edward-ly/stepmania-song-manager)
+[![build](https://github.com/edward-ly/stepmania-song-manager/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/edward-ly/stepmania-song-manager/actions/workflows/main.yml)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
-A cross-platform companion app for [StepMania](https://github.com/stepmania/stepmania) that downloads and automatically updates song ("simfile") packs hosted in Amazon S3 buckets.
+A cross-platform utility app for [StepMania](https://github.com/stepmania/stepmania) that downloads and automatically updates song ("simfile") packs hosted in Amazon S3 buckets.
 
 Made with [Electron](https://www.electronjs.org/) and [Vue.js](https://vuejs.org/) via the [Quasar](https://quasar.dev/) framework.
 
@@ -23,7 +23,7 @@ yarn lint
 yarn build
 ```
 
-If you don't have AWS CLI installed on your machine or haven't configured it with your AWS credentials yet, you can also add a `.env` file in the project root directory with the following values:
+If you don't have AWS CLI installed on your machine or haven't configured it with your AWS credentials yet, you can alternatively add in the project root directory a `.env` file that contains your AWS credentials.
 
 ```
 AWS_ACCESS_KEY_ID=<some-access-key-id>
