@@ -1,5 +1,5 @@
 <template>
-  <q-page class="q-pt-lg q-px-lg">
+  <q-page class="q-pt-lg q-px-lg q-pb-xl">
     <div class="row">
       <div class="col-auto">
         <div class="text-h5 q-my-none">Installed Packs</div>
