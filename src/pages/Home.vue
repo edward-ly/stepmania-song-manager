@@ -44,6 +44,7 @@
 <script>
 import { defineComponent, ref } from 'vue'
 import { useQuasar } from 'quasar'
+import { api } from 'boot/axios'
 import RepositoryCard from 'components/RepositoryCard.vue'
 import ConfirmDialog from 'components/dialogs/ConfirmDialog.vue'
 import EmptyMessage from 'components/EmptyMessage.vue'
@@ -99,7 +100,11 @@ export default defineComponent({
         let repo = repoList.value[index]
         setLoadingStatus(index, true)
 
-        window.aws.s3Sync(repo.bucketName, repo.localPath)
+        window.aws.s3Sync(
+          repo.bucketName,
+          repo.localPath,
+          $q.localStorage.getItem('S3Credentials')
+        )
         window.aws.subscribeSyncEvents(
           (err) => {
             window.aws.unsubscribeSyncEvents()
@@ -123,7 +128,11 @@ export default defineComponent({
       return new Promise((resolve) => {
         let repo = repoList.value[index]
 
-        window.aws.s3SyncSongList(repo.bucketName, repo.localPath)
+        window.aws.s3SyncSongList(
+          repo.bucketName,
+          repo.localPath,
+          $q.localStorage.getItem('S3Credentials')
+        )
         window.aws.subscribeSyncEvents(
           (err) => {
             window.aws.unsubscribeSyncEvents()
@@ -223,6 +232,21 @@ export default defineComponent({
           setSyncAllReposTimeout()
         })
     }
+
+    // Initialize AWS credentials
+    async function getS3Credentials () {
+      api
+        .get('/getRole')
+        .then((res) => {
+          $q.localStorage.set('S3Credentials', res.data.credentials)
+          setTimeout(getS3Credentials, 1800000)
+        })
+        .catch(() => {
+          setTimeout(getS3Credentials, 1800000)
+        })
+    }
+
+    getS3Credentials()
 
     return {
       disableAddSongs,
