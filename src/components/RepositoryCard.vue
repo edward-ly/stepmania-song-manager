@@ -98,8 +98,8 @@
     </q-card-actions>
 
     <q-card-section v-if="loading" class="q-pt-none">
-      <q-linear-progress v-if="isNaN(progress)" indeterminate />
-      <q-linear-progress v-else :value="progress" />
+      <q-linear-progress v-if="progress || progress === 0" :value="progress" />
+      <q-linear-progress v-else indeterminate />
     </q-card-section>
 
     <q-card-section v-if="error.length" class="q-pt-none">
