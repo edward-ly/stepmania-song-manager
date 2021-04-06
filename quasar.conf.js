@@ -74,8 +74,6 @@ module.exports = configure(function (/* ctx */) {
             exclude: 'node_modules'
           }])
       },
-
-      env: require('dotenv').config().parsed,
     },
 
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-devServer
