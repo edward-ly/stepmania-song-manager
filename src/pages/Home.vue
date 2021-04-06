@@ -250,8 +250,10 @@ export default defineComponent({
             message:
               'Error: download credentials could not be retrieved. Please try again later.',
             timeout: 1800000,
+            multiLine: false,
             actions: [
               { label: 'Retry', color: 'yellow', handler: getS3Credentials },
+              { label: 'Dismiss', color: 'white', handler: () => {} },
             ],
           })
           getCredentialsTimer.value = setTimeout(getS3Credentials, 1800000)
