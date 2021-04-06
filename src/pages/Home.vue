@@ -61,6 +61,7 @@ export default defineComponent({
     const disableAddSongs = ref(false)
     const repoList = ref($q.localStorage.getItem('RepositoryList'))
     const syncAllReposTimer = setSyncAllReposInitTimeout()
+    const getCredentialsTimer = ref(null)
 
     function setSyncAllReposInitTimeout () {
       const interval = $q.localStorage.getItem('UpdateInterval')
@@ -234,15 +235,26 @@ export default defineComponent({
     }
 
     // Initialize AWS credentials
-    async function getS3Credentials () {
+    function getS3Credentials () {
+      clearTimeout(getCredentialsTimer.value)
+
       api
         .get('/getRole')
         .then((res) => {
           $q.localStorage.set('S3Credentials', res.data.credentials)
-          setTimeout(getS3Credentials, 1800000)
+          getCredentialsTimer.value = setTimeout(getS3Credentials, 1800000)
         })
         .catch(() => {
-          setTimeout(getS3Credentials, 1800000)
+          $q.notify({
+            type: 'negative',
+            message:
+              'Error: download credentials could not be retrieved. Please try again later.',
+            timeout: 1800000,
+            actions: [
+              { label: 'Retry', color: 'yellow', handler: getS3Credentials },
+            ],
+          })
+          getCredentialsTimer.value = setTimeout(getS3Credentials, 1800000)
         })
     }
 
