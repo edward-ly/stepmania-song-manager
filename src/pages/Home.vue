@@ -61,7 +61,6 @@ export default defineComponent({
     const disableAddSongs = ref(false)
     const repoList = ref($q.localStorage.getItem('RepositoryList'))
     const syncAllReposTimer = setSyncAllReposInitTimeout()
-    const getCredentialsTimer = ref(null)
 
     function setSyncAllReposInitTimeout () {
       const interval = $q.localStorage.getItem('UpdateInterval')
@@ -101,27 +100,35 @@ export default defineComponent({
         let repo = repoList.value[index]
         setLoadingStatus(index, true)
 
-        window.aws.s3Sync(
-          repo.bucketName,
-          repo.localPath,
-          $q.localStorage.getItem('S3Credentials')
-        )
-        window.aws.subscribeSyncEvents(
-          (err) => {
-            window.aws.unsubscribeSyncEvents()
+        api
+          .get('/getRole')
+          .then((res) => {
+            window.aws.s3Sync(
+              repo.bucketName,
+              repo.localPath,
+              res.data.credentials
+            )
+            window.aws.subscribeSyncEvents(
+              (err) => {
+                window.aws.unsubscribeSyncEvents()
+                setLoadingStatus(index, false)
+                resolve(err)
+              },
+              (progress) => (repo.progress = progress),
+              () => {
+                window.aws.unsubscribeSyncEvents()
+                setLoadingStatus(index, false)
+                repo.isDownloaded = true
+                repo.lastUpdated = new Date().toISOString()
+                $q.localStorage.set('RepositoryList', repoList.value)
+                resolve(null)
+              }
+            )
+          })
+          .catch(() => {
             setLoadingStatus(index, false)
-            resolve(err)
-          },
-          (progress) => (repo.progress = progress),
-          () => {
-            window.aws.unsubscribeSyncEvents()
-            setLoadingStatus(index, false)
-            repo.isDownloaded = true
-            repo.lastUpdated = new Date().toISOString()
-            $q.localStorage.set('RepositoryList', repoList.value)
-            resolve(null)
-          }
-        )
+            resolve('Error: download credentials could not be retrieved. Please try again later.')
+          })
       })
     }
 
@@ -129,22 +136,29 @@ export default defineComponent({
       return new Promise((resolve) => {
         let repo = repoList.value[index]
 
-        window.aws.s3SyncSongList(
-          repo.bucketName,
-          repo.localPath,
-          $q.localStorage.getItem('S3Credentials')
-        )
-        window.aws.subscribeSyncEvents(
-          (err) => {
-            window.aws.unsubscribeSyncEvents()
-            resolve(err)
-          },
-          () => {},
-          () => {
-            window.aws.unsubscribeSyncEvents()
-            resolve(null)
-          }
-        )
+        api
+          .get('/getRole')
+          .then((res) => {
+            window.aws.s3SyncSongList(
+              repo.bucketName,
+              repo.localPath,
+              res.data.credentials
+            )
+            window.aws.subscribeSyncEvents(
+              (err) => {
+                window.aws.unsubscribeSyncEvents()
+                resolve(err)
+              },
+              () => {},
+              () => {
+                window.aws.unsubscribeSyncEvents()
+                resolve(null)
+              }
+            )
+          })
+          .catch(() => {
+            resolve('Error: download credentials could not be retrieved. Please try again later.')
+          })
       })
     }
 
@@ -233,34 +247,6 @@ export default defineComponent({
           setSyncAllReposTimeout()
         })
     }
-
-    // Initialize AWS credentials
-    function getS3Credentials () {
-      clearTimeout(getCredentialsTimer.value)
-
-      api
-        .get('/getRole')
-        .then((res) => {
-          $q.localStorage.set('S3Credentials', res.data.credentials)
-          getCredentialsTimer.value = setTimeout(getS3Credentials, 1800000)
-        })
-        .catch(() => {
-          $q.notify({
-            type: 'negative',
-            message:
-              'Error: download credentials could not be retrieved. Please try again later.',
-            timeout: 1800000,
-            multiLine: false,
-            actions: [
-              { label: 'Retry', color: 'yellow', handler: getS3Credentials },
-              { label: 'Dismiss', color: 'white', handler: () => {} },
-            ],
-          })
-          getCredentialsTimer.value = setTimeout(getS3Credentials, 1800000)
-        })
-    }
-
-    getS3Credentials()
 
     return {
       disableAddSongs,
