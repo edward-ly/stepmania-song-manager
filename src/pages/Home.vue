@@ -98,7 +98,6 @@ export default defineComponent({
     function syncRepo (index) {
       return new Promise((resolve) => {
         let repo = repoList.value[index]
-        setLoadingStatus(index, true)
 
         api
           .get('/getRole')
@@ -111,13 +110,11 @@ export default defineComponent({
             window.aws.subscribeSyncEvents(
               (err) => {
                 window.aws.unsubscribeSyncEvents()
-                setLoadingStatus(index, false)
                 resolve(err)
               },
               (progress) => (repo.progress = progress),
               () => {
                 window.aws.unsubscribeSyncEvents()
-                setLoadingStatus(index, false)
                 repo.isDownloaded = true
                 repo.lastUpdated = new Date().toISOString()
                 $q.localStorage.set('RepositoryList', repoList.value)
@@ -126,7 +123,6 @@ export default defineComponent({
             )
           })
           .catch(() => {
-            setLoadingStatus(index, false)
             resolve('Error: download credentials could not be retrieved. Please try again later.')
           })
       })
@@ -165,12 +161,14 @@ export default defineComponent({
     async function syncOneRepo (index) {
       clearTimeout(syncAllReposTimer.value)
       closeErrorMessage(index)
+      setLoadingStatus(index, true)
 
       const err = await syncRepo(index)
       if (err) {
         repoList.value[index].error = err.toString()
       }
 
+      setLoadingStatus(index, false)
       setSyncAllReposTimeout()
     }
 
@@ -180,10 +178,12 @@ export default defineComponent({
 
       for (let i = 0; i < repoList.value.length; i++) {
         if (repoList.value[i].isDownloaded) {
+          setLoadingStatus(i, true)
           const err = await syncRepo(i)
           if (err) {
             repoList.value[i].error = err.toString()
           }
+          setLoadingStatus(i, false)
         }
       }
 
