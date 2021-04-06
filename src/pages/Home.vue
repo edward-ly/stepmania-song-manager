@@ -201,6 +201,7 @@ export default defineComponent({
         const err = await syncSongList(index)
         if (err) {
           repo.error = err.toString()
+          setSongListLoadingStatus(index, false)
           setSyncAllReposTimeout()
           return
         }
