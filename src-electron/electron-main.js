@@ -439,13 +439,13 @@ ipcMain.on('disable-auto-launch', () => {
 
 // AWS S3 ====================================================================
 
-ipcMain.on('sync-bucket', (event, bucketName, downloadPath) => {
+ipcMain.on('sync-bucket', (event, bucketName, downloadPath, credentials) => {
   const dl = s3
     .createClient({
       s3Options: {
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-        region: process.env.AWS_REGION,
+        accessKeyId: credentials.AccessKeyId,
+        secretAccessKey: credentials.SecretAccessKey,
+        sessionToken: credentials.SessionToken,
       },
     })
     .downloadDir({
@@ -464,13 +464,13 @@ ipcMain.on('sync-bucket', (event, bucketName, downloadPath) => {
   dl.on('end', () => event.reply('sync-end'))
 })
 
-ipcMain.on('sync-song-list', (event, bucketName, downloadPath) => {
+ipcMain.on('sync-song-list', (event, bucketName, downloadPath, credentials) => {
   const dl = s3
     .createClient({
       s3Options: {
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-        region: process.env.AWS_REGION,
+        accessKeyId: credentials.AccessKeyId,
+        secretAccessKey: credentials.SecretAccessKey,
+        sessionToken: credentials.SessionToken,
       },
     })
     .downloadDir({
