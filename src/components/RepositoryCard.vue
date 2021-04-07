@@ -3,10 +3,17 @@
     <q-card-section>
       <!-- TODO: add popups to edit name and description -->
       <div class="text-h6">{{ name }}</div>
-      <div class="text-caption">S3 Bucket: {{ bucketName }}</div>
-      <div v-if="description.length" class="text-body2 q-pt-sm">
-        {{ description }}
+
+      <div
+        v-if="endpoint"
+        class="text-caption text-link"
+        @click="openUrl(bucketURL)"
+      >
+        {{ bucketURL }}
       </div>
+      <div v-else class="text-caption">{{ bucketURL }}</div>
+
+      <div v-if="description" class="text-body2 q-pt-sm">{{ description }}</div>
       <div v-else class="text-body2 text-italic text-muted q-pt-sm">
         No description set.
       </div>
@@ -130,6 +137,7 @@ export default defineComponent({
   props: {
     name: { type: String, required: true },
     bucketName: { type: String, required: true },
+    endpoint: { type: String, default: '' },
     description: { type: String, default: '' },
     route: { type: String, required: true },
     isDownloaded: { type: Boolean, default: false },
@@ -147,6 +155,10 @@ export default defineComponent({
   },
 
   computed: {
+    bucketURL () {
+      if (!this.endpoint) return 'S3 Bucket: ' + this.bucketName
+      return this.endpoint + '/' + this.bucketName
+    },
     lastUpdatedString () {
       return new Date(this.lastUpdated).toLocaleString(this.$i18n.locale)
     },
@@ -163,6 +175,9 @@ export default defineComponent({
   },
 
   methods: {
+    openUrl (url) {
+      window.electron.openExternal(url)
+    },
     async addRepo () {
       const localPath = await window.electron.getDownloadPath(
         this.$q.localStorage.getItem('DownloadPath'),
