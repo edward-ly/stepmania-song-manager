@@ -164,9 +164,7 @@ export default defineComponent({
 
     function getSongTitle (row) {
       const title =
-        showTranslit.value && row.titleTranslit
-          ? row.titleTranslit
-          : row.title
+        showTranslit.value && row.titleTranslit ? row.titleTranslit : row.title
       const subtitle =
         showTranslit.value && row.subtitleTranslit
           ? row.subtitleTranslit
