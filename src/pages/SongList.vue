@@ -164,14 +164,14 @@ export default defineComponent({
 
     function getSongTitle (row) {
       const title =
-        showTranslit.value && row.titleTranslit.length
+        showTranslit.value && row.titleTranslit
           ? row.titleTranslit
           : row.title
       const subtitle =
-        showTranslit.value && row.subtitleTranslit.length
+        showTranslit.value && row.subtitleTranslit
           ? row.subtitleTranslit
           : row.subtitle
-      return subtitle.length ? `${title} ${subtitle}` : title
+      return subtitle ? `${title} ${subtitle}` : title
     }
 
     const columns = [
@@ -188,7 +188,7 @@ export default defineComponent({
         name: 'artist',
         label: 'Artist',
         field: (row) =>
-          showTranslit.value && row.artistTranslit.length
+          showTranslit.value && row.artistTranslit
             ? row.artistTranslit
             : row.artist,
         align: 'left',

@@ -177,7 +177,7 @@ function getChartLevel (data, fileExtension, style, difficulty) {
 function getDisplayBPM (data) {
   const displayBpmMatch = data.match(/(?<=#DISPLAYBPM:).*(?=;\s*#BPMS:)/)
   const displayBPM = !displayBpmMatch ? '' : displayBpmMatch[0]
-  if (!displayBPM.length) {
+  if (!displayBPM) {
     const trueBPMs = data
       .match(/(?<=#BPMS:)[^;]*(?=;)/)[0]
       .replace(/\s+/g, '')
@@ -342,9 +342,7 @@ ipcMain.on('add-paths-preferences-ini', (event, iniFiles, paths) => {
       if (err) return
 
       const newData = data.replace(/(?<=AdditionalSongFolders=).*/, (match) => {
-        const iniPaths = match.length
-          ? match.replace(/\\/g, '/').split(',')
-          : []
+        const iniPaths = match ? match.replace(/\\/g, '/').split(',') : []
         const newPaths = paths.map((path) => path.replace(/\\/g, '/'))
         return _.union(iniPaths, newPaths).join(',')
       })
@@ -360,9 +358,7 @@ ipcMain.on('delete-paths-preferences-ini', (event, iniFiles, paths) => {
       if (err) return
 
       const newData = data.replace(/(?<=AdditionalSongFolders=).*/, (match) => {
-        const iniPaths = match.length
-          ? match.replace(/\\/g, '/').split(',')
-          : []
+        const iniPaths = match ? match.replace(/\\/g, '/').split(',') : []
         const newPaths = paths.map((path) => path.replace(/\\/g, '/'))
         return _.difference(iniPaths, newPaths).join(',')
       })
@@ -385,7 +381,7 @@ ipcMain.handle('list-sm-files', (event, folderPath) => {
         try {
           const data = fs.readFileSync(groupIni, 'utf8')
           const newPackName = getSimfileField(data, 'NAME')
-          if (newPackName.length) packName = newPackName
+          if (newPackName) packName = newPackName
         } catch (err) {
           /* continue */
         }

@@ -109,7 +109,7 @@
       <q-linear-progress v-else indeterminate />
     </q-card-section>
 
-    <q-card-section v-if="error.length" class="q-pt-none">
+    <q-card-section v-if="error" class="q-pt-none">
       <q-banner inline-actions dense rounded class="text-white bg-negative">
         {{ error }}
         <template #avatar>
