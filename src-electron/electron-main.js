@@ -439,20 +439,20 @@ ipcMain.on('disable-auto-launch', () => {
 
 // AWS S3 ====================================================================
 
-ipcMain.on('sync-bucket', (event, bucketName, downloadPath, credentials) => {
+ipcMain.on('sync-bucket', (event, bucket, credentials) => {
   let s3Params = {
     s3Options: {
       accessKeyId: credentials.AccessKeyId,
       secretAccessKey: credentials.SecretAccessKey,
       sessionToken: credentials.SessionToken,
-      // endpoint: bucket.endpoint,
     },
   }
+  if (bucket.endpoint) s3Params.s3Options.endpoint = bucket.endpoint
 
   const dlParams = {
-    localDir: downloadPath,
+    localDir: bucket.localPath,
     s3Params: {
-      Bucket: bucketName,
+      Bucket: bucket.name,
       Prefix: '',
     },
     deleteRemoved: true,
@@ -466,20 +466,20 @@ ipcMain.on('sync-bucket', (event, bucketName, downloadPath, credentials) => {
   dl.on('end', () => event.reply('sync-end'))
 })
 
-ipcMain.on('sync-song-list', (event, bucketName, downloadPath, credentials) => {
+ipcMain.on('sync-song-list', (event, bucket, credentials) => {
   let s3Params = {
     s3Options: {
       accessKeyId: credentials.AccessKeyId,
       secretAccessKey: credentials.SecretAccessKey,
       sessionToken: credentials.SessionToken,
-      // endpoint: bucket.endpoint,
     },
   }
+  if (bucket.endpoint) s3Params.s3Options.endpoint = bucket.endpoint
 
   const dlParams = {
-    localDir: downloadPath,
+    localDir: bucket.localPath,
     s3Params: {
-      Bucket: bucketName,
+      Bucket: bucket.name,
       Prefix: '',
     },
     getS3Params: (localFile, s3Object, callback) => {

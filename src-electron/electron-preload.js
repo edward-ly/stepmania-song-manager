@@ -91,11 +91,11 @@ contextBridge.exposeInMainWorld('autoLaunch', {
 })
 
 contextBridge.exposeInMainWorld('aws', {
-  s3Sync: (bucketName, downloadPath, credentials) => {
-    ipcRenderer.send('sync-bucket', bucketName, downloadPath, credentials)
+  s3Sync: (bucket, credentials) => {
+    ipcRenderer.send('sync-bucket', bucket, credentials)
   },
-  s3SyncSongList: (bucketName, downloadPath, credentials) => {
-    ipcRenderer.send('sync-song-list', bucketName, downloadPath, credentials)
+  s3SyncSongList: (bucket, credentials) => {
+    ipcRenderer.send('sync-song-list', bucket, credentials)
   },
   subscribeSyncEvents: (errorCallback, progressCallback, endCallback) => {
     ipcRenderer.on('sync-error', (event, err) => {
