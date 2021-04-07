@@ -440,23 +440,25 @@ ipcMain.on('disable-auto-launch', () => {
 // AWS S3 ====================================================================
 
 ipcMain.on('sync-bucket', (event, bucketName, downloadPath, credentials) => {
-  const dl = s3
-    .createClient({
-      s3Options: {
-        accessKeyId: credentials.AccessKeyId,
-        secretAccessKey: credentials.SecretAccessKey,
-        sessionToken: credentials.SessionToken,
-      },
-    })
-    .downloadDir({
-      localDir: downloadPath,
-      s3Params: {
-        Bucket: bucketName,
-        Prefix: '',
-      },
-      deleteRemoved: true,
-    })
+  let s3Params = {
+    s3Options: {
+      accessKeyId: credentials.AccessKeyId,
+      secretAccessKey: credentials.SecretAccessKey,
+      sessionToken: credentials.SessionToken,
+      // endpoint: bucket.endpoint,
+    },
+  }
 
+  const dlParams = {
+    localDir: downloadPath,
+    s3Params: {
+      Bucket: bucketName,
+      Prefix: '',
+    },
+    deleteRemoved: true,
+  }
+
+  const dl = s3.createClient(s3Params).downloadDir(dlParams)
   dl.on('error', (err) => event.reply('sync-error', err))
   dl.on('progress', () =>
     event.reply('sync-progress', dl.progressAmount / dl.progressTotal)
@@ -465,30 +467,32 @@ ipcMain.on('sync-bucket', (event, bucketName, downloadPath, credentials) => {
 })
 
 ipcMain.on('sync-song-list', (event, bucketName, downloadPath, credentials) => {
-  const dl = s3
-    .createClient({
-      s3Options: {
-        accessKeyId: credentials.AccessKeyId,
-        secretAccessKey: credentials.SecretAccessKey,
-        sessionToken: credentials.SessionToken,
-      },
-    })
-    .downloadDir({
-      localDir: downloadPath,
-      s3Params: {
-        Bucket: bucketName,
-        Prefix: '',
-      },
-      getS3Params: (localFile, s3Object, callback) => {
-        const ext = path.extname(s3Object.Key)
-        if (ext === '.sm' || ext === '.ssc' || ext === '.ini') {
-          callback(null, {})
-        } else {
-          callback(null, null)
-        }
-      },
-    })
+  let s3Params = {
+    s3Options: {
+      accessKeyId: credentials.AccessKeyId,
+      secretAccessKey: credentials.SecretAccessKey,
+      sessionToken: credentials.SessionToken,
+      // endpoint: bucket.endpoint,
+    },
+  }
 
+  const dlParams = {
+    localDir: downloadPath,
+    s3Params: {
+      Bucket: bucketName,
+      Prefix: '',
+    },
+    getS3Params: (localFile, s3Object, callback) => {
+      const ext = path.extname(s3Object.Key)
+      if (ext === '.sm' || ext === '.ssc' || ext === '.ini') {
+        callback(null, {})
+      } else {
+        callback(null, null)
+      }
+    },
+  }
+
+  const dl = s3.createClient(s3Params).downloadDir(dlParams)
   dl.on('error', (err) => event.reply('sync-error', err))
   dl.on('progress', () =>
     event.reply('sync-progress', dl.progressAmount / dl.progressTotal)
