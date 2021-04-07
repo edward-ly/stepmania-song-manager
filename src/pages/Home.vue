@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, onMounted } from 'vue'
 import { useQuasar } from 'quasar'
 import { api } from 'boot/axios'
 import RepositoryCard from 'components/RepositoryCard.vue'
@@ -84,6 +84,7 @@ export default defineComponent({
         repo.disable = status
         return repo
       })
+      $q.localStorage.set('RepositoryList', repoList.value)
     }
 
     function setSongListLoadingStatus (index, status) {
@@ -93,6 +94,7 @@ export default defineComponent({
         repo.disable = status
         return repo
       })
+      $q.localStorage.set('RepositoryList', repoList.value)
     }
 
     function syncRepo (index) {
@@ -216,6 +218,7 @@ export default defineComponent({
 
     function closeErrorMessage (index) {
       repoList.value[index].error = ''
+      $q.localStorage.set('RepositoryList', repoList.value)
     }
 
     function closeAllErrorMessages () {
@@ -223,6 +226,7 @@ export default defineComponent({
         repo.error = ''
         return repo
       })
+      $q.localStorage.set('RepositoryList', repoList.value)
     }
 
     function deleteRepo (index) {
@@ -248,6 +252,17 @@ export default defineComponent({
           setSyncAllReposTimeout()
         })
     }
+
+    onMounted(() => {
+      repoList.value = repoList.value.map((repo) => {
+        repo.error = ''
+        repo.disable = false
+        repo.loading = false
+        repo.songListLoading = false
+        return repo
+      })
+      $q.localStorage.set('RepositoryList', repoList.value)
+    })
 
     return {
       disableAddSongs,
