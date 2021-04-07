@@ -104,11 +104,12 @@ export default defineComponent({
         api
           .get('/getRole')
           .then((res) => {
-            window.aws.s3Sync(
-              repo.bucketName,
-              repo.localPath,
-              res.data.credentials
-            )
+            const bucket = {
+              name: repo.bucketName,
+              localPath: repo.localPath,
+              endpoint: repo.endpoint,
+            }
+            window.aws.s3Sync(bucket, res.data.credentials)
             window.aws.subscribeSyncEvents(
               (err) => {
                 window.aws.unsubscribeSyncEvents()
@@ -137,11 +138,12 @@ export default defineComponent({
         api
           .get('/getRole')
           .then((res) => {
-            window.aws.s3SyncSongList(
-              repo.bucketName,
-              repo.localPath,
-              res.data.credentials
-            )
+            const bucket = {
+              name: repo.bucketName,
+              localPath: repo.localPath,
+              endpoint: repo.endpoint,
+            }
+            window.aws.s3SyncSongList(bucket, res.data.credentials)
             window.aws.subscribeSyncEvents(
               (err) => {
                 window.aws.unsubscribeSyncEvents()
