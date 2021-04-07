@@ -9,14 +9,21 @@
         </q-card-section>
 
         <q-card-section class="q-gutter-sm">
-          <q-input v-model="name" dense outlined label="Name" class="q-pb-sm" />
+          <q-input v-model="name" dense outlined label="Name" />
           <q-input
             v-model="bucketName"
             dense
             outlined
-            label="S3 Bucket Name *"
+            label="Bucket Name *"
             lazy-rules="ondemand"
             :rules="bucketNameRules"
+          />
+          <q-input
+            v-model="endpoint"
+            dense
+            outlined
+            type="url"
+            label="Endpoint URL"
           />
           <q-input
             v-model="description"
@@ -54,6 +61,7 @@ export default defineComponent({
 
     const name = ref(null)
     const bucketName = ref(null)
+    const endpoint = ref(null)
     const description = ref(null)
 
     return {
@@ -79,6 +87,7 @@ export default defineComponent({
           /^[a-z0-9].*[a-z0-9]$/.test(val) ||
           'Must begin and end with a letter or number',
       ],
+      endpoint,
       description,
       dialogRef,
       onDialogHide,
@@ -86,9 +95,11 @@ export default defineComponent({
         const sanitizedName = name.value
           ? name.value.trim().replace(/\s+/g, ' ')
           : ''
+
         onDialogOK({
           name: sanitizedName.length ? sanitizedName : bucketName.value,
           bucketName: bucketName.value,
+          endpoint: endpoint.value || '',
           description: !description.value ? '' : description.value,
           isDownloaded: false,
           disable: false,
@@ -104,6 +115,7 @@ export default defineComponent({
       onReset () {
         name.value = null
         bucketName.value = null
+        endpoint.value = null
         description.value = null
       },
       onCancelClick: onDialogCancel,
