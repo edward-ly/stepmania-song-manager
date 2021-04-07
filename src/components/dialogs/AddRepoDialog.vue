@@ -86,6 +86,10 @@ export default defineComponent({
         (val) =>
           /^[a-z0-9].*[a-z0-9]$/.test(val) ||
           'Must begin and end with a letter or number',
+        (val) => {
+          const bucketNames = $q.localStorage.getItem('RepositoryList').map((repo) => repo.bucketName)
+          return !bucketNames.includes(val) || 'Bucket already added'
+        },
       ],
       endpoint,
       description,
