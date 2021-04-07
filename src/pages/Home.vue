@@ -125,9 +125,7 @@ export default defineComponent({
               }
             )
           })
-          .catch(() => {
-            resolve('Error: download credentials could not be retrieved. Please try again later.')
-          })
+          .catch((err) => resolve(err))
       })
     }
 
@@ -156,9 +154,7 @@ export default defineComponent({
               }
             )
           })
-          .catch(() => {
-            resolve('Error: download credentials could not be retrieved. Please try again later.')
-          })
+          .catch((err) => resolve(err))
       })
     }
 
