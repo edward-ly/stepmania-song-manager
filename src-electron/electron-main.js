@@ -440,10 +440,12 @@ ipcMain.on('sync-bucket', (event, bucket, credentials) => {
     s3Options: {
       accessKeyId: credentials.AccessKeyId,
       secretAccessKey: credentials.SecretAccessKey,
-      sessionToken: credentials.SessionToken,
     },
   }
   if (bucket.endpoint) s3Params.s3Options.endpoint = bucket.endpoint
+  if (credentials.SessionToken) {
+    s3Params.s3Options.sessionToken = credentials.SessionToken
+  }
 
   const dlParams = {
     localDir: bucket.localPath,
@@ -467,10 +469,12 @@ ipcMain.on('sync-song-list', (event, bucket, credentials) => {
     s3Options: {
       accessKeyId: credentials.AccessKeyId,
       secretAccessKey: credentials.SecretAccessKey,
-      sessionToken: credentials.SessionToken,
     },
   }
   if (bucket.endpoint) s3Params.s3Options.endpoint = bucket.endpoint
+  if (credentials.SessionToken) {
+    s3Params.s3Options.sessionToken = credentials.SessionToken
+  }
 
   const dlParams = {
     localDir: bucket.localPath,
