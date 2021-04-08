@@ -183,6 +183,7 @@ export default defineComponent({
       repoList.push({
         name: this.name,
         bucketName: this.bucketName,
+        endpoint: this.endpoint,
         description: this.description,
         isDownloaded: false,
         disable: false,
