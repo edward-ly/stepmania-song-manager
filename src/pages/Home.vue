@@ -97,12 +97,19 @@ export default defineComponent({
       $q.localStorage.set('RepositoryList', repoList.value)
     }
 
+    function getRoleEndpoint (endpoint) {
+      let roleEndpoint = '/getRole'
+      if (endpoint.endsWith('amazonaws.com'))  roleEndpoint += 'S3'
+      if (endpoint.endsWith('backblazeb2.com')) roleEndpoint += 'B2'
+      return roleEndpoint
+    }
+
     function syncRepo (index) {
       return new Promise((resolve) => {
         let repo = repoList.value[index]
 
         api
-          .get('/getRole')
+          .get(getRoleEndpoint(repo.endpoint))
           .then((res) => {
             const bucket = {
               name: repo.bucketName,
@@ -134,7 +141,7 @@ export default defineComponent({
         let repo = repoList.value[index]
 
         api
-          .get('/getRole')
+          .get(getRoleEndpoint(repo.endpoint))
           .then((res) => {
             const bucket = {
               name: repo.bucketName,
