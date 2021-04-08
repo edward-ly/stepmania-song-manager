@@ -90,7 +90,11 @@ function createSongListWindow () {
     },
   })
 
-  songListWindow.loadURL(process.env.APP_URL + '/#/songs')
+  if (process.env.DEV) {
+    songListWindow.loadURL(process.env.APP_URL + '/#/songs')
+  } else {
+    songListWindow.loadURL(process.env.APP_URL + '#songs')
+  }
 
   if (process.env.DEBUGGING) {
     // if on DEV or Production with debug enabled
