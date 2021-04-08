@@ -27,9 +27,9 @@
           </div>
 
           <p class="text-body2">
-            Want to report a bug or submit feedback? Create an issue or start a
-            discussion on GitHub from the link above, or contact me on social
-            media!
+            Want to report a bug or suggest new features? Create an issue or
+            start a discussion on GitHub from the link above, or contact me on
+            social media!
           </p>
 
           <ul class="text-body2">
@@ -70,7 +70,9 @@
           </ul>
 
           <p class="text-body2">
-            Want to donate and support the work that I do?
+            Want to donate and support the work that I do? Donations will go
+            towards paying for the costs of hosting and downloading simfiles
+            online.
           </p>
 
           <q-card-actions class="q-gutter-lg">
