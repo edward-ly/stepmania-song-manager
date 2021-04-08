@@ -36,8 +36,8 @@ jobs:
       - name: Install dependencies
         run: yarn --frozen-lockfile
       - name: Build app
-        if: github.ref != 'refs/heads/master'
+        if: github.event_name != 'push'
         run: yarn build
-      - name: Publish app
-        if: github.ref == 'refs/heads/master'
+      - name: Build & deploy app
+        if: github.event_name == 'push'
         run: yarn release
