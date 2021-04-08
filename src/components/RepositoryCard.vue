@@ -149,7 +149,7 @@ export default defineComponent({
 
   computed: {
     bucketURL () {
-      if (!this.endpoint) return 'S3 Bucket: ' + this.bucketName
+      if (!this.endpoint) return this.bucketName
       return this.endpoint + '/' + this.bucketName
     },
     lastUpdatedString () {
