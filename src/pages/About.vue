@@ -37,36 +37,36 @@
               Email:
               <span
                 class="text-link"
-                @click="openUrl('mailto:' + personalEmail)"
-                >{{ personalEmail }}</span
+                @click="openUrl('mailto:' + email)"
+                >{{ email }}</span
               >
             </li>
             <!-- <li>
               GitHub:
-              <span class="text-link" @click="openUrl(personalGitHub)">{{
-                personalGitHub
+              <span class="text-link" @click="openUrl(github)">{{
+                github
               }}</span>
             </li> -->
             <li>
               Twitter:
-              <span class="text-link" @click="openUrl(personalTwitter1)"
+              <span class="text-link" @click="openUrl(twitter1)"
                 >@_edward_ly</span
               >
               or
-              <span class="text-link" @click="openUrl(personalTwitter2)"
+              <span class="text-link" @click="openUrl(twitter2)"
                 >@_led_light</span
               >
             </li>
             <!-- <li>
               Twitch:
-              <span class="text-link" @click="openUrl(personalTwitch)">{{
-                personalTwitch
+              <span class="text-link" @click="openUrl(twitch)">{{
+                twitch
               }}</span>
             </li> -->
             <li>
               Discord Server:
-              <span class="text-link" @click="openUrl(personalDiscord)">{{
-                personalDiscord
+              <span class="text-link" @click="openUrl(discord)">{{
+                discord
               }}</span>
             </li>
           </ul>
@@ -84,7 +84,7 @@
               fit="scale-down"
               alt="Donate with PayPal"
               src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
-              @click="openUrl(personalPayPal)"
+              @click="openUrl(paypal)"
             />
             <q-img
               class="cursor-pointer"
@@ -94,7 +94,7 @@
               fit="scale-down"
               alt="Buy Me a Coffee at ko-fi.com"
               src="https://cdn.ko-fi.com/cdn/kofi1.png?v=2"
-              @click="openUrl(personalKofi)"
+              @click="openUrl(kofi)"
             />
           </q-card-actions>
 
@@ -151,16 +151,15 @@ export default defineComponent({
       version,
       openUrl,
       appGitHub: 'https://github.com/edward-ly/stepmania-song-manager',
-      personalEmail: 'edward.ly@pm.me',
-      // personalGitHub: 'https://github.com/edward-ly',
-      personalTwitter1: 'https://twitter.com/_edward_ly',
-      personalTwitter2: 'https://twitter.com/_led_light',
-      // personalTwitch: 'https://www.twitch.tv/led_light7',
-      personalDiscord: 'https://discord.gg/FYHvtEP',
-      personalKofi: 'https://ko-fi.com/Z8Z42UJNY',
-      // personalStreamlabs: 'https://streamlabs.com/led_light7',
-      personalPayPal:
-        'https://www.paypal.com/donate?hosted_button_id=R3F883NUQFLP2',
+      email: 'edward.ly@pm.me',
+      // github: 'https://github.com/edward-ly',
+      twitter1: 'https://twitter.com/_edward_ly',
+      twitter2: 'https://twitter.com/_led_light',
+      // twitch: 'https://www.twitch.tv/led_light7',
+      discord: 'https://discord.gg/FYHvtEP',
+      kofi: 'https://ko-fi.com/Z8Z42UJNY',
+      // streamlabs: 'https://streamlabs.com/led_light7',
+      paypal: 'https://www.paypal.com/donate?hosted_button_id=R3F883NUQFLP2',
     }
   },
 })
