@@ -4,14 +4,7 @@
       <!-- TODO: add popups to edit name and description -->
       <div class="text-h6">{{ name }}</div>
 
-      <div
-        v-if="endpoint"
-        class="text-caption text-link"
-        @click="openUrl(bucketURL)"
-      >
-        {{ bucketURL }}
-      </div>
-      <div v-else class="text-caption">{{ bucketURL }}</div>
+      <div class="text-caption">S3 Bucket: {{ bucketURL }}</div>
 
       <div v-if="description" class="text-body2 q-pt-sm">{{ description }}</div>
       <div v-else class="text-body2 text-italic text-muted q-pt-sm">
@@ -175,9 +168,6 @@ export default defineComponent({
   },
 
   methods: {
-    openUrl (url) {
-      window.electron.openExternal(url)
-    },
     async addRepo () {
       const localPath = await window.electron.getDownloadPath(
         this.$q.localStorage.getItem('DownloadPath'),
