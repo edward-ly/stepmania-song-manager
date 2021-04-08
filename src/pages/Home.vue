@@ -64,10 +64,8 @@ export default defineComponent({
 
     function setSyncAllReposInitTimeout () {
       const interval = $q.localStorage.getItem('UpdateInterval')
-      if (interval >= 0) {
-        return ref(setTimeout(syncAllRepos, interval))
-      }
-      return ref(null)
+      if (interval < 0) return ref(null)
+      return ref(setTimeout(syncAllRepos, interval))
     }
 
     function setSyncAllReposTimeout () {
@@ -99,7 +97,7 @@ export default defineComponent({
 
     function getRoleEndpoint (endpoint) {
       let roleEndpoint = '/getRole'
-      if (endpoint.endsWith('amazonaws.com'))  roleEndpoint += 'S3'
+      if (endpoint.endsWith('amazonaws.com')) roleEndpoint += 'S3'
       if (endpoint.endsWith('backblazeb2.com')) roleEndpoint += 'B2'
       return roleEndpoint
     }
@@ -171,9 +169,7 @@ export default defineComponent({
       setLoadingStatus(index, true)
 
       const err = await syncRepo(index)
-      if (err) {
-        repoList.value[index].error = err.toString()
-      }
+      if (err) repoList.value[index].error = err.toString()
 
       setLoadingStatus(index, false)
       setSyncAllReposTimeout()
@@ -186,10 +182,10 @@ export default defineComponent({
       for (let i = 0; i < repoList.value.length; i++) {
         if (repoList.value[i].isDownloaded) {
           setLoadingStatus(i, true)
+
           const err = await syncRepo(i)
-          if (err) {
-            repoList.value[i].error = err.toString()
-          }
+          if (err) repoList.value[i].error = err.toString()
+
           setLoadingStatus(i, false)
         }
       }
