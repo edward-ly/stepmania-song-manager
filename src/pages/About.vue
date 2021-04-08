@@ -35,39 +35,37 @@
           <ul class="text-body2">
             <li>
               Email:
-              <span
-                class="text-link"
-                @click="openUrl('mailto:' + email)"
-                >{{ email }}</span
-              >
+              <span class="text-link" @click="openUrl('mailto:' + email)">
+                {{ email }}
+              </span>
             </li>
             <!-- <li>
               GitHub:
-              <span class="text-link" @click="openUrl(github)">{{
-                github
-              }}</span>
+              <span class="text-link" @click="openUrl(github)">
+                {{ github }}
+              </span>
             </li> -->
             <li>
               Twitter:
-              <span class="text-link" @click="openUrl(twitter1)"
-                >@_edward_ly</span
-              >
+              <span class="text-link" @click="openUrl(twitter1)">
+                @_edward_ly
+              </span>
               or
-              <span class="text-link" @click="openUrl(twitter2)"
-                >@_led_light</span
-              >
+              <span class="text-link" @click="openUrl(twitter2)">
+                @_led_light
+              </span>
             </li>
             <!-- <li>
               Twitch:
-              <span class="text-link" @click="openUrl(twitch)">{{
-                twitch
-              }}</span>
+              <span class="text-link" @click="openUrl(twitch)">
+                {{ twitch }}
+              </span>
             </li> -->
             <li>
               Discord Server:
-              <span class="text-link" @click="openUrl(discord)">{{
-                discord
-              }}</span>
+              <span class="text-link" @click="openUrl(discord)">
+                {{ discord }}
+              </span>
             </li>
           </ul>
 
