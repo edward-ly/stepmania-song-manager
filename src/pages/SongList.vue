@@ -86,7 +86,7 @@
           </div>
         </div>
 
-        <EmptyMessage :show="!filteredSongList.length" icon="info">
+        <EmptyMessage :show="noSongsFound" icon="info">
           No songs found.
         </EmptyMessage>
       </q-scroll-area>
@@ -95,7 +95,7 @@
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, computed } from 'vue'
 import EmptyMessage from 'components/EmptyMessage.vue'
 import thumbScrollStyle from 'components/thumbScrollStyle'
 import _ from 'lodash'
@@ -113,6 +113,11 @@ export default defineComponent({
     const duration = ref([])
     const showTranslit = ref(false)
     const searchText = ref(null)
+
+    const noSongsFound = computed(() => {
+      const songs = _.flatten(filteredSongList.value.map((pack) => pack.songs))
+      return !songs.length
+    })
 
     function getDuration (pack) {
       return Math.max(Math.log1p(pack.songs.length) * 100, 150)
@@ -351,6 +356,7 @@ export default defineComponent({
       duration,
       showTranslit,
       searchText,
+      noSongsFound,
       filterSongList,
       columns,
       minimize,
