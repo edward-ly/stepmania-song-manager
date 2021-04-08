@@ -212,7 +212,7 @@ function parseSimfileData (data, fileExtension) {
     titleTranslit: getSimfileField(data, 'TITLETRANSLIT'),
     subtitleTranslit: getSimfileField(data, 'SUBTITLETRANSLIT'),
     artistTranslit: getSimfileField(data, 'ARTISTTRANSLIT'),
-    genre: getSimfileField(data, 'GENRE'),
+    // genre: getSimfileField(data, 'GENRE'),
     displayBPM: getDisplayBPM(data),
     begLevel: getChartLevel(data, fileExtension, 'dance-single', 'Beginner'),
     bspLevel: getChartLevel(data, fileExtension, 'dance-single', 'Easy'),
