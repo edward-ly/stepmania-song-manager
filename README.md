@@ -71,17 +71,23 @@ Default download paths:
     -   `$XDG_CONFIG_HOME/StepMania Song Manager/Songs`, or
     -   `~/.config/StepMania Song Manager/Songs`
 
-## Uploading to Amazon S3
+## Adding New Packs
 
-If you want to upload your own simfile packs to Amazon S3, you can follow these steps:
+If you want to upload your own simfile packs for others to freely download with the app, you can follow the steps for each cloud storage provider below.
+
+> Note: Regardless of the server to which you want to upload your packs, the files in the bucket must follow this directory structure: `/<pack-name>/<song-name>/<song-files>`.
+Otherwise, StepMania will not be able to recognize the simfiles from the app.
+
+### Amazon S3
 
 1. Create an AWS account if you haven't already.
    [Creating an IAM admin user](https://docs.aws.amazon.com/IAM/latest/UserGuide/getting-started_create-admin-group.html) is also recommended for interacting with AWS.
-2. Create a new bucket (either from the Amazon S3 console or from the AWS CLI).
+2. Create a new bucket from the Amazon S3 web console.
    The name of the bucket must contain only lowercase letters, numbers, and hyphens.
 3. Configure the bucket to allow public access.
    From the Amazon S3 console, uncheck "Block *all* public access" and (optionally) re-check "Block public access to buckets and objects granted through [*new* & *any*] access control lists (ACLs)".
-4. Add the following JSON to the bucket policy, replacing `<bucket-name>` with the bucket name:
+4. Add the following JSON to the bucket policy, replacing `<bucket-name>` with the bucket name.
+   After this step, your bucket should now be public and ready for download from the app!
 
 ```json
 {
@@ -104,16 +110,25 @@ If you want to upload your own simfile packs to Amazon S3, you can follow these 
 }
 ```
 
-Your bucket should now be public and ready for download from the app!
-
-To add files to the bucket with AWS CLI:
+5. Install and configure [AWS CLI](https://aws.amazon.com/cli/) if you haven't already, using the Access Key ID and Secret Access Key of your IAM admin user account.
 
 ```sh
-aws s3 sync </path/to/packs> s3://<bucket-name> --delete
+aws configure --profile <any-profile-name>
 ```
 
-Be sure to run `aws configure` first with the Access Key ID and Secret Access Key of your IAM admin user account if you haven't already.
-Also, the bucket must follow this directory structure in order for StepMania to recognize the simfiles in the app: `/<pack-name>/<song-name>/<song-files>`.
+6. Configure AWS CLI to prevent uploading large files in multiple parts.
+
+```sh
+aws configure set s3.multipart_threshold 128MB --profile <any-profile-name>
+```
+
+Feel free to change `128MB` to whatever size you want, but make sure it is larger than the size of the largest file you intend to upload.
+
+7. Upload your files to the bucket:
+
+```sh
+aws s3 sync </path/to/packs> s3://<bucket-name> --delete --profile <any-profile-name>
+```
 
 ## Donate
 
