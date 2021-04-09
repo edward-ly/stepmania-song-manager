@@ -17,7 +17,11 @@
           <div class="text-center q-gutter-y-sm">
             <q-img src="~assets/master-icon.png" ratio="1" width="64px" />
             <div class="text-h5 text-bold">StepMania Song Manager</div>
-            <div class="text-subtitle1">Version: {{ version }}</div>
+            <div class="text-subtitle1">
+              Version: {{ version }}
+              <span class="q-px-md" />
+              <span class="text-link" @click="openUrl(appLog)">Release Notes</span>
+            </div>
             <div class="q-gutter-sm" @click="openUrl(appGitHub)">
               <q-icon name="fab fa-github" size="xl" class="cursor-pointer" />
               <p class="text-body2 text-link">
@@ -151,6 +155,7 @@ export default defineComponent({
       version,
       openUrl,
       appGitHub: 'https://github.com/edward-ly/stepmania-song-manager',
+      appLog: 'https://github.com/edward-ly/stepmania-song-manager/releases',
       email: 'edward.ly@pm.me',
       // github: 'https://github.com/edward-ly',
       twitter1: 'https://twitter.com/_edward_ly',
