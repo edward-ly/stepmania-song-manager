@@ -197,7 +197,7 @@ module.exports = configure(function (/* ctx */) {
           target: [
             {
               target: 'nsis',
-              arch: [ 'x64', 'ia32' ]
+              arch: [ 'x64', 'arm64', 'ia32' ]
             }
           ]
         },
@@ -205,7 +205,7 @@ module.exports = configure(function (/* ctx */) {
           target: [
             {
               target: 'dmg',
-              arch: [ 'x64' ]
+              arch: [ 'x64', 'arm64' ]
             }
           ]
         },
@@ -213,7 +213,7 @@ module.exports = configure(function (/* ctx */) {
           target: [
             {
               target: 'AppImage',
-              arch: [ 'x64', 'ia32' ]
+              arch: [ 'x64', 'arm64', 'ia32', 'armv7l' ]
             }
           ]
         },
