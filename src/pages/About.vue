@@ -20,7 +20,9 @@
             <div class="text-subtitle1">
               Version: {{ version }}
               <span class="q-px-md" />
-              <span class="text-link" @click="openUrl(appLog)">Release Notes</span>
+              <span class="text-link" @click="openUrl(appLog)">
+                Release Notes
+              </span>
             </div>
             <div class="q-gutter-sm" @click="openUrl(appGitHub)">
               <q-icon name="fab fa-github" size="xl" class="cursor-pointer" />
