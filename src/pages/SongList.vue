@@ -25,6 +25,7 @@
           @click="expanded.fill(false)"
         />
         <q-toggle v-model="showTranslit" label="Show Transliterated" />
+        <q-toggle v-model="showEditCharts" label="Show Edit Charts" />
         <q-space />
         <q-input
           v-model="searchText"
@@ -76,6 +77,7 @@
                   dense
                   :rows="pack.songs"
                   :columns="columns"
+                  :visible-columns="getVisibleColumns()"
                   :row-key="getSongTitle"
                   :pagination="{ rowsPerPage: 0 }"
                   hide-pagination
@@ -112,6 +114,7 @@ export default defineComponent({
     const expanded = ref([])
     const duration = ref([])
     const showTranslit = ref(false)
+    const showEditCharts = ref(false)
     const searchText = ref(null)
 
     const noSongsFound = computed(() => {
@@ -177,6 +180,12 @@ export default defineComponent({
       return subtitle ? `${title} ${subtitle}` : title
     }
 
+    function getArtist (row) {
+      return showTranslit.value && row.artistTranslit
+        ? row.artistTranslit
+        : row.artist
+    }
+
     const columns = [
       {
         name: 'title',
@@ -190,10 +199,7 @@ export default defineComponent({
       {
         name: 'artist',
         label: 'Artist',
-        field: (row) =>
-          showTranslit.value && row.artistTranslit
-            ? row.artistTranslit
-            : row.artist,
+        field: getArtist,
         align: 'left',
         sortable: true,
         style: 'width: 40%',
@@ -288,6 +294,18 @@ export default defineComponent({
           'text-center text-no-wrap q-table--col-auto-width padding-level',
       },
       {
+        name: 'spEdit',
+        label: 'EDIT',
+        field: 'spEditLevel',
+        align: 'center',
+        sortable: true,
+        sort: levelSort,
+        classes:
+          'bg-blue-grey-1 text-no-wrap q-table--col-auto-width padding-level',
+        headerClasses:
+          'text-center text-no-wrap q-table--col-auto-width padding-level',
+      },
+      {
         name: 'bdp',
         label: 'BDP',
         field: 'bdpLevel',
@@ -333,7 +351,42 @@ export default defineComponent({
         headerClasses:
           'text-center text-no-wrap q-table--col-auto-width padding-level',
       },
+      {
+        name: 'dpEdit',
+        label: 'EDIT',
+        field: 'dpEditLevel',
+        align: 'center',
+        sortable: true,
+        sort: levelSort,
+        classes:
+          'bg-blue-grey-1 text-no-wrap q-table--col-auto-width padding-level',
+        headerClasses:
+          'text-center text-no-wrap q-table--col-auto-width padding-level',
+      },
     ]
+
+    const visibleColumns = ref([
+      'title',
+      'artist',
+      'bpm',
+      'beg',
+      'bsp',
+      'dsp',
+      'esp',
+      'csp',
+      'spEdit',
+      'bdp',
+      'ddp',
+      'edp',
+      'cdp',
+      'dpEdit',
+    ])
+
+    function getVisibleColumns () {
+      if (showEditCharts.value) return visibleColumns.value
+
+      return _.without(visibleColumns.value, 'spEdit', 'dpEdit')
+    }
 
     function minimize () {
       window.windowAPI.minimize()
@@ -355,10 +408,12 @@ export default defineComponent({
       expanded,
       duration,
       showTranslit,
+      showEditCharts,
       searchText,
       noSongsFound,
       filterSongList,
       columns,
+      getVisibleColumns,
       minimize,
       toggleMaximize,
       closeApp,
