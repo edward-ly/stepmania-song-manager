@@ -25,6 +25,7 @@
           @click="expanded.fill(false)"
         />
         <q-toggle v-model="showTranslit" label="Show Transliterated" />
+        <q-toggle v-model="showEditCharts" label="Show Edit Charts" />
         <q-space />
         <q-input
           v-model="searchText"
@@ -76,6 +77,7 @@
                   dense
                   :rows="pack.songs"
                   :columns="columns"
+                  :visible-columns="getVisibleColumns()"
                   :row-key="getSongTitle"
                   :pagination="{ rowsPerPage: 0 }"
                   hide-pagination
@@ -112,6 +114,7 @@ export default defineComponent({
     const expanded = ref([])
     const duration = ref([])
     const showTranslit = ref(false)
+    const showEditCharts = ref(false)
     const searchText = ref(null)
 
     const noSongsFound = computed(() => {
@@ -359,6 +362,29 @@ export default defineComponent({
       },
     ]
 
+    const visibleColumns = ref([
+      'title',
+      'artist',
+      'bpm',
+      'beg',
+      'bsp',
+      'dsp',
+      'esp',
+      'csp',
+      'spEdit',
+      'bdp',
+      'ddp',
+      'edp',
+      'cdp',
+      'dpEdit',
+    ])
+
+    function getVisibleColumns () {
+      if (showEditCharts.value) return visibleColumns.value
+
+      return _.without(visibleColumns.value, 'spEdit', 'dpEdit')
+    }
+
     function minimize () {
       window.windowAPI.minimize()
     }
@@ -379,10 +405,12 @@ export default defineComponent({
       expanded,
       duration,
       showTranslit,
+      showEditCharts,
       searchText,
       noSongsFound,
       filterSongList,
       columns,
+      getVisibleColumns,
       minimize,
       toggleMaximize,
       closeApp,
