@@ -180,6 +180,12 @@ export default defineComponent({
       return subtitle ? `${title} ${subtitle}` : title
     }
 
+    function getArtist (row) {
+      return showTranslit.value && row.artistTranslit
+        ? row.artistTranslit
+        : row.artist
+    }
+
     const columns = [
       {
         name: 'title',
@@ -193,10 +199,7 @@ export default defineComponent({
       {
         name: 'artist',
         label: 'Artist',
-        field: (row) =>
-          showTranslit.value && row.artistTranslit
-            ? row.artistTranslit
-            : row.artist,
+        field: getArtist,
         align: 'left',
         sortable: true,
         style: 'width: 40%',
