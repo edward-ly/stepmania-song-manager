@@ -219,10 +219,12 @@ function parseSimfileData (data, fileExtension) {
     dspLevel: getChartLevel(data, fileExtension, 'dance-single', 'Medium'),
     espLevel: getChartLevel(data, fileExtension, 'dance-single', 'Hard'),
     cspLevel: getChartLevel(data, fileExtension, 'dance-single', 'Challenge'),
+    spEditLevel: getChartLevel(data, fileExtension, 'dance-single', 'Edit'),
     bdpLevel: getChartLevel(data, fileExtension, 'dance-double', 'Easy'),
     ddpLevel: getChartLevel(data, fileExtension, 'dance-double', 'Medium'),
     edpLevel: getChartLevel(data, fileExtension, 'dance-double', 'Hard'),
     cdpLevel: getChartLevel(data, fileExtension, 'dance-double', 'Challenge'),
+    dpEditLevel: getChartLevel(data, fileExtension, 'dance-double', 'Edit'),
   }
 }
 
