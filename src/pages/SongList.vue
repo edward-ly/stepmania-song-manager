@@ -288,6 +288,18 @@ export default defineComponent({
           'text-center text-no-wrap q-table--col-auto-width padding-level',
       },
       {
+        name: 'spEdit',
+        label: 'EDIT',
+        field: 'spEditLevel',
+        align: 'center',
+        sortable: true,
+        sort: levelSort,
+        classes:
+          'bg-blue-grey-1 text-no-wrap q-table--col-auto-width padding-level',
+        headerClasses:
+          'text-center text-no-wrap q-table--col-auto-width padding-level',
+      },
+      {
         name: 'bdp',
         label: 'BDP',
         field: 'bdpLevel',
@@ -330,6 +342,18 @@ export default defineComponent({
         sort: levelSort,
         classes:
           'bg-challenge text-no-wrap q-table--col-auto-width padding-level',
+        headerClasses:
+          'text-center text-no-wrap q-table--col-auto-width padding-level',
+      },
+      {
+        name: 'dpEdit',
+        label: 'EDIT',
+        field: 'dpEditLevel',
+        align: 'center',
+        sortable: true,
+        sort: levelSort,
+        classes:
+          'bg-blue-grey-1 text-no-wrap q-table--col-auto-width padding-level',
         headerClasses:
           'text-center text-no-wrap q-table--col-auto-width padding-level',
       },
