@@ -205,7 +205,7 @@ module.exports = configure(function (/* ctx */) {
           target: [
             {
               target: 'dmg',
-              arch: [ 'x64', 'ia32' ]
+              arch: [ 'x64' ]
             }
           ]
         },
