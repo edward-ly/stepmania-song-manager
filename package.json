@@ -1,6 +1,6 @@
 {
   "name": "stepmania-song-manager",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Download and update song packs for StepMania",
   "productName": "StepMania Song Manager",
   "author": {
