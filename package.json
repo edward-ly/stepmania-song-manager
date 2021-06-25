@@ -31,6 +31,7 @@
     "postcss": "^8.3.0",
     "quasar": "^2.0.0",
     "vue-i18n": "^9.0.0-beta.0",
+    "ws": "^7.5.0",
     "xmldom": "0.5.0"
   },
   "devDependencies": {
