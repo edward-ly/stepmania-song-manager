@@ -34,8 +34,7 @@
 
           <p class="text-body2">
             Want to report a bug or suggest new features? Create an issue or
-            start a discussion on GitHub from the link above, or contact me on
-            social media!
+            start a discussion on GitHub, or contact me on social media!
           </p>
 
           <ul class="text-body2">
@@ -43,6 +42,12 @@
               Email:
               <span class="text-link" @click="openUrl('mailto:' + email)">
                 {{ email }}
+              </span>
+            </li>
+            <li>
+              Discord Server:
+              <span class="text-link" @click="openUrl(discord)">
+                {{ discord }}
               </span>
             </li>
             <!-- <li>
@@ -67,18 +72,11 @@
                 {{ twitch }}
               </span>
             </li> -->
-            <li>
-              Discord Server:
-              <span class="text-link" @click="openUrl(discord)">
-                {{ discord }}
-              </span>
-            </li>
           </ul>
 
           <p class="text-body2">
             Want to donate and support the work that I do? Donations will go
-            towards paying for the costs of hosting and downloading simfiles
-            online.
+            towards paying for the costs of hosting and downloading simfiles.
           </p>
 
           <q-card-actions class="q-gutter-lg">
