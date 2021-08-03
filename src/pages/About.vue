@@ -20,11 +20,11 @@
             <div class="text-subtitle1">
               Version: {{ version }}
               <span class="q-px-md" />
-              <span class="text-link" @click="openUrl(appLog)">
+              <span class="text-link" @click="openUrl(github + '/releases')">
                 Release Notes
               </span>
             </div>
-            <div class="q-gutter-sm" @click="openUrl(appGitHub)">
+            <div class="q-gutter-sm" @click="openUrl(github)">
               <q-icon name="fab fa-github" size="xl" class="cursor-pointer" />
               <p class="text-body2 text-link">
                 Free and Open-Source on GitHub!
@@ -33,35 +33,32 @@
           </div>
 
           <p class="text-body2">
-            Want to report a bug or suggest new features? Create an issue or
-            start a discussion on GitHub, or contact me on social media!
+            Want to report a bug or suggest new features?
           </p>
 
           <ul class="text-body2">
             <li>
-              Email:
+              <span class="text-link" @click="openUrl(github + '/issues')"
+                >Create an issue</span
+              >
+              or
+              <span class="text-link" @click="openUrl(github + '/discussions')"
+                >start a discussion</span
+              >
+              on GitHub.
+            </li>
+            <li>
+              Send me an email:
               <span class="text-link" @click="openUrl('mailto:' + email)">
                 {{ email }}
               </span>
             </li>
             <li>
-              Discord Server:
+              Join my Discord server:
               <span class="text-link" @click="openUrl(discord)">
                 {{ discord }}
               </span>
             </li>
-            <!-- <li>
-              GitHub:
-              <span class="text-link" @click="openUrl(github)">
-                {{ github }}
-              </span>
-            </li> -->
-            <!-- <li>
-              Twitch:
-              <span class="text-link" @click="openUrl(twitch)">
-                {{ twitch }}
-              </span>
-            </li> -->
           </ul>
 
           <p class="text-body2">
@@ -144,11 +141,8 @@ export default defineComponent({
       thumbScrollStyle,
       version,
       openUrl,
-      appGitHub: 'https://github.com/edward-ly/stepmania-song-manager',
-      appLog: 'https://github.com/edward-ly/stepmania-song-manager/releases',
+      github: 'https://github.com/edward-ly/stepmania-song-manager',
       email: 'edward.ly@pm.me',
-      // github: 'https://github.com/edward-ly',
-      // twitch: 'https://www.twitch.tv/led_light7',
       discord: 'https://discord.gg/FYHvtEP',
       kofi: 'https://ko-fi.com/Z8Z42UJNY',
       // streamlabs: 'https://streamlabs.com/led_light7',
