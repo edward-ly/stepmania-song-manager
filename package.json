@@ -21,12 +21,12 @@
   },
   "dependencies": {
     "@auth0/s3": "^1.0.0",
-    "@quasar/extras": "^1.10.8",
+    "@quasar/extras": "^1.10.9",
     "auto-launch": "^5.0.5",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "electron-updater": "^4.3.8",
-    "quasar": "^2.0.1",
+    "quasar": "^2.0.3",
     "vue-i18n": "^9.0.0-beta.0"
   },
   "resolutions": {
@@ -42,7 +42,7 @@
     "yargs-parser": "^20.2.9"
   },
   "devDependencies": {
-    "@quasar/app": "^3.0.1",
+    "@quasar/app": "^3.0.4",
     "babel-eslint": "^10.0.1",
     "electron": "^11.3.0",
     "electron-builder": "^22.4.0",
