@@ -56,16 +56,6 @@
                 {{ github }}
               </span>
             </li> -->
-            <li>
-              Twitter:
-              <span class="text-link" @click="openUrl(twitter1)">
-                @_edward_ly
-              </span>
-              or
-              <span class="text-link" @click="openUrl(twitter2)">
-                @_led_light
-              </span>
-            </li>
             <!-- <li>
               Twitch:
               <span class="text-link" @click="openUrl(twitch)">
@@ -158,8 +148,6 @@ export default defineComponent({
       appLog: 'https://github.com/edward-ly/stepmania-song-manager/releases',
       email: 'edward.ly@pm.me',
       // github: 'https://github.com/edward-ly',
-      twitter1: 'https://twitter.com/_edward_ly',
-      twitter2: 'https://twitter.com/_led_light',
       // twitch: 'https://www.twitch.tv/led_light7',
       discord: 'https://discord.gg/FYHvtEP',
       kofi: 'https://ko-fi.com/Z8Z42UJNY',
