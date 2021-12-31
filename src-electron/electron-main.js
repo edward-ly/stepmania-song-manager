@@ -15,6 +15,12 @@ import { autoUpdater } from 'electron-updater'
 // TODO: replace with native '@aws-sdk/client-s3' package and md5 file caching
 import s3 from '@auth0/s3'
 
+import readDirRecursive from './helpers/readDirRecursive'
+import {
+  getSimfileField,
+  parseSimfileData,
+} from './helpers/sm-parsers'
+
 const appLock = app.requestSingleInstanceLock()
 if (!appLock) {
   app.quit()
@@ -138,95 +144,6 @@ app.on('activate', () => {
 const autoLauncher = new AutoLaunch({
   name: 'StepMania Song Manager',
 })
-
-// ===========================================================================
-// Helper Functions
-// ===========================================================================
-
-// Based on the 'fs-readdir-recursive' npm package, modified for this app
-// https://github.com/fs-utils/fs-readdir-recursive
-function readDir (root, files, prefix) {
-  files = files || []
-  prefix = prefix || ''
-
-  let dir = path.join(root, prefix)
-  if (!fs.existsSync(dir)) return files
-  if (fs.statSync(dir).isDirectory()) {
-    fs.readdirSync(dir)
-      .filter((name) => name[0] !== '.')
-      .forEach((name) => readDir(root, files, path.join(prefix, name)))
-  } else {
-    files.push(dir)
-  }
-
-  return files
-}
-
-function getChartLevel (data, fileExtension, style, difficulty) {
-  let matchStr = 'a^'
-  if (fileExtension === '.sm') {
-    matchStr = `(?<=#NOTES:\\s*${style}:\\s*.*:\\s*${difficulty}:\\s*)\\d+`
-  }
-  if (fileExtension === '.ssc') {
-    matchStr = `(?<=#STEPSTYPE:${style};\\s*(.*\\s*){0,2}#DIFFICULTY:${difficulty};\\s*#METER:)\\d+`
-  }
-  const match = data.match(new RegExp(matchStr))
-  return !match ? '-' : match[0]
-}
-
-function getDisplayBPM (data) {
-  const displayBpmMatch = data.match(/(?<=#DISPLAYBPM:).*(?=;\s*#BPMS:)/)
-  const displayBPM = !displayBpmMatch ? '' : displayBpmMatch[0]
-  if (!displayBPM) {
-    const trueBPMs = data
-      .match(/(?<=#BPMS:)[^;]*(?=;)/)[0]
-      .replace(/\s+/g, '')
-      .split(',')
-      .map((entry) => Number(entry.substring(entry.indexOf('=') + 1)))
-    const minBPM = _.round(_.min(trueBPMs))
-    const maxBPM = _.round(_.max(trueBPMs))
-    return minBPM === maxBPM ? `${maxBPM}` : `${minBPM}-${maxBPM}`
-  }
-  if (displayBPM === '*') return '???'
-  const bpms = displayBPM.split(':')
-  const minBPM = _.round(Number(bpms[0]))
-  if (bpms.length > 1) {
-    const maxBPM = _.round(Number(bpms[1]))
-    return `${minBPM}-${maxBPM}`
-  }
-  return minBPM.toString()
-}
-
-function getSimfileField (data, field) {
-  const match = data.match(new RegExp(`(?<=#${field}:).*(?=;)`))
-  return !match ? '' : match[0]
-}
-
-function parseSimfileData (data, fileExtension) {
-  if (fileExtension !== '.sm' && fileExtension !== '.ssc') return {}
-
-  return {
-    title: getSimfileField(data, 'TITLE'),
-    subtitle: getSimfileField(data, 'SUBTITLE'),
-    artist: getSimfileField(data, 'ARTIST'),
-    titleTranslit: getSimfileField(data, 'TITLETRANSLIT'),
-    subtitleTranslit: getSimfileField(data, 'SUBTITLETRANSLIT'),
-    artistTranslit: getSimfileField(data, 'ARTISTTRANSLIT'),
-    // genre: getSimfileField(data, 'GENRE'),
-    displayBPM: getDisplayBPM(data),
-    begLevel: getChartLevel(data, fileExtension, 'dance-single', 'Beginner'),
-    bspLevel: getChartLevel(data, fileExtension, 'dance-single', 'Easy'),
-    dspLevel: getChartLevel(data, fileExtension, 'dance-single', 'Medium'),
-    espLevel: getChartLevel(data, fileExtension, 'dance-single', 'Hard'),
-    cspLevel: getChartLevel(data, fileExtension, 'dance-single', 'Challenge'),
-    spEditLevel: getChartLevel(data, fileExtension, 'dance-single', 'Edit'),
-    bdpLevel: getChartLevel(data, fileExtension, 'dance-double', 'Easy'),
-    ddpLevel: getChartLevel(data, fileExtension, 'dance-double', 'Medium'),
-    edpLevel: getChartLevel(data, fileExtension, 'dance-double', 'Hard'),
-    cdpLevel: getChartLevel(data, fileExtension, 'dance-double', 'Challenge'),
-    dpEditLevel: getChartLevel(data, fileExtension, 'dance-double', 'Edit'),
-  }
-}
 
 // ===========================================================================
 // Main Process Methods for Renderer
@@ -377,7 +294,7 @@ ipcMain.handle('list-sm-files', (event, folderPath) => {
     const packFullPath = path.join(folderPath, packPath)
     if (fs.lstatSync(packFullPath).isDirectory()) {
       let packName = packPath
-      const packFiles = readDir(packFullPath)
+      const packFiles = readDirRecursive(packFullPath)
       const groupIni = packFiles.find((el) => el.endsWith('group.ini'))
       if (groupIni) {
         try {
