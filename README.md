@@ -17,6 +17,14 @@ Current list of downloadable packs (officially supported and maintained by me):
 -   [led_light's Tech Experiments](https://zenius-i-vanisher.com/v5.2/viewsimfilecategory.php?categoryid=821) - A separate collection of ITG-style simfiles made by me.
     Not recommended for beginners.
 
+## Donate
+
+This is a one-man job, so if you like the app, please consider donating, which will help pay for the costs of hosting and downloading simfiles online.
+
+[![PayPal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/donate?hosted_button_id=R3F883NUQFLP2)
+
+[![Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Z8Z42UJNY)
+
 ## Development
 
 ```bash
@@ -31,6 +39,12 @@ yarn lint
 
 # Build app for production
 yarn build
+```
+
+If using [git-flow](https://github.com/petervanderdoes/gitflow-avh), configure release branches:
+
+```bash
+git config --local gitflow.release.finish.notag false
 ```
 
 ### Contributing
@@ -139,15 +153,6 @@ Feel free to change `128MB` to whatever size you want, but make sure it is large
 ```sh
 aws s3 sync </path/to/packs> s3://<bucket-name> --delete --profile <any-profile-name>
 ```
-
-## Donate
-
-Like the app?
-Please consider donating, which will help pay for the costs of hosting and downloading simfiles online.
-
-[![PayPal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/donate?hosted_button_id=R3F883NUQFLP2)
-
-[![Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Z8Z42UJNY)
 
 ## License
 
