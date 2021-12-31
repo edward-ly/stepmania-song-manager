@@ -48,7 +48,7 @@ function getSimfileField (data, field) {
 
 
 function parseSimfileData (data, fileExtension) {
-  if (fileExtension !== '.sm' && fileExtension !== '.ssc') return {}
+  if (!_.includes(['.sm', '.ssc'], fileExtension)) return {}
 
   return {
     title: getSimfileField(data, 'TITLE'),
