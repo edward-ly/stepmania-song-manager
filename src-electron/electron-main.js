@@ -12,14 +12,9 @@ import glob from 'glob'
 import _ from 'lodash'
 import AutoLaunch from 'auto-launch'
 import { autoUpdater } from 'electron-updater'
-// TODO: replace with native '@aws-sdk/client-s3' package and md5 file caching
-import s3 from '@auth0/s3'
-
+import s3Download from './components/aws-s3'
 import readDirRecursive from './helpers/readDirRecursive'
-import {
-  getSimfileField,
-  parseSimfileData,
-} from './helpers/sm-parsers'
+import { getSimfileField, parseSimfileData } from './helpers/sm-parsers'
 
 const appLock = app.requestSingleInstanceLock()
 if (!appLock) {
@@ -355,66 +350,9 @@ ipcMain.on('disable-auto-launch', () => {
 // AWS S3 ====================================================================
 
 ipcMain.on('sync-bucket', (event, bucket, credentials) => {
-  let s3Params = {
-    s3Options: {
-      accessKeyId: credentials.AccessKeyId,
-      secretAccessKey: credentials.SecretAccessKey,
-    },
-  }
-  if (bucket.endpoint) s3Params.s3Options.endpoint = bucket.endpoint
-  if (credentials.SessionToken) {
-    s3Params.s3Options.sessionToken = credentials.SessionToken
-  }
-
-  const dlParams = {
-    localDir: bucket.localPath,
-    s3Params: {
-      Bucket: bucket.name,
-      Prefix: '',
-    },
-    deleteRemoved: true,
-  }
-
-  const dl = s3.createClient(s3Params).downloadDir(dlParams)
-  dl.on('error', (err) => event.reply('sync-error', err))
-  dl.on('progress', () =>
-    event.reply('sync-progress', dl.progressAmount / dl.progressTotal)
-  )
-  dl.on('end', () => event.reply('sync-end'))
+  s3Download(event, bucket, credentials, false)
 })
 
 ipcMain.on('sync-song-list', (event, bucket, credentials) => {
-  let s3Params = {
-    s3Options: {
-      accessKeyId: credentials.AccessKeyId,
-      secretAccessKey: credentials.SecretAccessKey,
-    },
-  }
-  if (bucket.endpoint) s3Params.s3Options.endpoint = bucket.endpoint
-  if (credentials.SessionToken) {
-    s3Params.s3Options.sessionToken = credentials.SessionToken
-  }
-
-  const dlParams = {
-    localDir: bucket.localPath,
-    s3Params: {
-      Bucket: bucket.name,
-      Prefix: '',
-    },
-    getS3Params: (localFile, s3Object, callback) => {
-      const ext = path.extname(s3Object.Key)
-      if (_.includes(['.sm', '.ssc', '.ini'], ext)) {
-        callback(null, {})
-      } else {
-        callback(null, null)
-      }
-    },
-  }
-
-  const dl = s3.createClient(s3Params).downloadDir(dlParams)
-  dl.on('error', (err) => event.reply('sync-error', err))
-  dl.on('progress', () =>
-    event.reply('sync-progress', dl.progressAmount / dl.progressTotal)
-  )
-  dl.on('end', () => event.reply('sync-end'))
+  s3Download(event, bucket, credentials, true)
 })
