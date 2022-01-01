@@ -7,6 +7,24 @@ A cross-platform utility app for [StepMania](https://github.com/stepmania/stepma
 
 Made with [Electron](https://www.electronjs.org/) and [Vue.js](https://vuejs.org/) via the [Quasar](https://quasar.dev/) framework.
 
+## Available Songs
+
+Current list of downloadable packs (officially supported and maintained by me):
+
+-   [DanceDanceRevolution (Arcade)](https://p.eagate.573.jp/game/ddr/ddra20/p/index.html) - Aims to replicate the DDR arcade experience with a song list that mirrors that of the DDR A20 PLUS song list (meaning that future updates will include both song additions and song removals).
+-   [The Complete led_light Collection](https://zenius-i-vanisher.com/v5.2/viewsimfilecategory.php?categoryid=821) - A continuously growing collection of DDR-style simfiles made by me!
+    Recommended for beginners with a wide variety of popular songs!
+-   [led_light's Tech Experiments](https://zenius-i-vanisher.com/v5.2/viewsimfilecategory.php?categoryid=821) - A separate collection of ITG-style simfiles made by me.
+    Not recommended for beginners.
+
+## Donate
+
+This is a one-man job, so if you like the app, please consider donating, which will help pay for the costs of hosting and downloading simfiles online.
+
+[![PayPal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/donate?hosted_button_id=R3F883NUQFLP2)
+
+[![Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Z8Z42UJNY)
+
 ## Development
 
 ```bash
@@ -21,6 +39,12 @@ yarn lint
 
 # Build app for production
 yarn build
+```
+
+If using [git-flow](https://github.com/petervanderdoes/gitflow-avh), configure release branches:
+
+```bash
+git config --local gitflow.release.finish.notag false
 ```
 
 ### Contributing
@@ -129,15 +153,6 @@ Feel free to change `128MB` to whatever size you want, but make sure it is large
 ```sh
 aws s3 sync </path/to/packs> s3://<bucket-name> --delete --profile <any-profile-name>
 ```
-
-## Donate
-
-Like the app?
-Please consider donating, which will help pay for the costs of hosting and downloading simfiles online.
-
-[![PayPal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/donate?hosted_button_id=R3F883NUQFLP2)
-
-[![Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Z8Z42UJNY)
 
 ## License
 

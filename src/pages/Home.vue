@@ -113,6 +113,7 @@ export default defineComponent({
               name: repo.bucketName,
               localPath: repo.localPath,
               endpoint: repo.endpoint,
+              region: repo.region,
             }
             window.aws.s3Sync(bucket, res.data.credentials)
             window.aws.subscribeSyncEvents(
@@ -145,6 +146,7 @@ export default defineComponent({
               name: repo.bucketName,
               localPath: repo.localPath,
               endpoint: repo.endpoint,
+              region: repo.region,
             }
             window.aws.s3SyncSongList(bucket, res.data.credentials)
             window.aws.subscribeSyncEvents(

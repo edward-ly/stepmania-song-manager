@@ -198,6 +198,14 @@ module.exports = configure(function (/* ctx */) {
             {
               target: 'nsis',
               arch: [ 'x64', 'arm64', 'ia32' ]
+            },
+            {
+              target: 'nsis-web',
+              arch: [ 'x64', 'arm64', 'ia32' ]
+            },
+            {
+              target: 'portable',
+              arch: [ 'x64', 'arm64', 'ia32' ]
             }
           ]
         },
