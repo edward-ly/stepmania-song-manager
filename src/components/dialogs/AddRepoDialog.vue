@@ -52,12 +52,8 @@ export default defineComponent({
 
   setup () {
     const $q = useQuasar()
-    const {
-      dialogRef,
-      onDialogHide,
-      onDialogOK,
-      onDialogCancel,
-    } = useDialogPluginComponent()
+    const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } =
+      useDialogPluginComponent()
 
     const name = ref(null)
     const bucketName = ref(null)

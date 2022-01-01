@@ -16,7 +16,6 @@ function getChartLevel (data, fileExtension, style, difficulty) {
   return !match ? '-' : match[0]
 }
 
-
 function getDisplayBPM (data) {
   const displayBpmMatch = data.match(/(?<=#DISPLAYBPM:).*(?=;\s*#BPMS:)/)
   const displayBPM = !displayBpmMatch ? '' : displayBpmMatch[0]
@@ -40,12 +39,10 @@ function getDisplayBPM (data) {
   return minBPM.toString()
 }
 
-
 function getSimfileField (data, field) {
   const match = data.match(new RegExp(`(?<=#${field}:).*(?=;)`))
   return !match ? '' : match[0]
 }
-
 
 function parseSimfileData (data, fileExtension) {
   if (!_.includes(['.sm', '.ssc'], fileExtension)) return {}
@@ -73,10 +70,4 @@ function parseSimfileData (data, fileExtension) {
   }
 }
 
-
-export {
-  getChartLevel,
-  getDisplayBPM,
-  getSimfileField,
-  parseSimfileData,
-}
+export { getChartLevel, getDisplayBPM, getSimfileField, parseSimfileData }

@@ -31,12 +31,8 @@ export default defineComponent({
   emits: [...useDialogPluginComponent.emits],
 
   setup () {
-    const {
-      dialogRef,
-      onDialogHide,
-      onDialogOK,
-      onDialogCancel,
-    } = useDialogPluginComponent()
+    const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } =
+      useDialogPluginComponent()
 
     return {
       dialogRef,
