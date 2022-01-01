@@ -41,10 +41,11 @@ yarn lint
 yarn build
 ```
 
-If using [git-flow](https://github.com/petervanderdoes/gitflow-avh), configure release branches:
+If using [git-flow](https://github.com/petervanderdoes/gitflow-avh), disable automatic tagging to the production branch:
 
 ```bash
-git config --local gitflow.release.finish.notag false
+git config gitflow.hotfix.finish.notag true
+git config gitflow.release.finish.notag true
 ```
 
 ### Contributing
