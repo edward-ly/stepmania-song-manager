@@ -14,8 +14,8 @@ Current list of downloadable packs (officially supported and maintained by me):
 -   [DanceDanceRevolution (Arcade)](https://p.eagate.573.jp/game/ddr/ddra20/p/index.html) - Aims to replicate the DDR arcade experience with a song list that mirrors that of the DDR A20 PLUS song list (meaning that future updates will include both song additions and song removals).
 -   [The Complete led_light Collection](https://zenius-i-vanisher.com/v5.2/viewsimfilecategory.php?categoryid=821) - A continuously growing collection of DDR-style simfiles made by me!
     Recommended for beginners with a wide variety of popular songs!
--   [led_light's Tech Experiments](https://zenius-i-vanisher.com/v5.2/viewsimfilecategory.php?categoryid=821) - A separate collection of ITG-style simfiles made by me.
-    Not recommended for beginners.
+-   [led_light's Tech Experiments](https://zenius-i-vanisher.com/v5.2/viewsimfilecategory.php?categoryid=821) - A small, separate collection of ITG-style simfiles made by me.
+    For advanced players only.
 
 ## Donate
 
@@ -92,9 +92,7 @@ Default download paths:
 
 -   Windows: `%APPDATA%/StepMania Song Manager/Songs`
 -   macOS: `~/Library/Application Support/StepMania Song Manager/Songs`
--   Linux:
-    -   `$XDG_CONFIG_HOME/StepMania Song Manager/Songs`, or
-    -   `~/.config/StepMania Song Manager/Songs`
+-   Linux: `$XDG_CONFIG_HOME/StepMania Song Manager/Songs` (most likely `~/.config/StepMania Song Manager/Songs`)
 
 ## Adding New Packs
 
