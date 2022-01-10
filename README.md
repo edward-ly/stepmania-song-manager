@@ -2,6 +2,7 @@
 
 [![build](https://github.com/edward-ly/stepmania-song-manager/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/edward-ly/stepmania-song-manager/actions/workflows/main.yml)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
+[![Liberapay](https://img.shields.io/liberapay/patrons/edward-ly.svg?logo=liberapay)](https://liberapay.com/edward-ly/donate)
 
 A cross-platform utility app for [StepMania](https://github.com/stepmania/stepmania) that downloads and automatically updates song ("simfile") packs hosted in Amazon S3 buckets (or any bucket that can interact with the S3 API).
 
@@ -21,9 +22,10 @@ Current list of downloadable packs (officially supported and maintained by me):
 
 This is a one-man job, so if you like the app, please consider donating, which will help pay for the costs of hosting and downloading simfiles online.
 
-[![PayPal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/donate?hosted_button_id=R3F883NUQFLP2)
-
-[![Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Z8Z42UJNY)
+| **Liberapay** | [![Liberapay](https://liberapay.com/assets/widgets/donate.svg)](https://liberapay.com/edward-ly/donate)  |
+| --- | :---: |
+| **Ko-fi** | [![Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Z8Z42UJNY) |
+| **PayPal** | [![PayPal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/donate?hosted_button_id=R3F883NUQFLP2) |
 
 ## Development
 
